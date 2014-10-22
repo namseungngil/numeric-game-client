@@ -13,5 +13,15 @@
 /*.pidb
 /*.booproj
 
+Library
+Temp
+*. pidb
+*. unityproj
+* .. sln
+*. userprefs
+
+apk/
+iosbuild/
+
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
