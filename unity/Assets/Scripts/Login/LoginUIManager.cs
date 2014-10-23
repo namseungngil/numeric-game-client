@@ -8,7 +8,7 @@ public class LoginUIManager : UIManager
 
 	new void Start () {
 		base.Start ();
-		NumericPlayerPrefs numericPlayerPrefs = NumericPlayerPrefs.Instance ();
+		Register numericPlayerPrefs = Register.Instance ();
 		numericPlayerPrefs.GetLove ();
 	}
 

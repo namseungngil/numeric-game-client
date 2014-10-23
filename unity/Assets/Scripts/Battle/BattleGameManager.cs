@@ -58,6 +58,7 @@ public class BattleGameManager : GameManager
 	private int clearCount;
 	private int missCount;
 	private int hitCount;
+	private int comboCount;
 	private string firstString = null;
 	private string lastString = null;
 	private int result;
@@ -315,9 +316,8 @@ public class BattleGameManager : GameManager
 	private IEnumerator SetAttack ()
 	{
 		clearCount++;
+		comboCount++;
 		gameStatus = GameStatus.Attack;
-
-		int tempPlusClear = clearCount - 1;
 
 		int tempFrist = int.Parse (firstString);
 		int tempLast = int.Parse (lastString);
@@ -326,11 +326,12 @@ public class BattleGameManager : GameManager
 		}
 
 		string tempString = "Attack";
-		if (tempPlusClear >= 1) {
+		int tempCombo = comboCount - 1;
+		if (tempCombo >= 1) {
 			tempString = "Combo +";
-			tempString += "" + tempPlusClear;
-			tempFrist += tempPlusClear;
-			tempLast += tempPlusClear;
+			tempString += "" + tempCombo;
+			tempFrist += tempCombo;
+			tempLast += tempCombo;
 		}
 
 		panel200.SetActive (true);
@@ -359,6 +360,7 @@ public class BattleGameManager : GameManager
 	private IEnumerator SetMiss ()
 	{
 		missCount++;
+		comboCount = 0;
 		gameStatus = GameStatus.Miss;
 
 		panel200.SetActive (true);

@@ -1,8 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Manager/GameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../star-game-client/Assets/Scripts/Resource/ResourceManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/_Common/Manager/GameManager.cs" Line="34" Column="3" />
+      <File FileName="Assets/Scripts/_Common/Namespace/ASSETBUNDLE.cs" Line="87" Column="8" />
+      <File FileName="Assets/Scripts/_Common/Component/LoveComponent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Data/Register.cs" Line="1" Column="1" />
+      <File FileName="../../star-game-client/Assets/Scripts/Resource/ResourceManager.cs" Line="1" Column="1" />
+      <File FileName="../../star-game-client/Assets/Scripts/_Common/Http/HTTP.cs" Line="51" Column="16" />
+      <File FileName="../../star-game-client/Assets/Scripts/_Common/Managers/HttpManager.cs" Line="1" Column="1" />
+      <File FileName="../../star-game-client/Assets/Scripts/_Common/Managers/ParticleSystemManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="4" Column="11" />
+      <File FileName="Assets/Scripts/_Common/Namespace/ASSETBUNDLE.cs" Line="87" Column="8" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

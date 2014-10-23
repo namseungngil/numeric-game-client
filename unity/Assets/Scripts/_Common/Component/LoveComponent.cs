@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections;
 
@@ -14,7 +14,7 @@ public class LoveComponent : MonoBehaviour
 	// component
 	private UILabel loveTimeUILabel;
 	private UILabel loveCountUILabel;
-	private NumericPlayerPrefs numericPlayerPrefs;
+	private Register numericPlayerPrefs;
 	private DataQuery dataQuery;
 	// variable
 	private int love;
@@ -23,7 +23,7 @@ public class LoveComponent : MonoBehaviour
 
 	void Start ()
 	{
-		numericPlayerPrefs = NumericPlayerPrefs.Instance ();
+		numericPlayerPrefs = Register.Instance ();
 		dataQuery = DataQuery.Instance ();
 		GameObject loveGameObject = GameObject.Find (LOVE);
 		if (loveGameObject != null) {
