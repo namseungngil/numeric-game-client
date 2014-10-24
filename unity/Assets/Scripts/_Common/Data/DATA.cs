@@ -4,7 +4,7 @@ namespace DATA
 {
 	public class DataArray
 	{
-		public string questMasterVersion = "1";
+		public string questMasterVersion = "2";
 		public string[][] questMaster = 
 		{
 			new string[] {"9", "1", "1"},
@@ -18,16 +18,17 @@ namespace DATA
 			new string[] {"17", "9", "1"},
 			new string[] {"18", "10", "1"},
 			new string[] {"19", "11", "1"},
-			new string[] {"21", "12", "1"},
-			new string[] {"22", "13", "1"},
-			new string[] {"23", "14", "1"},
-			new string[] {"24", "15", "1"},
-			new string[] {"25", "16", "1"},
-			new string[] {"26", "17", "1"},
-			new string[] {"27", "18", "1"},
-			new string[] {"28", "19", "1"},
-			new string[] {"29", "20", "1"},
-			new string[] {"30", "21", "1"}
+			new string[] {"20", "12", "1"},
+			new string[] {"21", "13", "1"},
+			new string[] {"22", "14", "1"},
+			new string[] {"23", "15", "1"},
+			new string[] {"24", "16", "1"},
+			new string[] {"25", "17", "1"},
+			new string[] {"26", "18", "1"},
+			new string[] {"27", "19", "1"},
+			new string[] {"28", "20", "1"},
+			new string[] {"29", "21", "1"},
+			new string[] {"30", "22", "1"}
 		};
 	}
 }

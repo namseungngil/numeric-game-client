@@ -57,7 +57,7 @@ public class LoadingManager : MonoBehaviour
 
 	private void MasterDataLogin ()
 	{
-		DataQuery dataQuery = DataQuery.Instance ();
+		QueryModel dataQuery = QueryModel.Instance ();
 		dataQuery.MasterData ();
 	}
 

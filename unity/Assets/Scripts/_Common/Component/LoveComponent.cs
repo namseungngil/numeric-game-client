@@ -9,13 +9,13 @@ public class LoveComponent : MonoBehaviour
 	private const string LOVE = "Love";
 	private const string LOVE_TIME = "LoveTime";
 	private const string LOVE_COUNT = "LoveCount";
-	private const int LOVE_RECOVERY = 600;
+	private const int LOVE_RECOVERY = 60;
 	private const int TIMER = 1;
 	// component
 	private UILabel loveTimeUILabel;
 	private UILabel loveCountUILabel;
 	private Register numericPlayerPrefs;
-	private DataQuery dataQuery;
+	private QueryModel dataQuery;
 	// variable
 	private int love;
 	private int loveTime;
@@ -24,7 +24,7 @@ public class LoveComponent : MonoBehaviour
 	void Start ()
 	{
 		numericPlayerPrefs = Register.Instance ();
-		dataQuery = DataQuery.Instance ();
+		dataQuery = QueryModel.Instance ();
 		GameObject loveGameObject = GameObject.Find (LOVE);
 		if (loveGameObject != null) {
 			foreach (UILabel uiLabel in loveGameObject.GetComponentsInChildren<UILabel> ()) {
@@ -41,7 +41,6 @@ public class LoveComponent : MonoBehaviour
 
 	void Update ()
 	{
-
 		if (love < Config.LOVE_MAX) {
 			string timeLabel;
 
@@ -117,6 +116,9 @@ public class LoveComponent : MonoBehaviour
 
 		if (love < Config.LOVE_MAX) {
 			string tempLoveTime = numericPlayerPrefs.GetLoveTime ();
+			if (tempLoveTime == "") {
+				SetLove (Config.LOVE_MAX);
+			}
 			Debug.Log ("tempLoveTime : " + tempLoveTime + " Length : " + tempLoveTime.Length);
 
 			int[] dateArray = Date.Slice (tempLoveTime);
@@ -146,12 +148,14 @@ public class LoveComponent : MonoBehaviour
 			} else {
 				loveTime = (int)(LOVE_RECOVERY - seconds);
 			}
+
+			Debug.Log ("loveTime : " + loveTime);
 		}
 	}
 
 	private void SetLove (int love, string time = "")
 	{
-		if (time == null) {
+		if (time == "") {
 			numericPlayerPrefs.SetLove (love);
 		} else {
 			numericPlayerPrefs.SetLove (love, time);

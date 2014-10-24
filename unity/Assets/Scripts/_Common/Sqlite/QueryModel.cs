@@ -2,25 +2,49 @@
 using System;
 using DATA;
 
-public class DataQuery : Query
+public class QueryModel : Query
 {
+	// instance
+	private static QueryModel instance;
+	public static QueryModel Instance ()
+	{
+		if (instance == null) {
+			instance = new QueryModel ();
+		}
 
-	private static DataQuery instance;
+		return instance;
+	}
+	// quest_master_version
+	public string masterVersion = "master_version";
+	public string version = "version";
+	public string[] masterVersionColumnName;
+	// quest_master
+	public string questMaster = "quest_master";
+	public static string questStage = "stage";
+	public string questCard = "card";
+	public string questLevel = "level";
+	public string questDate = "date";
+	public string[] questMasterColumnName;
+	// quest_user
+	public string questUser = "quest_user";
+	public string questTime = "time";
+	public static string questClear = "clear";
+	public string questMiss = "miss";
+	public string questHit = "hit";
+	public string[] questUserColumnName;
+
+	private QueryModel ()
+	{
+		masterVersionColumnName = new string[] {version, questDate};
+		questMasterColumnName = new string[] {questStage, questCard, questLevel, questDate};
+		questUserColumnName = new string[] {questStage, version, questTime, questHit, questClear, questMiss, questDate};
+	}
 
 	public string Date ()
 	{
 		return DateTime.Now.ToString (Config.DATA_TIME);
 	}
-	
-	public static DataQuery Instance ()
-	{
-		if (instance == null) {
-			instance = new DataQuery ();
-		}
 
-		return instance;
-	}
-	
 	public void MasterData ()
 	{
 		DataArray dataArray = new DataArray ();

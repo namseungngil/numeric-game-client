@@ -135,7 +135,7 @@ public class BattleGameManager : GameManager
 
 		if (flag) {
 			// DB
-			DataQuery dataQuery = DataQuery.Instance ();
+			QueryModel dataQuery = QueryModel.Instance ();
 			string date = dataQuery.Date ();
 			dataQuery.BattleClear ("" + numberMax, "" + (int)timer, "" + hitCount, "" + clearCount, "" + missCount, date);
 

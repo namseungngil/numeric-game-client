@@ -7,12 +7,12 @@ public class MypageGameManager : GameManager
 //	private const string MAP1 = "1";
 	private const int LAYERX = 4;
 	// component
-	private DataQuery dataQuery;
+	private QueryModel dataQuery;
 
 	void Awake ()
 	{
 //		Application.LoadLevelAdditive (MAP1);
-		dataQuery = DataQuery.Instance ();
+		dataQuery = QueryModel.Instance ();
 		DataTable dataTable = dataQuery.MypageQuestList ();
 
 		GameObject grid = GameObject.Find (Config.GRID);

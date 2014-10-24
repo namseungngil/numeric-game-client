@@ -2,16 +2,6 @@ using System;
 using System.Runtime.InteropServices;
 using System.Collections;
 using UnityEngine;
-
-/*
- * please don't use this code for sell a asset
- * user for free 
- * developed by Poya  @  http://gamesforsoul.com/
- * BLOB support by Jonathan Derrough @ http://jderrough.blogspot.com/
- * Modify and structure by Santiago Bustamante @ busta117@gmail.com
- * Android compatibility by Thomas Olsen @ olsen.thomas@gmail.com
- *
- * */
  
 public class SqliteException : Exception
 {
