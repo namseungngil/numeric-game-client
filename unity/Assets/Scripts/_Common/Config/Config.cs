@@ -52,6 +52,11 @@
 	public const string MYPAGE = "MyPage";
 	public const string BATTLE = "Battle";
 	public const string LOADINGPOPUP = "LoadingPopup";
+	public const string SETTING = "Setting";
+	public const string LOVE = "Love";
+	public const string START = "Start";
+	public const string OVER = "Over";
+	public const string STOP = "Stop";
 	// image
 	public const string STAR_EMPTY = "empty";
 	public const string STAR_FULL = "full";

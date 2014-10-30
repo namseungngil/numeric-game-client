@@ -15,7 +15,7 @@ public enum GameStatus
 
 public class BattleGameManager : GameManager
 {
-	// Const
+	// const
 	private const float READY_TIME = 2f;
 	private const float START_TIME = 1f;
 //	private const float ATTACK_ALL_TIME = 3f;
@@ -31,11 +31,11 @@ public class BattleGameManager : GameManager
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
 	private const int CARD_COUNT = 9;
-	// Object
-	private GameStatus gameStatus;
+	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
-	private GameObject panel300;
+	// component
+	private GameStatus gameStatus;
 	private UILabel[] cardUILabel = new UILabel[CARD_COUNT];
 	private UILabel problemUILabel;
 	private UILabel timerUILabel;
@@ -45,16 +45,16 @@ public class BattleGameManager : GameManager
 	private UILabel panel200UILabel;
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
-	// Config
+	// config
 	private string labelString;
 	private string[] MARK_TEXT = new string[] {"?", "?"};
 	private string[] tempMark;
 	private string[] cardString = new string[CARD_COUNT];
 	private string problemSign;
 	private int numberMax;
-	private float maxTime = 60f;
+	private float maxTime = 10f;
 	private float timer;
-	// User
+	// user
 	private int clearCount;
 	private int missCount;
 	private int hitCount;
@@ -62,7 +62,7 @@ public class BattleGameManager : GameManager
 	private string firstString = null;
 	private string lastString = null;
 	private int result;
-	// Boss
+	// boss
 	private int hp;
 
 	// +-×÷＝★♠♥♣
@@ -76,7 +76,6 @@ public class BattleGameManager : GameManager
 
 		panel100 = GameObject.Find (Config.PANEL100);
 		panel200 = GameObject.Find (Config.PANEL200);
-		panel300 = GameObject.Find (Config.PANEL300);
 
 		panel200Animation = panel200.GetComponentInChildren<Animation> ();
 		panel200UILabel = panel200.GetComponentInChildren<UILabel> ();
@@ -119,17 +118,16 @@ public class BattleGameManager : GameManager
 		yield return new WaitForSeconds (OVER_TIME);
 
 		panel200.SetActive (false);
-		panel300.SetActive (true);
 
-		GameObject.Find (Config.LEVEL).GetComponent<UILabel> ().text = Config.LEVEL_TEXT + LoadingData.stageLevel;
-		GameObject.Find (Config.SCORE).GetComponent<UILabel> ().text = "" + clearCount;
+//		GameObject.Find (Config.LEVEL).GetComponent<UILabel> ().text = Config.LEVEL_TEXT + SenceData.stageLevel;
+//		GameObject.Find (Config.SCORE).GetComponent<UILabel> ().text = "" + clearCount;
 		if (flag) {
-			GameObject.Find (Config.STAR1).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
+//			GameObject.Find (Config.STAR1).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
 			if (timer >= Config.CLEAR_2_TIME) {
-				GameObject.Find (Config.STAR2).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
+//				GameObject.Find (Config.STAR2).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
 			} 
 			if (missCount == 0) {
-				GameObject.Find (Config.STAR3).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
+//				GameObject.Find (Config.STAR3).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
 			}
 		}
 
@@ -148,8 +146,8 @@ public class BattleGameManager : GameManager
 
 		}
 
-		battleUIManager.PlayAnimation (panel300, true);
-//		PlayAnimation (panel300, true);
+		SSSceneManager.Instance.PopUp (Config.OVER);
+
 	}
 
 	private IEnumerator Ready ()
@@ -441,7 +439,7 @@ public class BattleGameManager : GameManager
 		timer = maxTime;
 
 		// Set numer max
-		numberMax = int.Parse (LoadingData.stageLevel);
+		numberMax = int.Parse (SenceData.stageLevel);
 		
 		// Set hp
 //		for (int i = 1; i <= numberMax; i++) {
@@ -452,7 +450,7 @@ public class BattleGameManager : GameManager
 
 		panel100.SetActive (false);
 		panel200.SetActive (false);
-		panel300.SetActive (false);
+//		panel300.SetActive (false);
 		
 		StartCoroutine (Ready ());
 	}

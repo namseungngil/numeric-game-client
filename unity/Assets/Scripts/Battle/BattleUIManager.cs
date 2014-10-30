@@ -3,11 +3,19 @@ using System.Collections;
 
 public class BattleUIManager : UIManager
 {
-	BattleGameManager battleGameManager;
+	private BattleGameManager battleGameManager;
 	
-	new void Start ()
+	public override void Awake ()
 	{
-		battleGameManager = GameObject.Find (Config.GAME_MANAGER).GetComponent<BattleGameManager> ();
+		BgmType = Bgm.NONE;
+		BgmName = string.Empty;
+		
+		IsCache = false;
+	}
+
+	public override void Start ()
+	{
+		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 
 //	void Update ()
@@ -23,12 +31,14 @@ public class BattleUIManager : UIManager
 		battleGameManager.SetNumber (length);
 	}
 
-	public void BattleOnClick (GameObject gO)
+	public void BattleOnClick ()
 	{
+		Debug.Log ("BattleOnClick");
 		if (!battleGameManager.GetCheckStatus (GameStatus.Play)) {
 			return;
 		}
 
+		GameObject gO = UIButton.current.gameObject;
 		UILabel tempUILabel = gO.GetComponentInChildren<UILabel> ();
 		if (tempUILabel.text == "") {
 			return;
@@ -41,14 +51,8 @@ public class BattleUIManager : UIManager
 		// Color myOtherColor = new Color(0.5f,0.5f,0.5f, 1f); //RGBA in 0-1f
 	}
 
-	public void Retry ()
+	public void Stop ()
 	{
-		battleGameManager.BattleStart ();
-	}
-
-	public void Next ()
-	{
-		LoadingData.currentLevel = Config.MYPAGE;
-		Application.LoadLevel (Config.LOADING);
+		SSSceneManager.Instance.PopUp (Config.STOP);
 	}
 }

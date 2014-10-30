@@ -1,12 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../star-game-client/Assets/Scripts/_Common/Data/Register.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Over/OverUIManager.cs">
     <Files>
-      <File FileName="../../star-game-client/Assets/Scripts/Resource/ResourceManager.cs" Line="32" Column="3" />
-      <File FileName="../../star-game-client/Assets/Scripts/_Common/Http/ASSETBUNDLE.cs" Line="57" Column="24" />
-      <File FileName="../../star-game-client/Assets/Scripts/_Common/Managers/AssetBundleManager.cs" Line="86" Column="3" />
-      <File FileName="../../star-game-client/Assets/Scripts/Editor/BuildAssetBundles.cs" Line="11" Column="19" />
-      <File FileName="../../star-game-client/Assets/Scripts/_Common/Data/Register.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Over/OverUIManager.cs" Line="16" Column="36" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Battle/BattleUIManager.cs" Line="13" Column="18" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="70" Column="2" />
+      <File FileName="Assets/Scripts/_Common/Config/Config.cs" Line="59" Column="34" />
+      <File FileName="Assets/SSSystem/Scripts/SSApplication.cs" Line="23" Column="1" />
+      <File FileName="Assets/Scripts/Stop/StopUIManager.cs" Line="4" Column="35" />
+      <File FileName="Assets/Scripts/Setting/SettingUIManager.cs" Line="6" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Manager/UIManager.cs" Line="8" Column="32" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

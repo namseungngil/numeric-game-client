@@ -4,37 +4,62 @@ using System.Collections.Generic;
 
 public class LoginUIManager : UIManager
 {
-	private string path;
+	// gameobject
+	private GameObject facebookUI;
 
-	new void Start () {
-		base.Start ();
-		Register numericPlayerPrefs = Register.Instance ();
-		numericPlayerPrefs.GetLove ();
+	public override void Awake ()
+	{
+		BgmType = Bgm.NONE;
+		BgmName = string.Empty;
+		
+		IsCache = true;
+	}
+	public override void Start ()
+	{
+		facebookUI = GameObject.Find (Config.FACEBOOK);
 	}
 
-	public void Login ()
+	void Update ()
 	{
-		if (uiStatus != UIStatus.Default) {
-			return;
+		if (FB.IsLoggedIn) {
+			facebookUI.SetActive (false);
+		} else {
+			facebookUI.SetActive (true);
 		}
-
-		LoadingData.currentLevel = Config.MYPAGE;
-		Application.LoadLevel (Config.LOADING);
 	}
-
-	public void Facebook ()
+	
+	private void LoginCallback (FBResult result)
 	{
-		if (uiStatus != UIStatus.Default) {
-			return;
+		if (result.Error != null) {
+			// "Error Response:\n" + result.Error;
+			Debug.Log ("Error Response:\n" + result.Error);
+			//			debugText = result.Error;
+		} else if (!FB.IsLoggedIn) {
+			// "Login cancelled by Player";
+			Debug.Log ("Login cancelled by Player");
+		} else {
+			// "Login was successful!";
+			Debug.Log ("Login was successful!");
+			
+			gameObject.GetComponent<HttpComponent> ().Login (0);
 		}
-
-		LoginFacebookManager loginFacebookManager = GameObject.Find (Config.GAME_MANAGER).GetComponent<LoginFacebookManager> ();
-		loginFacebookManager.Login ();
 	}
 
-	public void FacebookLogout ()
+	public void GameStart ()
 	{
-		LoginFacebookManager loginFacebookManager = GameObject.Find (Config.GAME_MANAGER).GetComponent<LoginFacebookManager> ();
-		loginFacebookManager.Logout ();
+//		Application.LoadLevel (Config.LOADING);
+		SSSceneManager.Instance.GoHome ();
+	}
+	
+	public void FacebookLogin ()
+	{
+		if (!FB.IsLoggedIn) {
+			FB.Login ("email, publish_actions", LoginCallback);
+		}
+	}
+
+	public void Setting ()
+	{
+		SSSceneManager.Instance.PopUp (Config.SETTING);
 	}
 }
