@@ -23,6 +23,10 @@ Temp
 apk/
 iosbuild/
 External Assets/
+SSSystem/
+IGSoft_Resources/
+IGSoft_Tools/
+StreamingAssets/
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
