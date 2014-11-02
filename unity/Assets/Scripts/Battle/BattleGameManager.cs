@@ -31,6 +31,7 @@ public class BattleGameManager : GameManager
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
 	private const int CARD_COUNT = 9;
+	private const float TIME_MAX = 60f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
@@ -45,16 +46,15 @@ public class BattleGameManager : GameManager
 	private UILabel panel200UILabel;
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
-	// config
-	private string labelString;
+	// array
 	private string[] MARK_TEXT = new string[] {"?", "?"};
 	private string[] tempMark;
 	private string[] cardString = new string[CARD_COUNT];
+	// variable
+	private string labelString;
 	private string problemSign;
 	private int numberMax;
-	private float maxTime = 10f;
 	private float timer;
-	// user
 	private int clearCount;
 	private int missCount;
 	private int hitCount;
@@ -62,11 +62,8 @@ public class BattleGameManager : GameManager
 	private string firstString = null;
 	private string lastString = null;
 	private int result;
-	// boss
 	private int hp;
-
-	// +-×÷＝★♠♥♣
-	// ■◆▲▼
+	
 	void Start ()
 	{
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
@@ -103,6 +100,7 @@ public class BattleGameManager : GameManager
 
 	private IEnumerator Over (bool flag)
 	{
+		Debug.Log ("over flag :" + flag);
 		gameStatus = GameStatus.Over;
 
 		panel200.SetActive (true);
@@ -119,8 +117,6 @@ public class BattleGameManager : GameManager
 
 		panel200.SetActive (false);
 
-//		GameObject.Find (Config.LEVEL).GetComponent<UILabel> ().text = Config.LEVEL_TEXT + SenceData.stageLevel;
-//		GameObject.Find (Config.SCORE).GetComponent<UILabel> ().text = "" + clearCount;
 		if (flag) {
 //			GameObject.Find (Config.STAR1).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
 			if (timer >= Config.CLEAR_2_TIME) {
@@ -142,7 +138,6 @@ public class BattleGameManager : GameManager
 //			for (int i = 0; i < dataQuery.questUserColumnName.Length; i++) {
 //				list.Add ();
 //			}
-
 
 		}
 
@@ -403,6 +398,9 @@ public class BattleGameManager : GameManager
 			break;
 		case "/" : // ÷
 			tempResult = int.Parse (firstString) / int.Parse (lastString);
+			if ((int.Parse (firstString) % int.Parse (lastString)) != 0) {
+				tempResult = -1;
+			}
 			break;
 		}
 
@@ -436,11 +434,11 @@ public class BattleGameManager : GameManager
 		hitCount = 0;
 
 		// Set time
-		timer = maxTime;
+		timer = TIME_MAX;
 
 		// Set numer max
 		numberMax = int.Parse (SenceData.stageLevel);
-		
+		Debug.Log ("number max : " + numberMax);
 		// Set hp
 //		for (int i = 1; i <= numberMax; i++) {
 //			hp += i;

@@ -19,5 +19,6 @@ public class OverUIManager : UIManager
 	public void Next ()
 	{
 		SSSceneManager.Instance.GoHome ();
+//		SSSceneManager.Instance.Screen (Config.MYPAGE);
 	}
 }

@@ -9,14 +9,37 @@ public class MypageGameManager : GameManager
 	// component
 	private QueryModel dataQuery;
 
-	void Awake ()
+	void Start ()
+	{
+		SetMypage ();
+	}
+
+	new void Update ()
+	{ 
+		base.Update ();
+	}
+
+	protected override void AndroidBackButton ()
+	{
+		Application.Quit ();
+	}
+
+	public void SetMypage ()
 	{
 //		Application.LoadLevelAdditive (MAP1);
 		dataQuery = QueryModel.Instance ();
 		DataTable dataTable = dataQuery.MypageQuestList ();
-
+		
 		GameObject grid = GameObject.Find (Config.GRID);
 		GameObject stage9 = GameObject.Find (Config.STAGE9);
+
+		UIButton[] childGameObject = grid.GetComponentsInChildren<UIButton> ();
+		foreach (UIButton uiButton in childGameObject) {
+			if (uiButton.gameObject.name != stage9.name) {
+				Destroy (uiButton.gameObject);
+			}
+		}
+
 		UIGrid uiGrid = grid.GetComponent<UIGrid> ();
 		UISprite uiSprite = stage9.GetComponent<UISprite> ();
 		Vector2 size = uiSprite.localSize;
@@ -28,32 +51,18 @@ public class MypageGameManager : GameManager
 		uiGrid.cellHeight = size.y;
 		
 		if (dataTable.Rows.Count > 0) {
-//			Destroy (stage9);
+			//			Destroy (stage9);
 			for (int i = dataTable.Rows.Count - 1; i >= 0; i--) {
 				string dumpName = "" + dataTable [i] [Query.questStage];
 				Debug.Log (dumpName);
-//				if (dumpName == stage9.name) {
-//					continue;
-//				}
-
+				
 				GameObject dump = NGUITools.AddChild (grid, stage9);
 				dump.name = dumpName;
 				Debug.Log (dumpName);
 				UILabel uiLabel = dump.GetComponentInChildren<UILabel> ();
 				uiLabel.text = dumpName;
-				
-//				int division = i / layerX;
-//				int reset = i;
-//				if (i > layerX) {
-//					reset = i % layerX;
-//				}
-				
-//				float dumpX = position.x + (reset * size.x);
-//				float dumpY = position.y + (division * size.y);
-//				Vector3 dumpPosition = new Vector3 (dumpX, dumpY, 0);
-//				dump.transform.localPosition = dumpPosition;
 			}
-
+			
 			float defaultX = size.x / 2;
 			float gridX = defaultX;
 			if (dataTable.Rows.Count < LAYERX) {
@@ -63,24 +72,11 @@ public class MypageGameManager : GameManager
 			} else {
 				gridX = defaultX * LAYERX;
 			}
-
+			
 			Debug.Log ("grid X : " + gridX);
 			grid.transform.localPosition = new Vector3 (gridX, 0, 0);
 			stage9.SetActive (false);
 		}
 	}
-	
-	new void Update ()
-	{ 
-		base.Update ();
-	}
-
-
-
-	protected override void AndroidBackButton ()
-	{
-		Application.Quit ();
-	}
-
 
 }

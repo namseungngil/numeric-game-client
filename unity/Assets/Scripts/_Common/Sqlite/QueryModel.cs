@@ -130,25 +130,25 @@ public class QueryModel : Query
 			if (int.Parse (time) < (int)dataTable[0][questTime]) {
 				flag = true;
 			} else {
-				data[2] = (string)dataTable[0][questTime];
+				data[2] = dataTable[0][questTime].ToString ();
 			}
 
 			if (int.Parse (hit) > (int)dataTable[0][questHit]) {
 				flag = true;
 			} else {
-				data[3] = (string)dataTable[0][questHit];
+				data[3] = dataTable[0][questHit].ToString ();
 			}
 
 			if (int.Parse (clear) > (int)dataTable[0][questClear]) {
 				flag = true;
 			} else {
-				data[4] = (string)dataTable[0][questClear];
+				data[4] = dataTable[0][questClear].ToString ();
 			}
 
 			if (int.Parse (miss) < (int)dataTable[0][questMiss]) {
 				flag = true;
 			} else {
-				data[5] = (string)dataTable[0][questMiss];
+				data[5] = dataTable[0][questMiss].ToString ();
 			}
 
 			if (flag) {

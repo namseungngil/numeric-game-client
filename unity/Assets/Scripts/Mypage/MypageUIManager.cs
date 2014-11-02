@@ -3,12 +3,13 @@ using System.Collections;
 
 public class MypageUIManager : UIManager
 {
+	MypageGameManager mypageGameManager;
 	public override void Awake ()
 	{
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 		
-		IsCache = true;
+		IsCache = false;
 	}
 
 	public void Love ()
@@ -24,7 +25,9 @@ public class MypageUIManager : UIManager
 
 	public void GameStart ()
 	{
-		SenceData.currentLevel = UIButton.current.name;
+		Debug.Log (UIButton.current.name);
+		SenceData.stageLevel = UIButton.current.name.ToString ();
+		Debug.Log (SenceData.currentLevel);
 		SSSceneManager.Instance.PopUp (Config.START);
 	}
 }

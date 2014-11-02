@@ -8,11 +8,12 @@ public class StopUIManager : UIManager
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 		
-		IsCache = false;
+		IsCache = true;
 	}
 
 	public void Out ()
 	{
 		SSSceneManager.Instance.GoHome ();
+//		SSSceneManager.Instance.Screen (Config.MYPAGE);
 	}
 }

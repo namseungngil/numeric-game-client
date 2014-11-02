@@ -12,7 +12,7 @@ public class LoginUIManager : UIManager
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 		
-		IsCache = true;
+		IsCache = false;
 	}
 	public override void Start ()
 	{
@@ -31,14 +31,14 @@ public class LoginUIManager : UIManager
 	private void LoginCallback (FBResult result)
 	{
 		if (result.Error != null) {
-			// "Error Response:\n" + result.Error;
+		// "Error Response:\n" + result.Error;
 			Debug.Log ("Error Response:\n" + result.Error);
 			//			debugText = result.Error;
 		} else if (!FB.IsLoggedIn) {
-			// "Login cancelled by Player";
+		// "Login cancelled by Player";
 			Debug.Log ("Login cancelled by Player");
 		} else {
-			// "Login was successful!";
+		// "Login was successful!";
 			Debug.Log ("Login was successful!");
 			
 			gameObject.GetComponent<HttpComponent> ().Login (0);
@@ -49,6 +49,7 @@ public class LoginUIManager : UIManager
 	{
 //		Application.LoadLevel (Config.LOADING);
 		SSSceneManager.Instance.GoHome ();
+//		SSSceneManager.Instance.Screen (Config.MYPAGE);
 	}
 	
 	public void FacebookLogin ()

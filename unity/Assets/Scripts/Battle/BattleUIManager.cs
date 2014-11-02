@@ -44,7 +44,8 @@ public class BattleUIManager : UIManager
 			return;
 		}
 
-		Common(int.Parse(gO.name) - 1);
+		string temp = gO.name.Replace (Config.BATTLE, "");
+		Common(int.Parse(temp) - 1);
 		gO.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
 		tempUILabel.text = "";
 		// Color32 myNewColor = new Color32(128,128,128,255);

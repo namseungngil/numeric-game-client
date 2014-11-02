@@ -8,7 +8,7 @@ public class SettingUIManager : UIManager
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 
-		IsCache = false;
+		IsCache = true;
 	}
 
 	public void SoundBack ()
