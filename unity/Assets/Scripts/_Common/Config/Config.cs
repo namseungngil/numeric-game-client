@@ -18,12 +18,12 @@
 	public const string LABEL = "Label";
 	public const string GAME_MANAGER = "GameManager";
 	public const string FACEBOOK = "Facebook";
-	public const string PANEL1 = "Panel:1";
+//	public const string PANEL1 = "Panel:1";
 	public const string PANEL100 = "Panel:100";
 	public const string PANEL200 = "Panel:200";
-	public const string PANEL300 = "Panel:300";
-	public const string PANEL400 = "Panel:400";
-	public const string PANEL500 = "Panel:500";
+//	public const string PANEL300 = "Panel:300";
+//	public const string PANEL400 = "Panel:400";
+//	public const string PANEL500 = "Panel:500";
 	public const string PANEL1000 = "Panel:1000";
 	public const string STAGE9 = "9";
 	public const string TIMER = "Timer";
@@ -34,15 +34,12 @@
 	public const string SCORE = "Score";
 	public const string GRID = "Grid";
 	public const string HP = "HP";
+	public const string SOLIDCAMERA = "SolidCamera";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";
 	public const string ANIMATION_CHECKMARK = "Checkmark";
 	public const string ANIMATION_WINDOW_BACK = "Window - Back";
 	public const string ANIMATION_WINDOW_FORWARD = "Window - Forward";
-	// NGUI
-	public const string NGUI_EICHI_NORMAL_BACK = "eichi_NORMAL_back";
-	public const string NGUI_YUUAI_NORMAL_BACK = "yuuai_NORMAL_back";
-	public const string NGUI_SHINPI_NORMAL_BACK = "shinpi_NORMAL_back";
 	// device
 	public const string ANDROID = "1";
 	public const string IPHONE = "2";

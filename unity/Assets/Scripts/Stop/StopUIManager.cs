@@ -3,6 +3,8 @@ using System.Collections;
 
 public class StopUIManager : UIManager
 {
+	private BattleGameManager battleGameManager;
+
 	public override void Awake ()
 	{
 		BgmType = Bgm.NONE;
@@ -11,9 +13,29 @@ public class StopUIManager : UIManager
 		IsCache = true;
 	}
 
+	public override void Start ()
+	{
+		battleGameManager = GameObject.Find (Config.BATTLE).GetComponent<BattleGameManager> ();
+	}
+
+	public void Continue ()
+	{
+		if (battleGameManager != null) {
+			battleGameManager.StopClear ();
+		}
+		Cancel ();
+	}
+
 	public void Out ()
 	{
 		SSSceneManager.Instance.GoHome ();
-//		SSSceneManager.Instance.Screen (Config.MYPAGE);
+	}
+
+	public void Restart ()
+	{
+		if (battleGameManager != null) {
+			battleGameManager.BattleStart ();
+		}
+		Cancel ();
 	}
 }

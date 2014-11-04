@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MypageUIManager : UIManager
 {
-	MypageGameManager mypageGameManager;
 	public override void Awake ()
 	{
 		BgmType = Bgm.NONE;

@@ -85,7 +85,7 @@ public class BattleGameManager : GameManager
 	{
 		base.Update ();
 		if (gameStatus == GameStatus.Play) {
-			timerUILabel.text = "" + timer.ToString("N2");
+			timerUILabel.text = "" + ((int)timer).ToString();
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
 				timer = 0;
@@ -451,5 +451,16 @@ public class BattleGameManager : GameManager
 //		panel300.SetActive (false);
 		
 		StartCoroutine (Ready ());
+	}
+
+	public void Stop ()
+	{
+		gameStatus = GameStatus.Stop;
+	}
+
+	public void StopClear ()
+	{
+		StartCoroutine (Shuffle ());
+		gameStatus = GameStatus.Play;
 	}
 }

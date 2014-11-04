@@ -50,7 +50,6 @@ public class BattleUIManager : UIManager
 
 		string temp = gO.name.Replace (Config.BATTLE, "");
 		Common(int.Parse(temp) - 1);
-		gO.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
 		tempUILabel.text = "";
 		// Color32 myNewColor = new Color32(128,128,128,255);
 		// Color myOtherColor = new Color(0.5f,0.5f,0.5f, 1f); //RGBA in 0-1f
@@ -58,6 +57,9 @@ public class BattleUIManager : UIManager
 
 	public void Stop ()
 	{
+		if (battleGameManager != null) {
+			battleGameManager.Stop ();
+		}
 		SSSceneManager.Instance.PopUp (Config.STOP);
 	}
 }
