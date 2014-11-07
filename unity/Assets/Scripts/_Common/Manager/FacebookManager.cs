@@ -8,6 +8,7 @@ using Facebook.MiniJSON;
 public class FacebookManager : MonoBehaviour
 {
 	protected const string FRIENDS_QUERY_STRING = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+//	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
 	protected Texture userTexture;
 	protected List<object> friends = null;
 
@@ -47,31 +48,18 @@ public class FacebookManager : MonoBehaviour
 		return DeserializePictureURLObject (Json.Deserialize (response));
 	}
 	
-	private static string DeserializePictureURLObject(object pictureObj)
+	private static string DeserializePictureURLObject (object pictureObj)
 	{
-		var picture = (Dictionary<string, object>)(((Dictionary<string, object>)pictureObj)["data"]);
+		var picture = (Dictionary<string, object>)(((Dictionary<string, object>)pictureObj) ["data"]);
 		object urlH = null;
-		if (picture.TryGetValue("url", out urlH))
-		{
+		if (picture.TryGetValue ("url", out urlH)) {
 			return (string)urlH;
 		}
 		
 		return null;
 	}
 
-	private Dictionary<string, string> RandomFriend(List<object> friends)
-	{
-		var fd = ((Dictionary<string, object>)(friends[UnityEngine.Random.Range(0, friends.Count)]));
-		var friend = new Dictionary<string, string>();
-		friend["id"] = (string)fd["id"];
-		friend["first_name"] = (string)fd["first_name"];
-		var pictureDict = ((Dictionary<string, object>)(fd["picture"]));
-		var pictureDataDict = ((Dictionary<string, object>)(pictureDict["data"]));
-		friend["image_url"] = (string)pictureDataDict["url"];
-		return friend;
-	}
-
-	protected void Start ()
+	protected virtual void Start ()
 	{
 		CallFBInit ();
 	}
@@ -99,19 +87,20 @@ public class FacebookManager : MonoBehaviour
 				return;
 			}
 			
-			var imageUrl = DeserializePictureURLString(result.Text);
+			var imageUrl = DeserializePictureURLString (result.Text);
 			StartCoroutine (LoadPictureEnumerator (imageUrl, callback));
 		});
 	}
 
-	protected static string GetPictureURL(string facebookID, int? width = null, int? height = null, string type = null)
+	protected static string GetPictureURL (string facebookID, int? width = null, int? height = null, string type = null)
 	{
-		string url = string.Format("/{0}/picture", facebookID);
-		string query = width != null ? "&width=" + width.ToString() : "";
-		query += height != null ? "&height=" + height.ToString() : "";
+		string url = string.Format ("/{0}/picture", facebookID);
+		string query = width != null ? "&width=" + width.ToString () : "";
+		query += height != null ? "&height=" + height.ToString () : "";
 		query += type != null ? "&type=" + type : "";
 		query += "&redirect=false";
-		if (query != "") url += ("?g" + query);
+		if (query != "")
+			url += ("?g" + query);
 		return url;
 	}
 	
@@ -128,7 +117,19 @@ public class FacebookManager : MonoBehaviour
 		userTexture = texture;
 	}
 
-	protected List<object> DeserializeJSONFriends(string response)
+	protected Dictionary<string, string> RandomFriend(List<object> friends)
+	{
+		var fd = ((Dictionary<string, object>)(friends[UnityEngine.Random.Range(0, friends.Count)]));
+		var friend = new Dictionary<string, string>();
+		friend["id"] = (string)fd["id"];
+		friend["first_name"] = (string)fd["first_name"];
+		var pictureDict = ((Dictionary<string, object>)(fd["picture"]));
+		var pictureDataDict = ((Dictionary<string, object>)(pictureDict["data"]));
+		friend["image_url"] = (string)pictureDataDict["url"];
+		return friend;
+	}
+
+	protected List<object> DeserializeJSONFriends (string response)
 	{
 		var responseObject = Json.Deserialize(response) as Dictionary<string, object>;
 		object friendsH;
@@ -143,6 +144,7 @@ public class FacebookManager : MonoBehaviour
 		}
 		return friends;
 	}
+
 
 	public string userID ()
 	{

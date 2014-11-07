@@ -460,7 +460,7 @@ public class BattleGameManager : GameManager
 
 	public void StopClear ()
 	{
-		StartCoroutine (Shuffle ());
 		gameStatus = GameStatus.Play;
+		StartCoroutine (Shuffle ());
 	}
 }

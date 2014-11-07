@@ -161,8 +161,6 @@ public class LoveComponent : MonoBehaviour
 			numericPlayerPrefs.SetLove (love, time);
 		}
 
-		Notification.Unregister ();
-
 		if (love < Config.LOVE_MAX) {
 			int tempInt = (Config.LOVE_MAX - love) * LOVE_RECOVERY;
 			string tempTime = DateTime.Now.AddSeconds (tempInt).ToString (Config.DATA_TIME);
@@ -171,6 +169,8 @@ public class LoveComponent : MonoBehaviour
 				tempTime, Config.GAME_TITME, NOTIFICATION_TEXT 
 			};
 			Notification.Register (tempString);
+		} else {
+			Notification.Unregister ();
 		}
 	}
 	

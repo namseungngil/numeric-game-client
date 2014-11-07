@@ -1,19 +1,13 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleUIManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Stop/StopUIManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Love/LoveUIManager.cs" Line="14" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageFacebookManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Love/LoveGameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="465" Column="3" />
-      <File FileName="Assets/Scripts/Battle/BattleUIManager.cs" Line="13" Column="19" />
-      <File FileName="Assets/SSSystem/Scripts/SSApplication.cs" Line="33" Column="1" />
-      <File FileName="Assets/SSSystem/Scripts/SSRoot.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="5" Column="2" />
-      <File FileName="Assets/Scripts/_Common/Config/Config.cs" Line="42" Column="68" />
-      <File FileName="Assets/Scripts/Loading/LoadingPopup.cs" Line="44" Column="3" />
-      <File FileName="Assets/Scripts/Stop/StopUIManager.cs" Line="18" Column="85" />
-      <File FileName="Assets/Scripts/_Common/Manager/UIManager.cs" Line="8" Column="3" />
+      <File FileName="Assets/Scripts/Love/LoveFacebookManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Love/LoveFacebookManager.cs" Line="125" Column="11" />
+      <File FileName="../../star-game-client/Assets/Scripts/Battle/UI/SkillButtonControl.cs" Line="60" Column="38" />
+      <File FileName="Assets/Scripts/Stop/StopUIManager.cs" Line="13" Column="18" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="464" Column="31" />
+      <File FileName="Assets/Scripts/Battle/BattleUIManager.cs" Line="63" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

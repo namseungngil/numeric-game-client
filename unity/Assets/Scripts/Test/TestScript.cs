@@ -19,7 +19,7 @@ public class TestScript : MonoBehaviour
 
 	public void Button1 ()
 	{
-//		DateTime date = DateTime.Now;
+
 //	
 ////		nowTime += 10;
 //		string[] str = new string[] {
@@ -28,6 +28,14 @@ public class TestScript : MonoBehaviour
 //		Debug.Log (str[0]);
 //		Notification.Register (str);
 
+		Debug.Log ("Button1");
+
+//		DateTime date = DateTime.Now;
+//		string[] tempString = new string[] {
+//			date.AddSeconds(10).ToString ("yyyyMMddHHmmss"), Config.GAME_TITME, "Test notification" 
+//		};
+//		Notification.Register (tempString);
+
 		loveManager.UseLove ();
 
 		fxMakerAnimation.FadeIn (ncCurveAnimation);
@@ -35,6 +43,7 @@ public class TestScript : MonoBehaviour
 
 	public void Button2 ()
 	{
+		Debug.Log ("Button2");
 		Notification.Unregister ();
 
 		fxMakerAnimation.FadeOut (ncCurveAnimation);

@@ -101,6 +101,7 @@
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NcTimerTool.cs" />
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NcTransformTool.cs" />
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NgInterpolate.cs" />
+     <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NgMath.cs" />
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NsEffectManager.cs" />
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NsRenderManager.cs" />
      <Compile Include="Assets\IGSoft_Resources\Scripts\NcEffect\Common\NsSharedManager.cs" />
@@ -344,6 +345,7 @@
      <Compile Include="Assets\Scripts\Loading\LoadingPopup.cs" />
      <Compile Include="Assets\Scripts\Login\LoginGameManager.cs" />
      <Compile Include="Assets\Scripts\Login\LoginUIManager.cs" />
+     <Compile Include="Assets\Scripts\Love\LoveFacebookManager.cs" />
      <Compile Include="Assets\Scripts\Love\LoveGameManager.cs" />
      <Compile Include="Assets\Scripts\Love\LoveUIManager.cs" />
      <Compile Include="Assets\Scripts\Mypage\MypageFacebookManager.cs" />
@@ -355,6 +357,7 @@
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
      <Compile Include="Assets\Scripts\Stop\StopUIManager.cs" />
      <Compile Include="Assets\Scripts\Test\TestScript.cs" />
+     <Compile Include="Assets\Scripts\Webview\WebviewUIManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Animation\FXMakerAnimation.cs" />
      <Compile Include="Assets\Scripts\_Common\Apns\InfobipPush.cs" />
      <Compile Include="Assets\Scripts\_Common\Apns\InfobipPushBuilder.cs" />
@@ -513,6 +516,7 @@
      <None Include="Assets\IGSoft_Tools\Readme\FX Maker VideoGuide Youtube.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-de\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\styles.xml" />
+     <None Include="Assets\IGSoft_Tools\FXMaker\ToolScript\Temp\grayShader.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-am\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-nl\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\bin\AndroidManifest.xml" />

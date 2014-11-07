@@ -54,6 +54,7 @@
 	public const string START = "Start";
 	public const string OVER = "Over";
 	public const string STOP = "Stop";
+	public const string WEBVIEW = "Webview";
 	// image
 	public const string STAR_EMPTY = "empty";
 	public const string STAR_FULL = "full";

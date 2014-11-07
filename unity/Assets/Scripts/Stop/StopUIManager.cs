@@ -10,7 +10,7 @@ public class StopUIManager : UIManager
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 		
-		IsCache = true;
+		IsCache = false;
 	}
 
 	public override void Start ()
