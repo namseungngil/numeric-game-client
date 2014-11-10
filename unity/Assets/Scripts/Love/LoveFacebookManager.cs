@@ -10,11 +10,20 @@ public class LoveFacebookManager : FacebookManager
 	private const string LABEL1 = "Label1";
 	private const string LABEL2 = "Label2";
 	// gameobject
-	public GameObject firend;
-	private GameObject gridGameObject;
+	private GameObject firend;
+	// component
+	private LoveComponent loveComponent;
+	private LoveUIManager loveUIManager;
+	// variable
+	private int count;
 
 	protected override void Start ()
 	{
+		count = 0;
+		firend = gameObject.GetComponentInChildren<UIToggle> ().gameObject;
+		loveComponent = GameObject.Find (Config.MYPAGE).GetComponent<LoveComponent> ();
+		loveUIManager = gameObject.GetComponentInParent<LoveUIManager> ();
+
 		Friends ();
 	}
 
@@ -44,6 +53,14 @@ public class LoveFacebookManager : FacebookManager
 				Debug.Log ("AppRequestCallback cancelled");
 			} else if (responseObject.TryGetValue ("request", out obj)) {
 				Debug.Log ("AppRequestCallback send");
+
+				if (loveComponent != null) {
+					loveComponent.Add (count);
+				}
+
+				if (loveUIManager != null) {
+					loveUIManager.Cancel ();
+				}
 			}
 		}
 	}
@@ -69,7 +86,7 @@ public class LoveFacebookManager : FacebookManager
 				Debug.Log ("[" + (string)friend ["first_name"] + " - " + (string)friend ["last_name"] + "]");
 	
 				GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-				Debug.Log (gObj.name);
+				gObj.name = friend ["id"].ToString ();
 				gObj.transform.parent = this.transform;
 				gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
 				Vector3 vector3 = gObj.transform.localPosition;
@@ -90,29 +107,8 @@ public class LoveFacebookManager : FacebookManager
 				});
 			}
 
+			firend.SetActive (false);
 			gameObject.GetComponent<UIGrid> ().Reposition ();
-		}
-	}
-	
-	public void onChallengeClicked ()
-	{
-		if (FB.IsLoggedIn && friends != null && friends.Count > 0) {
-			string[] temp = new string[friends.Count];
-			int index = 0;
-			foreach (Dictionary<string, object> friend in friends) {
-				temp [index] = (string)friend ["id"];
-				index++;
-			}
-			
-			FB.AppRequest (
-				message: "Let's go together",
-				to: temp,
-				filters: null,
-				excludeIds: null,
-				maxRecipients: null,
-				data: "Numeric",
-				title: "Numeric",
-				callback: AppRequestCallback);
 		}
 	}
 	
@@ -121,12 +117,52 @@ public class LoveFacebookManager : FacebookManager
 		string tempFriends = FRIENDS_QUERY_STRING;
 		Debug.Log (tempFriends);
 
+//		for (int i = 0; i < 10; i++) {
+//			GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+//			gObj.name = i.ToString ();
+//			gObj.transform.parent = this.transform;
+//			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
+//			Vector3 vector3 = gObj.transform.localPosition;
+//			gObj.transform.localPosition = new Vector3 (0, vector3.y, vector3.z);
+//			
+//			UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
+//			UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
+//			UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
+//			
+//			uILabel1.text = i.ToString ();
+//			uILabel2.text = i.ToString ();
+//		}
+//
+//		firend.SetActive (false);
+//		gameObject.GetComponent<UIGrid> ().Reposition ();
+
 		if (friends != null) {
 			return;
 		}
 		
 		if (FB.IsLoggedIn) {
 			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
+		}
+	}
+
+	public void onChallengeClicked (string[] list)
+	{
+		if (list.Length <= 0) {
+			return;
+		}
+
+		if (FB.IsLoggedIn) {
+			count = list.Length;
+			
+			FB.AppRequest (
+				message: "Let's go together",
+				to: list,
+				filters: null,
+				excludeIds: null,
+				maxRecipients: null,
+				data: "Numeric",
+				title: Config.GAME_TITME,
+				callback: AppRequestCallback);
 		}
 	}
 }

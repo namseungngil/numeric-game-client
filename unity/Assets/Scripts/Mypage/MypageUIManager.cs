@@ -13,13 +13,14 @@ public class MypageUIManager : UIManager
 
 	public void Love ()
 	{
+		if (FB.IsLoggedIn) {
 		SSSceneManager.Instance.PopUp (Config.LOVE);
-//		CommonNotification (panel300);
+		}
 	}
 
 	public void Setting ()
 	{
-		SSSceneManager.Instance.PopUp (Config.SETTING);
+		SSSceneManager.Instance.PopUp (Config.SETTING);	
 	}
 
 	public void GameStart ()

@@ -12,6 +12,8 @@ import com.unity3d.player.UnityPlayer;
 public class UnityTimerNotificationManager {
 	
 	private static final String TAG = UnityTimerNotificationManager.class.getSimpleName();
+	public static String TITLE = "";
+	public static String TEXT = "";
 
 	public static void register(String str) {
 		
@@ -53,8 +55,12 @@ public class UnityTimerNotificationManager {
 		calendar.set(Calendar.SECOND, temp);
 		
 		Intent intent = new Intent(activity, UnityTimerNotificationBroadcastRecevier.class);
-		intent.putExtra("title", title);
-		intent.putExtra("text", text);
+		Log.v(TAG, "Title : " + title);
+		Log.v(TAG, "Text : " + text);
+		TITLE = title;
+		TEXT = text;
+//		intent.putExtra("title", title);
+//		intent.putExtra("text", text);
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, 0);
 		
 		AlarmManager alarmManager = (AlarmManager)activity.getSystemService(Activity.ALARM_SERVICE);

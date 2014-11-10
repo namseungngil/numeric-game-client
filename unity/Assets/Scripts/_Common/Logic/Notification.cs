@@ -19,6 +19,7 @@ public class Notification
 		if (Application.platform == RuntimePlatform.Android) {
 			using (AndroidJavaClass cls = new AndroidJavaClass (CLASS_NAME)) {
 				string str = string.Join (",", stringArray);
+				Debug.Log ("register : " + str);
 				cls.CallStatic ("register", str);
 			}
 		}

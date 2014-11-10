@@ -183,6 +183,15 @@
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetContainerEditor.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
      <Compile Include="Assets\NGUI\Scripts\Editor\UIWrapContentEditor.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundBrushPresetInspectorC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundCreateBrushWindowC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundCreatePresetWindowC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundInspectorC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundInstallLanguageWindowC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundLanguageC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundParticleSystemInspectorC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundParticleWindowC.cs" />
+     <Compile Include="Assets\Particle Playground\Scripts\Editor\PlaygroundSettingsC.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
      <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Alpha Blended.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\version.xml" />
@@ -212,10 +221,12 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 1.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored (TextureClip).shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\common_strings.xml" />
+     <None Include="Assets\Particle Playground\Graphics\Shaders\VertexLit Color.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed) (TextureClip).shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ko\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\Particle Playground\Graphics\Shaders\Alpha Blended Texture.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_button.xml" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
@@ -355,6 +366,7 @@
      <None Include="Assets\Plugins\Android\facebook\res\values-ldpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-vi\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-et-rEE\common_strings.xml" />
+     <None Include="Assets\Particle Playground\Graphics\Shaders\Vertex Color.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\maps_attrs.xml" />
      <None Include="Assets\Plugins\Android\facebook\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rCN\common_strings.xml" />

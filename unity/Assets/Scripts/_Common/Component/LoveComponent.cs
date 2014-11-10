@@ -199,6 +199,14 @@ public class LoveComponent : MonoBehaviour
 		}
 	}
 
+	public void Add (int add)
+	{
+		if (add > 0) {
+			love += add;
+			SetLove (love);
+		}
+	}
+
 	public bool UseLove ()
 	{
 		if (love > 0) {

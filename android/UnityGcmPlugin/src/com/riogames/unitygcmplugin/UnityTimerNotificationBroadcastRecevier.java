@@ -12,10 +12,9 @@ public class UnityTimerNotificationBroadcastRecevier extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.v(TAG, "onReceive");
-		// TODO Auto-generated method stub
-//		Intent serviceIntent = new Intent(context, UnityTimerNotificationService.class);
-//		context.startService(serviceIntent);
+		Log.v(TAG, "Title : " + UnityTimerNotificationManager.TITLE);
+		Log.v(TAG, "Text : " + UnityTimerNotificationManager.TEXT);
 		
-		UnityGCMNotificationManager.showNotification(context, intent.getStringExtra("title"), intent.getStringExtra("text"), intent.getStringExtra("text"));
+		UnityGCMNotificationManager.showNotification(context, UnityTimerNotificationManager.TITLE, UnityTimerNotificationManager.TEXT, UnityTimerNotificationManager.TEXT);
 	}
 }
