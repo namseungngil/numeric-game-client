@@ -21,8 +21,12 @@ public class LoveFacebookManager : FacebookManager
 	{
 		count = 0;
 		firend = gameObject.GetComponentInChildren<UIToggle> ().gameObject;
-		loveComponent = GameObject.Find (Config.MYPAGE).GetComponent<LoveComponent> ();
 		loveUIManager = gameObject.GetComponentInParent<LoveUIManager> ();
+
+		GameObject myPage = GameObject.Find (Config.MYPAGE);
+		if (myPage != null) {
+			loveComponent = myPage.GetComponent<LoveComponent> ();
+		}
 
 		Friends ();
 	}
