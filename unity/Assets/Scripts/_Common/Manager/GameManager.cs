@@ -8,7 +8,7 @@ public abstract class GameManager : MonoBehaviour
 	private float shakeAmount = 0.7f;
 	private float decreaseFactor = 1.0f;
 
-	protected void Update ()
+	protected virtual void Update ()
 	{
 		if (Application.platform == RuntimePlatform.Android) {
 			if (Input.GetKey (KeyCode.Escape)) {

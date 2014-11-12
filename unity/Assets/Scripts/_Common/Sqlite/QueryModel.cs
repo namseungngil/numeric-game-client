@@ -27,6 +27,7 @@ public class QueryModel : Query
 	public string[] questMasterColumnName;
 	// quest_user
 	public string questUser = "quest_user";
+	public string questScore = "score";
 	public string questTime = "time";
 	public static string questClear = "clear";
 	public string questMiss = "miss";
@@ -37,7 +38,7 @@ public class QueryModel : Query
 	{
 		masterVersionColumnName = new string[] {version, questDate};
 		questMasterColumnName = new string[] {questStage, questCard, questLevel, questDate};
-		questUserColumnName = new string[] {questStage, version, questTime, questHit, questClear, questMiss, questDate};
+		questUserColumnName = new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
 	}
 
 	public string Date ()
@@ -117,38 +118,45 @@ public class QueryModel : Query
 		return dataTable;
 	}
 
-	// new string[] {questStage, version, questTime, questHit, questClear, questMiss, questDate};
-	public bool BattleClear (string stage, string time, string hit, string clear, string miss, string date = "")
+	// new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
+	public bool BattleClear (string stage, string score, string time, string hit, string clear, string miss, string date = "")
 	{
 		DataTable dataTable = SELECT (questUser, "WHERE " + questStage + "=" + stage);
 		if (date == "") {
 			date = Date ();
 		}
-		string[] data = new string[] {stage, "1", time, hit, clear, miss, date};
+		string[] data = new string[] {stage, "1", score, time, hit, clear, miss, date};
 		if (dataTable.Rows.Count > 0) {
 			bool flag = false;
+
+			if (int.Parse (score) > (int)dataTable[0][questScore]) {
+				flag = true;
+			} else {
+				data[2] = dataTable[0][questScore].ToString ();
+			}
+
 			if (int.Parse (time) < (int)dataTable[0][questTime]) {
 				flag = true;
 			} else {
-				data[2] = dataTable[0][questTime].ToString ();
+				data[3] = dataTable[0][questTime].ToString ();
 			}
 
 			if (int.Parse (hit) > (int)dataTable[0][questHit]) {
 				flag = true;
 			} else {
-				data[3] = dataTable[0][questHit].ToString ();
+				data[4] = dataTable[0][questHit].ToString ();
 			}
 
 			if (int.Parse (clear) > (int)dataTable[0][questClear]) {
 				flag = true;
 			} else {
-				data[4] = dataTable[0][questClear].ToString ();
+				data[5] = dataTable[0][questClear].ToString ();
 			}
 
 			if (int.Parse (miss) < (int)dataTable[0][questMiss]) {
 				flag = true;
 			} else {
-				data[5] = dataTable[0][questMiss].ToString ();
+				data[6] = dataTable[0][questMiss].ToString ();
 			}
 
 			if (flag) {

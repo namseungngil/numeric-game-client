@@ -392,12 +392,13 @@
      <Compile Include="Assets\Scripts\Love\LoveFacebookManager.cs" />
      <Compile Include="Assets\Scripts\Love\LoveGameManager.cs" />
      <Compile Include="Assets\Scripts\Love\LoveUIManager.cs" />
-     <Compile Include="Assets\Scripts\Mypage\MypageFacebookManager.cs" />
+     <Compile Include="Assets\Scripts\Mypage\MypageChildUIManager.cs" />
      <Compile Include="Assets\Scripts\Mypage\MypageGameManager.cs" />
      <Compile Include="Assets\Scripts\Mypage\MypageUIManager.cs" />
      <Compile Include="Assets\Scripts\Over\OverUIManager.cs" />
      <Compile Include="Assets\Scripts\Root\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Setting\SettingUIManager.cs" />
+     <Compile Include="Assets\Scripts\Start\StartFacebookManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
      <Compile Include="Assets\Scripts\Stop\StopUIManager.cs" />
      <Compile Include="Assets\Scripts\Test\TestScript.cs" />
@@ -428,6 +429,7 @@
      <Compile Include="Assets\Scripts\_Common\GCM\GCM.cs" />
      <Compile Include="Assets\Scripts\_Common\GCM\GCMReceiver.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Device.cs" />
+     <Compile Include="Assets\Scripts\_Common\Logic\Game.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Notification.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\RandomArray.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\FacebookManager.cs" />

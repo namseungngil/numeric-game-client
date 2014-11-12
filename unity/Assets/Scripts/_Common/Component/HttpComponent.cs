@@ -6,28 +6,31 @@ using MiniJSON;
 
 public class HttpComponent : MonoBehaviour
 {
+	// delegate
 	public delegate void FinishedDelegate ();
-
 	public FinishedDelegate OnDone
 	{
 		set {
 			httpOnDone = value;
 		}
 	}
+	private FinishedDelegate httpOnDone;
 
+	// const
 	private const string DEVICE_KEY = "deviceKey";
 	private const string GCM_APNS = "GCMApns";
 	private const string FACEBOOK_ID = "facebookID";
-	private string key = Config.ANDROID;
-	private string id = null;
+	// component
 	private GCMComponent gCMComponent;
 	private ApnsComponent apnsComponent;
 	private FacebookManager facebookManager;
-	private FinishedDelegate httpOnDone;
+	private WWWClient http;
+	// variable
+	private string key = Config.ANDROID;
+	private string id = null;
 	private int regGCMApnsFacebookCount;
 	private int regGCMApnsFacebookCountMax = 3;
-	WWWClient http;
-
+	
 	void Start ()
 	{
 		gCMComponent = gameObject.GetComponent<GCMComponent> ();

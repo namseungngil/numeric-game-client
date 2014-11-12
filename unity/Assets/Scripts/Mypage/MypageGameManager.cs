@@ -11,12 +11,13 @@ public class MypageGameManager : GameManager
 
 	void Start ()
 	{
-		SetMypage ();
+		SetQuest ();
+		Debug.Log ("Start");
 	}
 
-	new void Update ()
-	{ 
-		base.Update ();
+	private void SetQuest ()
+	{
+
 	}
 
 	protected override void AndroidBackButton ()

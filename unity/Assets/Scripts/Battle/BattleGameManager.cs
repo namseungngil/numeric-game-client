@@ -18,7 +18,6 @@ public class BattleGameManager : GameManager
 	// const
 	private const float READY_TIME = 2f;
 	private const float START_TIME = 1f;
-//	private const float ATTACK_ALL_TIME = 3f;
 	private const float ATTACK_TIME = 1f;
 	private const float MISS_TIME = 1f;
 	private const float OVER_TIME = 2f;
@@ -31,7 +30,7 @@ public class BattleGameManager : GameManager
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
 	private const int CARD_COUNT = 9;
-	private const float TIME_MAX = 60f;
+	private const float TIME_MAX = 90f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
@@ -62,7 +61,10 @@ public class BattleGameManager : GameManager
 	private string firstString = null;
 	private string lastString = null;
 	private int result;
-	private int hp;
+	private int score;
+	private int score1;
+	private int score2;
+	private int score3;
 	
 	void Start ()
 	{
@@ -81,30 +83,40 @@ public class BattleGameManager : GameManager
 		BattleStart ();
 	}
 
-	new void Update ()
+	protected override void Update ()
 	{
 		base.Update ();
 		if (gameStatus == GameStatus.Play) {
-			timerUILabel.text = "" + ((int)timer).ToString();
+			timerUILabel.text = "" + ((int)timer).ToString("N2");
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
 				timer = 0;
-				StartCoroutine (Over (false));
+				StartCoroutine (Over ());
 			}
 		}
 	}
 
 	protected override void AndroidBackButton ()
 	{
+		battleUIManager.Stop ();
 	}
 
-	private IEnumerator Over (bool flag)
+	private IEnumerator Over ()
 	{
-		Debug.Log ("over flag :" + flag);
 		gameStatus = GameStatus.Over;
 
-		panel200.SetActive (true);
+		bool flag = true;
+		if (score >= score3) {
+			// star3
+		} else if (score >= score2) {
+			// star2
+		} else if (score >= score1) {
+			// star3
+		} else {
+			flag = false;
+		}
 
+		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 
 		string temp = TIME_OVER_TEXT;
@@ -112,37 +124,39 @@ public class BattleGameManager : GameManager
 			temp = CLEAR_TEXT;
 		}
 		panel200UILabel.text = temp;
-
 		yield return new WaitForSeconds (OVER_TIME);
-
-		panel200.SetActive (false);
-
-		if (flag) {
-//			GameObject.Find (Config.STAR1).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
-			if (timer >= Config.CLEAR_2_TIME) {
-//				GameObject.Find (Config.STAR2).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
-			} 
-			if (missCount == 0) {
-//				GameObject.Find (Config.STAR3).GetComponent<UISprite> ().spriteName = Config.STAR_FULL;
-			}
-		}
 
 		if (flag) {
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
 			string date = dataQuery.Date ();
-			dataQuery.BattleClear ("" + numberMax, "" + (int)timer, "" + hitCount, "" + clearCount, "" + missCount, date);
+			dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
 			// Http
 			List<string> list = new List<string> ();
-//			for (int i = 0; i < dataQuery.questUserColumnName.Length; i++) {
-//				list.Add ();
-//			}
+			string[] tempBatleClear = new string[] {
+				numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date
+			};
+			for (int i = 0; i < tempBatleClear.Length; i++) {
+				list.Add (tempBatleClear[i]);
+			}
 
+			httpComponent.Result (list);
+			httpComponent.OnDone = () => {
+			};
+
+			// score
+			if (FB.IsLoggedIn)
+			{
+				var query = new Dictionary<string, string>();
+				query["score"] = score.ToString();
+				FB.API("/me/scores", Facebook.HttpMethod.POST, delegate(FBResult r) {
+					Debug.Log("Result: " + r.Text);
+				}, query);
+			}
 		}
 
 		SSSceneManager.Instance.PopUp (Config.OVER);
-
 	}
 
 	private IEnumerator Ready ()
@@ -334,20 +348,16 @@ public class BattleGameManager : GameManager
 		panel200.SetActive (false);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
-		hp -= tempFrist;
-		hpUILabel.text = "" + (hp <= 0 ? 0 : hp);
+		score += tempFrist;
+		hpUILabel.text = "" + (score <= 0 ? 0 : score);
 		// Animation
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
-		hp -= tempLast;
-		hpUILabel.text = "" + (hp <= 0 ? 0 : hp);
+		score += tempLast;
+		hpUILabel.text = "" + (score <= 0 ? 0 : score);
 		// Animation
 
-		if (hp <= 0) {
-			StartCoroutine (Over (true));
-		} else {
-			StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));
-		}
+		StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));
 	}
 
 	private IEnumerator SetMiss ()
@@ -432,23 +442,32 @@ public class BattleGameManager : GameManager
 		clearCount = 0;
 		missCount = 0;
 		hitCount = 0;
+		score1 = 0;
+		score2 = 0;
+		score3 = 0;
 
 		// Set time
 		timer = TIME_MAX;
 
 		// Set numer max
 		numberMax = int.Parse (SenceData.stageLevel);
-		Debug.Log ("number max : " + numberMax);
-		// Set hp
-//		for (int i = 1; i <= numberMax; i++) {
-//			hp += i;
-//		}
-		hp = numberMax * CARD_COUNT;
-		hpUILabel.text = "" + hp;
+
+		// Set score1
+		score1 = numberMax * CARD_COUNT;
+
+		// Set score3
+		for (int i = 1; i <= numberMax; i++) {
+			score3 += i;
+		}
+
+		// Set score2
+		int temp = (int)(score3 - score1 / 2);
+		score2 = score1 + temp;
+
+		hpUILabel.text = "" + score;
 
 		panel100.SetActive (false);
 		panel200.SetActive (false);
-//		panel300.SetActive (false);
 		
 		StartCoroutine (Ready ());
 	}

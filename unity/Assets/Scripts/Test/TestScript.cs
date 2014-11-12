@@ -48,4 +48,8 @@ public class TestScript : MonoBehaviour
 
 		fxMakerAnimation.FadeOut (ncCurveAnimation);
 	}
+
+	void OnMouseDrag() {
+		print("MouseDrag!");
+	}
 }

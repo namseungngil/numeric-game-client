@@ -11,6 +11,12 @@ public class MypageUIManager : UIManager
 		IsCache = false;
 	}
 
+	public override void Start ()
+	{
+		Color myColor = new Color32 (118, 165, 165, 165);
+		Camera.main.backgroundColor = myColor;
+	}
+
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
