@@ -51,30 +51,10 @@ public class IntroManager : MonoBehaviour
 		
 		StartCoroutine (SetUILabel ());
 	}
-	
-	private IEnumerator DisplayLoadingScreen (string level)
-	{
-		yield return new WaitForSeconds (WAIT_SECOND);
-		AsyncOperation asyncOperation = Application.LoadLevelAsync (level);
-		while (!asyncOperation.isDone) {
-			// Create prograss bar ?
-			int loadProgress = (int)(asyncOperation.progress * 100);
-//			Debug.Log (loadProgress);
-			
-			yield return null;
-		}
-	}
 
 	private void Login ()
 	{
-		MasterDataLogin ();
 		HttpLogin ();
-	}
-
-	private void MasterDataLogin ()
-	{
-		QueryModel dataQuery = QueryModel.Instance ();
-		dataQuery.MasterData ();
 	}
 
 	private void HttpLogin ()
@@ -90,7 +70,5 @@ public class IntroManager : MonoBehaviour
 		Debug.Log ("LoginCallback");
 
 		SSSceneManager.Instance.Screen (Config.LOGIN);
-
-//		StartCoroutine (DisplayLoadingScreen (LoadingData.currentLevel));
 	}
 }

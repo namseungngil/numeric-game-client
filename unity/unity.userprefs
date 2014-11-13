@@ -1,10 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Mypage/MypageGameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="20" Column="3" />
-      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="11" Column="19" />
-      <File FileName="Assets/Scripts/Mypage/MypageChildUIManager.cs" Line="11" Column="18" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="119" Column="44" />
+      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="55" Column="3" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/SqliteDatabase.cs" Line="284" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/QueryModel.cs" Line="46" Column="3" />
+      <File FileName="Assets/NGUI/Scripts/UI/UIPanel.cs" Line="623" Column="1" />
+      <File FileName="Assets/GoogleMobileAds/Common/DummyClient.cs" Line="10" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -67,13 +67,13 @@
 	/**
 	 * Game Value.
 	 * */
-	// game clear time
-	public const int CLEAR_2_TIME = 15;
-	public const int CLEAR_3_TIME = 30;
 	// wait
 	public const float REG_GCM_APNS_FACEBOOK_WAIT = 2f;
 	// love max
 	public const int LOVE_MAX = 5;
 	// time
 	public const string DATA_TIME = "yyyyMMddHHmmss";
+	// card count
+	public const int CARD_COUNT = 9;
+	public const int CHAPTER_IN_QUEST = 16;
 }

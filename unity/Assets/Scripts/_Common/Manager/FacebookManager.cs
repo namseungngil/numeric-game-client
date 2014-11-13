@@ -7,8 +7,12 @@ using Facebook.MiniJSON;
 
 public class FacebookManager : MonoBehaviour
 {
+	// const
+	public const string SCORES_QUERY = "/me/scores";
 	protected const string FRIENDS_QUERY_STRING = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
 //	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
+
+	// component
 	protected Texture userTexture;
 	protected List<object> friends = null;
 

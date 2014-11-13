@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 using DATA;
 
 public class QueryModel : Query
@@ -14,31 +15,21 @@ public class QueryModel : Query
 
 		return instance;
 	}
-	// quest_master_version
-	public string masterVersion = "master_version";
-	public string version = "version";
-	public string[] masterVersionColumnName;
-	// quest_master
-	public string questMaster = "quest_master";
-	public static string questStage = "stage";
-	public string questCard = "card";
-	public string questLevel = "level";
-	public string questDate = "date";
-	public string[] questMasterColumnName;
 	// quest_user
-	public string questUser = "quest_user";
-	public string questScore = "score";
-	public string questTime = "time";
-	public static string questClear = "clear";
-	public string questMiss = "miss";
-	public string questHit = "hit";
+	public const string QUEST_USER = "quest_user";
+	public const string STAGE = "stage";
+	public const string VERSION = "version";
+	public const string SCORE = "score";
+	public const string TIME = "time";
+	public const string CLEAR = "clear";
+	public const string MISS = "miss";
+	public const string HIT = "hit";
+	public const string DATE = "date";
 	public string[] questUserColumnName;
 
 	private QueryModel ()
 	{
-		masterVersionColumnName = new string[] {version, questDate};
-		questMasterColumnName = new string[] {questStage, questCard, questLevel, questDate};
-		questUserColumnName = new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
+		questUserColumnName = new string[] {STAGE, VERSION, SCORE, TIME, HIT, CLEAR, MISS, DATE};
 	}
 
 	public string Date ()
@@ -46,74 +37,12 @@ public class QueryModel : Query
 		return DateTime.Now.ToString (Config.DATA_TIME);
 	}
 
-	public void MasterData ()
+	public DataTable MypageQuestList (int index)
 	{
-		DataArray dataArray = new DataArray ();
+		List<int> list = Game.Quest (index); 
 
-		string[][] masterData = dataArray.questMaster;
-		string[][] temp = new string[masterData.Length][];
-
-		string date = Date ();
-		for (int i = 0; i < masterData.Length; i++) {
-
-			temp[i] = new string[] {masterData[i][0], masterData[i][1], masterData[i][2], date};
-		}
-
-		DataTable dataTable = SELECT (masterVersion);
-		bool flag = false;
-		if (dataTable.Rows.Count <= 0) {
-			flag = true;
-		} else {
-			if (("" + dataTable[0][version]) != dataArray.questMasterVersion) {
-				flag = true;
-				ALLDELETE (questMaster);
-				ALLDELETE (masterVersion);
-			}
-		}
-
-		if (flag) {
-			Debug.Log ("Master Data update");
-			INSERT_BATCH (questMaster, questMasterColumnName, temp);
-			INSERT (masterVersion, masterVersionColumnName, new string[] {dataArray.questMasterVersion, date});
-		}
-	}
-
-	public DataTable QuestUser ()
-	{
-		DataTable dataTable = SELECT (questUser);
-		return dataTable;
-	}
-
-	public DataTable MypageQuestList ()
-	{
-		DataTable dataTable = QuestUser ();
-		if (dataTable.Rows.Count > 0) {
-			Debug.Log ("Quest user > 0");
-			string tempStage = "" + dataTable[dataTable.Rows.Count - 1][questStage];
-			tempStage = "" + (int.Parse (tempStage) + 1);
-			DataTable tempQuestMaster = SELECT (questMaster, "WHERE " + questStage + "=" + tempStage);
-			if (tempQuestMaster.Rows.Count > 0) {
-				object[] tempObject = new object[questUserColumnName.Length];
-				for (int i = 0; i < questUserColumnName.Length; i++) {
-					if (i == 0) {
-						tempObject[i] = tempStage;
-					} else {
-						tempObject[i] = "";
-					}
-				}
-
-				dataTable.AddRow (tempObject);
-			}
-		}
-
-		Debug.Log (dataTable.Rows.Count);
-
-		return dataTable;
-	}
-
-	public DataTable MypageQuestDetail (string stage)
-	{
-		DataTable dataTable = SELECT (questMaster, "WHERE " + questStage + "=" + stage);
+//		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + ">=" + list [0] + " AND " + STAGE + "<=" + list [1] + " ORDER BY ASC");
+		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + ">=" + list [0] + " AND " + STAGE + "<=" + list [1]);
 
 		return dataTable;
 	}
@@ -121,7 +50,7 @@ public class QueryModel : Query
 	// new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
 	public bool BattleClear (string stage, string score, string time, string hit, string clear, string miss, string date = "")
 	{
-		DataTable dataTable = SELECT (questUser, "WHERE " + questStage + "=" + stage);
+		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + "=" + stage);
 		if (date == "") {
 			date = Date ();
 		}
@@ -129,74 +58,54 @@ public class QueryModel : Query
 		if (dataTable.Rows.Count > 0) {
 			bool flag = false;
 
-			if (int.Parse (score) > (int)dataTable[0][questScore]) {
+			if (int.Parse (score) > (int)dataTable[0][SCORE]) {
 				flag = true;
 			} else {
-				data[2] = dataTable[0][questScore].ToString ();
+				data[2] = dataTable[0][SCORE].ToString ();
 			}
 
-			if (int.Parse (time) < (int)dataTable[0][questTime]) {
+			if (int.Parse (time) < (int)dataTable[0][TIME]) {
 				flag = true;
 			} else {
-				data[3] = dataTable[0][questTime].ToString ();
+				data[3] = dataTable[0][TIME].ToString ();
 			}
 
-			if (int.Parse (hit) > (int)dataTable[0][questHit]) {
+			if (int.Parse (hit) > (int)dataTable[0][HIT]) {
 				flag = true;
 			} else {
-				data[4] = dataTable[0][questHit].ToString ();
+				data[4] = dataTable[0][HIT].ToString ();
 			}
 
-			if (int.Parse (clear) > (int)dataTable[0][questClear]) {
+			if (int.Parse (clear) > (int)dataTable[0][CLEAR]) {
 				flag = true;
 			} else {
-				data[5] = dataTable[0][questClear].ToString ();
+				data[5] = dataTable[0][CLEAR].ToString ();
 			}
 
-			if (int.Parse (miss) < (int)dataTable[0][questMiss]) {
+			if (int.Parse (miss) < (int)dataTable[0][MISS]) {
 				flag = true;
 			} else {
-				data[6] = dataTable[0][questMiss].ToString ();
+				data[6] = dataTable[0][MISS].ToString ();
 			}
 
 			if (flag) {
-				int tempVersion = (int)dataTable[0][version] + 1;
+				int tempVersion = (int)dataTable[0][VERSION] + 1;
 				if (tempVersion > Config.MAX_VERSION) {
 					tempVersion = 1;
 				}
 			
 				data[1] = "" + tempVersion;
-				return UPDATE (questUser, questUserColumnName, data, "WHERE " + questStage + "=" + stage);
+				return UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
 			} else {
 				return true;
 			}
 		} else {
-			return INSERT (questUser, questUserColumnName, data);
+			return INSERT (QUEST_USER, questUserColumnName, data);
 		}
 	}
-	
-/*
- * Sample
- * */
-	public void DBInsert ()
-	{
-		string[] data = new string[] {"9", "10", "3", "20140925172600"};
-		
-		INSERT (questUser, questUserColumnName, data);
-	}
-	
-	public void DBSelect (GameObject gO)
-	{
-		DataTable dataTable = SELECT (questUser);
-		
-		Debug.Log (dataTable.Rows.Count);
-		string temp = "" + (int)dataTable[0]["stage"] + "//" + (int)dataTable[0]["time"];
-		Debug.Log (temp);
-		gO.GetComponentInChildren<UILabel> ().text = temp;
-	}
-	
+
 	public void DBDelete ()
 	{
-		ALLDELETE (questUser);
+		ALLDELETE (QUEST_USER);
 	}
 }

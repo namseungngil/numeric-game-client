@@ -142,7 +142,6 @@ public class HttpComponent : MonoBehaviour
 	public void Result (List<string> list)
 	{
 		Debug.Log ("Http result");
-		QuestUser (list);
 	}
 
 	public void Login (float regGCMApnsFacebookWaitTime, bool synchrozization = false)

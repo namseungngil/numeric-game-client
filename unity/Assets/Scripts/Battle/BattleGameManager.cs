@@ -29,14 +29,13 @@ public class BattleGameManager : GameManager
 	private const string PROBLEM_LABEL_TEXT = "Problem";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
-	private const int CARD_COUNT = 9;
 	private const float TIME_MAX = 90f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
 	// component
 	private GameStatus gameStatus;
-	private UILabel[] cardUILabel = new UILabel[CARD_COUNT];
+	private UILabel[] cardUILabel = new UILabel[Config.CARD_COUNT];
 	private UILabel problemUILabel;
 	private UILabel timerUILabel;
 	private UILabel hpUILabel;
@@ -48,7 +47,7 @@ public class BattleGameManager : GameManager
 	// array
 	private string[] MARK_TEXT = new string[] {"?", "?"};
 	private string[] tempMark;
-	private string[] cardString = new string[CARD_COUNT];
+	private string[] cardString = new string[Config.CARD_COUNT];
 	// variable
 	private string labelString;
 	private string problemSign;
@@ -141,16 +140,16 @@ public class BattleGameManager : GameManager
 				list.Add (tempBatleClear[i]);
 			}
 
-			httpComponent.Result (list);
-			httpComponent.OnDone = () => {
-			};
+//			httpComponent.Result (list);
+//			httpComponent.OnDone = () => {
+//			};
 
 			// score
 			if (FB.IsLoggedIn)
 			{
 				var query = new Dictionary<string, string>();
-				query["score"] = score.ToString();
-				FB.API("/me/scores", Facebook.HttpMethod.POST, delegate(FBResult r) {
+				query[QueryModel.SCORE] = score.ToString();
+				FB.API(FacebookManager.SCORES_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
 					Debug.Log("Result: " + r.Text);
 				}, query);
 			}
@@ -238,7 +237,6 @@ public class BattleGameManager : GameManager
 			problemSign = "+";
 			break;
 		case 2 : // -
-//			result = numberFirst - numberLast;
 			List<int> tempInt = new List<int> ();
 			foreach (string i in cardString) {
 				tempInt.Add (int.Parse (i));
@@ -452,17 +450,11 @@ public class BattleGameManager : GameManager
 		// Set numer max
 		numberMax = int.Parse (SenceData.stageLevel);
 
+		List<int> list = Game.Stage (numberMax);
 		// Set score1
-		score1 = numberMax * CARD_COUNT;
-
-		// Set score3
-		for (int i = 1; i <= numberMax; i++) {
-			score3 += i;
-		}
-
-		// Set score2
-		int temp = (int)(score3 - score1 / 2);
-		score2 = score1 + temp;
+		score1 = list [0];
+		score2 = list [1];
+		score3 = list [2];
 
 		hpUILabel.text = "" + score;
 

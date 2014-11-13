@@ -3,6 +3,15 @@ using System.Collections;
 
 public class MypageUIManager : UIManager
 {
+	// const
+	private const string UP = "Up";
+	private const string Down = "Down";
+	//gameobject
+	private GameObject upGameObject;
+	private GameObject downGameObject;
+	// component
+	private MypageGameManager mypageGameManager;
+
 	public override void Awake ()
 	{
 		BgmType = Bgm.NONE;
@@ -15,12 +24,25 @@ public class MypageUIManager : UIManager
 	{
 		Color myColor = new Color32 (118, 165, 165, 165);
 		Camera.main.backgroundColor = myColor;
+
+		upGameObject = GameObject.Find (UP);
+		downGameObject = GameObject.Find (Down);
+		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();
+
+		if (mypageGameManager.NextQuestStatus ()) {
+			upGameObject.SetActive (false);
+		}
+
+		if (mypageGameManager.BackQuestStatus ()) {
+			downGameObject.SetActive (false);
+		}
+
 	}
 
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
-		SSSceneManager.Instance.PopUp (Config.LOVE);
+			SSSceneManager.Instance.PopUp (Config.LOVE);
 		}
 	}
 
@@ -31,9 +53,7 @@ public class MypageUIManager : UIManager
 
 	public void GameStart ()
 	{
-		Debug.Log (UIButton.current.name);
 		SenceData.stageLevel = UIButton.current.name.ToString ();
-		Debug.Log (SenceData.currentLevel);
 		SSSceneManager.Instance.PopUp (Config.START);
 	}
 }

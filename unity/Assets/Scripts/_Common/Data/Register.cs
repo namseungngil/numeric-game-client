@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Register : MonoBehaviour
+public class Register
 {
 	// const
 	private const string LOVE = "Love";
@@ -45,5 +45,15 @@ public class Register : MonoBehaviour
 	public string GetLoveTime ()
 	{
 		return PlayerPrefs.GetString (LOVE_TIME, LOVE_TIME_ERROR);
+	}
+
+	public void SetMyPage (int index)
+	{
+		PlayerPrefs.SetInt (Config.MYPAGE, index);
+	}
+
+	public int GetMyPage ()
+	{
+		return PlayerPrefs.GetInt (Config.MYPAGE);
 	}
 }

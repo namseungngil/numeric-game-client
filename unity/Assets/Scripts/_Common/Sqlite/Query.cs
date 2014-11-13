@@ -1,26 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Query
 {
-	// quest_master_version
-	public string masterVersion = "master_version";
-	public string version = "version";
-	public string[] masterVersionColumnName;
-	// quest_master
-	public string questMaster = "quest_master";
-	public static string questStage = "stage";
-	public string questCard = "card";
-	public string questLevel = "level";
-	public string questDate = "date";
-	public string[] questMasterColumnName;
-	// quest_user
-	public string questUser = "quest_user";
-	public string questTime = "time";
-	public static string questClear = "clear";
-	public string questMiss = "miss";
-	public string questHit = "hit";
-	public string[] questUserColumnName;
 	// sql
 	protected SqliteDatabase sqliteDatabase;
 
@@ -28,9 +10,6 @@ public class Query
 	{
 		Debug.Log ("Query");
 		sqliteDatabase = new SqliteDatabase ("numeric");
-		masterVersionColumnName = new string[] {version, questDate};
-		questMasterColumnName = new string[] {questStage, questCard, questLevel, questDate};
-		questUserColumnName = new string[] {questStage, version, questTime, questHit, questClear, questMiss, questDate};
 	}
 
 	private string CommonInsert (string query, string[] sA)
