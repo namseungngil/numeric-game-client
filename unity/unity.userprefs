@@ -1,15 +1,8 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/RangeSkillControl.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Mypage/MypageGameManager.cs">
     <Files>
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/UI/BattleUIManager.cs" Line="1" Column="1" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/UI/Skill/LockonEffectControl.cs" Line="1" Column="1" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/UI/Skill/SkillLockonUIManager.cs" Line="1" Column="1" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/Firebeam.cs" Line="10" Column="19" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/Frozenblow.cs" Line="4" Column="34" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/RangeSkillControl.cs" Line="43" Column="117" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/SkillInputControl.cs" Line="21" Column="4" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Behaviour/Attack/Skill/LockonSkillControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

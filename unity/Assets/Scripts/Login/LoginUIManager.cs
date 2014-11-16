@@ -6,6 +6,8 @@ public class LoginUIManager : UIManager
 {
 	// gameobject
 	private GameObject facebookUI;
+	// component
+	private Register register;
 
 	public override void Awake ()
 	{
@@ -17,6 +19,7 @@ public class LoginUIManager : UIManager
 	public override void Start ()
 	{
 		facebookUI = GameObject.Find (Config.FACEBOOK);
+		register = Register.Instance ();
 	}
 
 	void Update ()
@@ -33,7 +36,7 @@ public class LoginUIManager : UIManager
 		if (result.Error != null) {
 		// "Error Response:\n" + result.Error;
 			Debug.Log ("Error Response:\n" + result.Error);
-			//			debugText = result.Error;
+		// debugText = result.Error;
 		} else if (!FB.IsLoggedIn) {
 		// "Login cancelled by Player";
 			Debug.Log ("Login cancelled by Player");
@@ -47,9 +50,13 @@ public class LoginUIManager : UIManager
 
 	public void GameStart ()
 	{
-//		Application.LoadLevel (Config.LOADING);
-		SSSceneManager.Instance.GoHome ();
-//		SSSceneManager.Instance.Screen (Config.MYPAGE);
+		int temp = register.GetMyPage ();
+		if (temp < 0) {
+			temp = 0;
+		}
+
+		SSSceneManager.Instance.Screen (Config.MYPAGE + temp.ToString ());
+//		SSSceneManager.Instance.GoHome ();
 	}
 	
 	public void FacebookLogin ()

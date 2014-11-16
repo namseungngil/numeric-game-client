@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using DATA;
 
 public class MypageUIManager : UIManager
 {
@@ -22,9 +23,6 @@ public class MypageUIManager : UIManager
 
 	public override void Start ()
 	{
-		Color myColor = new Color32 (118, 165, 165, 165);
-		Camera.main.backgroundColor = myColor;
-
 		upGameObject = GameObject.Find (UP);
 		downGameObject = GameObject.Find (Down);
 		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();

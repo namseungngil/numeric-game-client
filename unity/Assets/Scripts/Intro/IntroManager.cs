@@ -69,6 +69,7 @@ public class IntroManager : MonoBehaviour
 	private void LoginCallback () {
 		Debug.Log ("LoginCallback");
 
-		SSSceneManager.Instance.Screen (Config.LOGIN);
+//		SSSceneManager.Instance.Screen (Config.LOGIN);
+		SSSceneManager.Instance.GoHome ();
 	}
 }

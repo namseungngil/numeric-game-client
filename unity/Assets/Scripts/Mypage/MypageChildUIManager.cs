@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DATA;
 
 public class MypageChildUIManager : UIManager
 {
@@ -8,11 +9,18 @@ public class MypageChildUIManager : UIManager
 		BgmType = Bgm.NONE;
 		BgmName = string.Empty;
 
-		IsCache = true;
+		IsCache = false;
 	}
-	
-	public override void OnEnableFS ()
+
+	public override void Start ()
 	{
+		Register register = Register.Instance ();
+		int temp = register.GetMyPage ();
+
+
+		Color myColor = DataArray.color [temp];
+
+		Camera.main.backgroundColor = myColor;
 		SSSceneManager.Instance.LoadMenu(Config.MYPAGE);
 	}
 }
