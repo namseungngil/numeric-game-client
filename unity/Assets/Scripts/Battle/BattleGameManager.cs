@@ -149,6 +149,7 @@ public class BattleGameManager : GameManager
 			{
 				var query = new Dictionary<string, string>();
 				query[QueryModel.SCORE] = score.ToString();
+				query["type"] = numberMax.ToString ();
 				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
 					Debug.Log("Result: " + r.Text);
 				}, query);
@@ -397,6 +398,8 @@ public class BattleGameManager : GameManager
 		return tempResult;
 	}
 
+	private int firstInt = 0;
+	private int lastInt = 0;
 	public void SetNumber (int length)
 	{
 		Debug.Log (gameStatus);
@@ -404,8 +407,6 @@ public class BattleGameManager : GameManager
 			return;
 		}
 
-		int firstInt = 0;
-		int lastInt = 0;
 		if (firstString == null) {
 			firstString = cardString[length];
 			firstInt = int.Parse (firstString);
@@ -439,13 +440,12 @@ public class BattleGameManager : GameManager
 		}
 
 		int tempResult = MainLogic (firstInt, lastInt);
+		Debug.Log ("result : " + tempResult);
 		if (tempResult == result) {
 			StartCoroutine (SetAttack ());
 		} else {
 			StartCoroutine (SetMiss ());
 		}
-
-		Debug.Log (gameStatus);
 	}
 
 	public bool GetCheckStatus (GameStatus gS) {
@@ -477,7 +477,7 @@ public class BattleGameManager : GameManager
 		// Set numer max
 		numberMax = int.Parse (SenceData.stageLevel);
 
-		List<int> list = Game.Stage (numberMax);
+		List<int> list = Game.Score (numberMax);
 		// Set score1
 		score1 = list [0];
 		score2 = list [1];

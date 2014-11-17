@@ -13,9 +13,9 @@ public class CloudComponent : MonoBehaviour
 
 	void Update ()
 	{
-		transform.position = new Vector3 (transform.position.x + Time.deltaTime + speed, transform.position.y, transform.position.z);
-		if (transform.position.x > (Config.CONTENT_WIDTH + uISPrite.pixelSize)) {
-			transform.position = new Vector3 ((0 - uISPrite.pixelSize), transform.position.y, transform.position.z);
+		transform.localPosition = new Vector3 (transform.localPosition.x + Time.deltaTime + speed, transform.localPosition.y, transform.localPosition.z);
+		if (transform.localPosition.x > (Screen.width + uISPrite.pixelSize)) {
+			transform.localPosition = new Vector3 (((-Screen.width) - uISPrite.pixelSize), transform.localPosition.y, transform.localPosition.z);
 		}
 	}
 }

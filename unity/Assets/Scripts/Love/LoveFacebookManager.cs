@@ -5,70 +5,30 @@ using MiniJSON;
 
 public class LoveFacebookManager : FacebookManager
 {
-	// const
-	private const string TEXTURE = "Texture";
-	private const string LABEL1 = "Label1";
-	private const string LABEL2 = "Label2";
 	// gameobject
 	private GameObject firend;
 	// component
-	private LoveComponent loveComponent;
 	private LoveUIManager loveUIManager;
-	// variable
-	private int count;
+	// array
+	private List<object> friends = null;
 
 	protected override void Start ()
 	{
 		count = 0;
 		firend = gameObject.GetComponentInChildren<UIToggle> ().gameObject;
 		loveUIManager = gameObject.GetComponentInParent<LoveUIManager> ();
+		if (loveUIManager != null) {
+			uIManager = loveUIManager;
+		}
 
-		GameObject myPage = GameObject.Find (Config.MYPAGE);
-		if (myPage != null) {
-			loveComponent = myPage.GetComponent<LoveComponent> ();
+		GameObject temp = GameObject.Find (Config.ROOT_MANAGER);
+		if (temp != null) {
+			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
 
 		Friends ();
 	}
 
-	private GameObject GetChildObject (GameObject gO, string strName)
-	{ 
-		Transform[] AllData = gO.GetComponentsInChildren<Transform> (); 
-		GameObject target = null;
-		
-		foreach (Transform Obj in AllData) { 
-			if (Obj.name == strName) { 
-				target = Obj.gameObject;
-				break;
-			} 
-		}
-		
-		return target;
-	}
-
-	private void AppRequestCallback (FBResult result)
-	{
-		Debug.Log ("AppRequestCallback");
-		
-		if (result != null) {
-			Dictionary<string, object> responseObject = Json.Deserialize (result.Text) as Dictionary<string, object>;
-			object obj = 0;
-			if (responseObject.TryGetValue ("cancelled", out obj)) {
-				Debug.Log ("AppRequestCallback cancelled");
-			} else if (responseObject.TryGetValue ("request", out obj)) {
-				Debug.Log ("AppRequestCallback send");
-
-				if (loveComponent != null) {
-					loveComponent.Add (count);
-				}
-
-				if (loveUIManager != null) {
-					loveUIManager.Cancel ();
-				}
-			}
-		}
-	}
-	
 	private void FriendsCallback (FBResult result)
 	{
 		Debug.Log ("FriendsCallback");
@@ -113,6 +73,9 @@ public class LoveFacebookManager : FacebookManager
 
 			firend.SetActive (false);
 			gameObject.GetComponent<UIGrid> ().Reposition ();
+		} else {
+			// loading...
+			firend.SetActive (false);
 		}
 	}
 	
@@ -146,27 +109,6 @@ public class LoveFacebookManager : FacebookManager
 		
 		if (FB.IsLoggedIn) {
 			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
-		}
-	}
-
-	public void onChallengeClicked (string[] list)
-	{
-		if (list.Length <= 0) {
-			return;
-		}
-
-		if (FB.IsLoggedIn) {
-			count = list.Length;
-			
-			FB.AppRequest (
-				message: "Let's go together",
-				to: list,
-				filters: null,
-				excludeIds: null,
-				maxRecipients: null,
-				data: "Numeric",
-				title: Config.GAME_TITME,
-				callback: AppRequestCallback);
 		}
 	}
 }

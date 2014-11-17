@@ -12,12 +12,20 @@ public class FacebookManager : MonoBehaviour
 	protected const string SCORES_QUERY = "/app/scores?fields=score,user.limit(20)";
 	protected const string FRIENDS_QUERY = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
 	protected const int TEXTURE_SIZE = 128;
+	protected const string TEXTURE = "Texture";
+	protected const string LABEL1 = "Label1";
+	protected const string LABEL2 = "Label2";
 	
 //	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
 
 	// component
+	protected LoveComponent loveComponent;
+	protected UIManager uIManager;
 	protected Texture userTexture;
-	protected List<object> friends = null;
+	// array
+//	protected List<object> friends = null;
+	// variable
+	protected int count;
 	 
 	private void OnInitComplete ()
 	{
@@ -64,6 +72,29 @@ public class FacebookManager : MonoBehaviour
 		}
 		
 		return null;
+	}
+
+	private void AppRequestCallback (FBResult result)
+	{
+		Debug.Log ("AppRequestCallback");
+		
+		if (result != null) {
+			Dictionary<string, object> responseObject = Json.Deserialize (result.Text) as Dictionary<string, object>;
+			object obj = 0;
+			if (responseObject.TryGetValue ("cancelled", out obj)) {
+				Debug.Log ("AppRequestCallback cancelled");
+			} else if (responseObject.TryGetValue ("request", out obj)) {
+				Debug.Log ("AppRequestCallback send");
+				
+				if (loveComponent != null) {
+					loveComponent.Add (count);
+				}
+				
+				if (uIManager != null) {
+					uIManager.Cancel ();
+				}
+			}
+		}
 	}
 
 	protected virtual void Start ()
@@ -170,6 +201,42 @@ public class FacebookManager : MonoBehaviour
 	{
 		Dictionary<string,object> entry = (Dictionary<string,object>) obj;
 		return Convert.ToInt32(entry["score"]);
+	}
+
+	protected GameObject GetChildObject (GameObject gO, string strName)
+	{ 
+		Transform[] AllData = gO.GetComponentsInChildren<Transform> (); 
+		GameObject target = null;
+		
+		foreach (Transform Obj in AllData) { 
+			if (Obj.name == strName) { 
+				target = Obj.gameObject;
+				break;
+			} 
+		}
+		
+		return target;
+	}
+
+	public void onChallengeClicked (string[] list)
+	{
+		if (list.Length <= 0) {
+			return;
+		}
+		
+		if (FB.IsLoggedIn) {
+			count = list.Length;
+			
+			FB.AppRequest (
+				message: "Let's go together",
+				to: list,
+				filters: null,
+				excludeIds: null,
+				maxRecipients: null,
+				data: Config.GAME_TITME,
+				title: Config.GAME_TITME,
+				callback: AppRequestCallback);
+		}
 	}
 	
 	public string userID ()

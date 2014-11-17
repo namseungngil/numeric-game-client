@@ -5,7 +5,7 @@ public class Game
 {
 	private const int PLUS_SCORE = 20;
 
-	public static List<int> Stage (int numberMax)
+	public static List<int> Score (int numberMax)
 	{
 		int score1 = 0;
 		int score2 = 0;
@@ -30,6 +30,14 @@ public class Game
 		// Set score2
 		int temp = (int)(score3 - score1 / 2);
 		score2 = score1 + temp;
+
+		if (score2 > score3) {
+			int tempScore = score3;
+			score3 = score2;
+			score2 = tempScore;
+		} else if (score2 == score3) {
+			score3 += PLUS_SCORE;
+		}
 
 		List<int> list = new List<int> ();
 		list.Add (score1);

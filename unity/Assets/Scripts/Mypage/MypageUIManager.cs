@@ -27,11 +27,11 @@ public class MypageUIManager : UIManager
 		downGameObject = GameObject.Find (Down);
 		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();
 
-		if (mypageGameManager.NextQuestStatus ()) {
+		if (!mypageGameManager.NextQuestStatus ()) {
 			upGameObject.SetActive (false);
 		}
 
-		if (mypageGameManager.BackQuestStatus ()) {
+		if (!mypageGameManager.BackQuestStatus ()) {
 			downGameObject.SetActive (false);
 		}
 
@@ -51,7 +51,11 @@ public class MypageUIManager : UIManager
 
 	public void GameStart ()
 	{
-		SenceData.stageLevel = UIButton.current.name.ToString ();
+		string temp = UIButton.current.name.ToString ();
+		if (temp == MypageGameManager.DISABLE_QUEST) {
+			return;
+		}
+		SenceData.stageLevel = temp;
 		SSSceneManager.Instance.PopUp (Config.START);
 	}
 }

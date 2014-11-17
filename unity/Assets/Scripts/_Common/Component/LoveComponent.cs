@@ -221,4 +221,9 @@ public class LoveComponent : MonoBehaviour
 		}
 		return false;
 	}
+
+	public void Set ()
+	{
+		Start ();
+	}
 }

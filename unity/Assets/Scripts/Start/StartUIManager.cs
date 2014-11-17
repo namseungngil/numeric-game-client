@@ -5,6 +5,7 @@ public class StartUIManager : UIManager
 {
 	// component
 	private LoveComponent loveComponent;
+	private StartFacebookManager startFacebookManager;
 
 	public override void Awake ()
 	{
@@ -16,16 +17,31 @@ public class StartUIManager : UIManager
 
 	public override void Start ()
 	{
-
 		GameObject gObj = GameObject.Find (Config.ROOT_MANAGER);
-		loveComponent = gObj.GetComponent<LoveComponent> ();
+		if (gObj != null) {
+			loveComponent = gObj.GetComponent<LoveComponent> ();
+		}
+
+		startFacebookManager = GameObject.Find (GRIDLIST).GetComponent<StartFacebookManager> ();
 	}
 
 	public void GameStart ()
 	{
-		loveComponent.UseLove ();
+		if (loveComponent != null) {
+			loveComponent.UseLove ();
+		}
 
 		SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
 		SSSceneManager.Instance.Screen (Config.BATTLE);
+	}
+
+	public void Request ()
+	{
+		if (startFacebookManager != null) {
+			string[] temp = new string[] {
+				UIButton.current.name
+			};
+			startFacebookManager.onChallengeClicked (temp);
+		}
 	}
 }

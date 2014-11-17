@@ -22,6 +22,7 @@ public class MypageGameManager : GameManager
 		}
 	}
 	// const
+	public const string DISABLE_QUEST = "-1";
 	private const int LAYERX = 4;
 	private const string BACKGROUND = "Background";
 	private const string STAR1 = "Star1";
@@ -42,6 +43,8 @@ public class MypageGameManager : GameManager
 
 	void Start ()
 	{
+		GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ().Set ();
+
 		quest = new List<QuestData> ();
 		GameObject panel200 = GameObject.Find (Config.PANEL200);
 		foreach (UIButton uIButton in panel200.GetComponentsInChildren<UIButton> ()) {
@@ -85,6 +88,9 @@ public class MypageGameManager : GameManager
 			register.SetMyPage (index);
 		}
 
+		// Set static
+		SenceData.currentLevel = Config.MYPAGE + (index / Config.STAGE_COLOR_COUNT).ToString ();
+
 		// set map
 		foreach (UISprite uS in gameObject.GetComponentsInChildren<UISprite> ()) {
 			if (uS.gameObject.tag != UNTAGGED) {
@@ -122,7 +128,7 @@ public class MypageGameManager : GameManager
 				Debug.Log (score);
 				int stage = int.Parse (quest[i].myself.name);
 
-				List<int> list = Game.Stage (stage);
+				List<int> list = Game.Score (stage);
 				Debug.Log (list[0] + " : " + list[1] + " : " + list[2]);
 				if (score >= list[0]) {
 					quest[i].star1.gameObject.SetActive (true);
@@ -138,12 +144,14 @@ public class MypageGameManager : GameManager
 
 		// set next quest
 		if (!nextFlag) {
-			quest[dataTable.Rows.Count].qlock.gameObject.SetActive (true);
+			quest[dataTable.Rows.Count].uISprite.gameObject.SetActive (false);
 		}
 
 		// set impossible quest
 		for (int i = dataTable.Rows.Count + 1; i < quest.Count; i++) {
-			quest[i].myself.SetActive (false);
+			quest[i].myself.name = DISABLE_QUEST;
+			quest[i].uISprite.gameObject.SetActive (false);
+			quest[i].qlock.gameObject.SetActive (true);
 		}
 	}
 

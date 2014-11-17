@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class LoveUIManager : UIManager
 {
-	// const
-	private const string GRIDLIST = "GridList";
 	// component
 	private LoveFacebookManager loveFacebookManager;
 	// array
