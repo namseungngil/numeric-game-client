@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using MiniJSON;
@@ -77,7 +77,7 @@ public class LoveFacebookManager : FacebookManager
 			Debug.Log ("FriendsCallback error : " + result.Error);
 			
 			// Let's just try again
-			string temp = FRIENDS_QUERY_STRING;
+			string temp = FRIENDS_QUERY;
 			FB.API (temp, Facebook.HttpMethod.GET, FriendsCallback);
 			return;
 		}
@@ -103,7 +103,7 @@ public class LoveFacebookManager : FacebookManager
 				uILabel1.text = friend ["first_name"].ToString ();
 				uILabel2.text = friend ["last_name"].ToString ();
 
-				LoadPictureAPI (GetPictureURL (friend ["id"].ToString (), 128, 128), pictureTexture =>
+				LoadPictureAPI (GetPictureURL (friend ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
 				{
 					if (pictureTexture != null) {
 						uITexture.mainTexture = pictureTexture;
@@ -118,7 +118,7 @@ public class LoveFacebookManager : FacebookManager
 	
 	private void Friends ()
 	{
-		string tempFriends = FRIENDS_QUERY_STRING;
+		string tempFriends = FRIENDS_QUERY;
 		Debug.Log (tempFriends);
 
 //		for (int i = 0; i < 10; i++) {

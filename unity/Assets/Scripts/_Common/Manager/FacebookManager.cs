@@ -8,14 +8,17 @@ using Facebook.MiniJSON;
 public class FacebookManager : MonoBehaviour
 {
 	// const
-	public const string SCORES_QUERY = "/me/scores";
-	protected const string FRIENDS_QUERY_STRING = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+	public const string ME_SCORE_QUERY = "/me/scores";
+	protected const string SCORES_QUERY = "/app/scores?fields=score,user.limit(20)";
+	protected const string FRIENDS_QUERY = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+	protected const int TEXTURE_SIZE = 128;
+	
 //	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
 
 	// component
 	protected Texture userTexture;
 	protected List<object> friends = null;
-
+	 
 	private void OnInitComplete ()
 	{
 		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
@@ -149,7 +152,26 @@ public class FacebookManager : MonoBehaviour
 		return friends;
 	}
 
+	protected List<object> DeserializeScores(string response) 
+	{
+		
+		var responseObject = Json.Deserialize(response) as Dictionary<string, object>;
+		object scoresh;
+		var scores = new List<object>();
+		if (responseObject.TryGetValue ("data", out scoresh)) 
+		{
+			scores = (List<object>) scoresh;
+		}
+		
+		return scores;
+	}
 
+	protected int getScoreFromEntry(object obj)
+	{
+		Dictionary<string,object> entry = (Dictionary<string,object>) obj;
+		return Convert.ToInt32(entry["score"]);
+	}
+	
 	public string userID ()
 	{
 		if (FB.IsLoggedIn) {

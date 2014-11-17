@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public class Game
 {
+	private const int PLUS_SCORE = 20;
+
 	public static List<int> Stage (int numberMax)
 	{
 		int score1 = 0;
@@ -15,6 +17,14 @@ public class Game
 		// Set score3
 		for (int i = 1; i <= numberMax; i++) {
 			score3 += i;
+		}
+
+		if (score1 > score3) {
+			int tempChange = score3;
+			score3 = score1;
+			score1 = tempChange;
+		} else if (score1 == score3) {
+			score3 += PLUS_SCORE;
 		}
 		
 		// Set score2

@@ -28,6 +28,7 @@ public class MypageGameManager : GameManager
 	private const string STAR2 = "Star2";
 	private const string STAR3 = "Star3";
 	private const string LOCK = "Lock";
+	private const string UNTAGGED = "Untagged";
 	// component
 	private QueryModel dataQuery;
 	Register register;
@@ -72,7 +73,7 @@ public class MypageGameManager : GameManager
 	private void SetQuest (int ind = -1)
 	{
 		// exception
-		if (ind >= map.Length) {
+		if (ind >= (map.Length * Config.STAGE_COLOR_COUNT)) {
 			return;
 		}
 
@@ -86,8 +87,8 @@ public class MypageGameManager : GameManager
 
 		// set map
 		foreach (UISprite uS in gameObject.GetComponentsInChildren<UISprite> ()) {
-			if (uS.gameObject.tag != "Untagged") {
-				uS.atlas = map [index];
+			if (uS.gameObject.tag != UNTAGGED) {
+				uS.atlas = map [index / Config.STAGE_COLOR_COUNT];
 			}
 		}
 

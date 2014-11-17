@@ -4,6 +4,11 @@
 	public const string GAME_TITME = "Number Battle";
 	// key
 	public const string KEY = "riogamesnumeric88!#";
+	// content size
+	public const float CONTENT_WIDTH = 800;
+	public const float CONTENT_HEIGHT = 1280;
+	// stage color
+	public const int STAGE_COLOR_COUNT = 3;
 	// max version
 	public const int MAX_VERSION = 99999;
 	// URL
@@ -17,13 +22,10 @@
 	public const string UIROOT = "UI Root (2D)";
 	public const string LABEL = "Label";
 	public const string GAME_MANAGER = "GameManager";
+	public const string ROOT_MANAGER = "RootManager";
 	public const string FACEBOOK = "Facebook";
-//	public const string PANEL1 = "Panel:1";
 	public const string PANEL100 = "Panel:100";
 	public const string PANEL200 = "Panel:200";
-//	public const string PANEL300 = "Panel:300";
-//	public const string PANEL400 = "Panel:400";
-//	public const string PANEL500 = "Panel:500";
 	public const string PANEL1000 = "Panel:1000";
 	public const string STAGE9 = "9";
 	public const string TIMER = "Timer";

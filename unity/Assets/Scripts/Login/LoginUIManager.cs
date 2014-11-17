@@ -55,6 +55,8 @@ public class LoginUIManager : UIManager
 			temp = 0;
 		}
 
+		temp = temp / Config.STAGE_COLOR_COUNT;
+
 		SSSceneManager.Instance.Screen (Config.MYPAGE + temp.ToString ());
 //		SSSceneManager.Instance.GoHome ();
 	}

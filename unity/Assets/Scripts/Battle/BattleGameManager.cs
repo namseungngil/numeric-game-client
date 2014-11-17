@@ -149,7 +149,7 @@ public class BattleGameManager : GameManager
 			{
 				var query = new Dictionary<string, string>();
 				query[QueryModel.SCORE] = score.ToString();
-				FB.API(FacebookManager.SCORES_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
+				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
 					Debug.Log("Result: " + r.Text);
 				}, query);
 			}
@@ -372,7 +372,30 @@ public class BattleGameManager : GameManager
 
 		StartCoroutine (SetNextStatusWait (MISS_TIME / 2));
 	}
-	
+
+	private int MainLogic (int first, int last)
+	{
+		int tempResult = -1;
+		switch (problemSign) {
+		case "+" : // +
+			tempResult = first + last;
+			break;
+		case "-" : // -
+			tempResult = first - last;
+			break;
+		case "*" : // *
+			tempResult = first * last;
+			break;
+		case "/" : // ÷
+			tempResult = first / last;
+			if ((first % last) != 0) {
+				tempResult = -1;
+			}
+			break;
+		}
+
+		return tempResult;
+	}
 
 	public void SetNumber (int length)
 	{
@@ -381,37 +404,41 @@ public class BattleGameManager : GameManager
 			return;
 		}
 
+		int firstInt = 0;
+		int lastInt = 0;
 		if (firstString == null) {
 			firstString = cardString[length];
+			firstInt = int.Parse (firstString);
+
+			bool tempFlag = false;
+			for (int i = 0; i < cardString.Length; i++) {
+				if (length == i) {
+					continue;
+				}
+				int tempLast = int.Parse (cardString [i]);
+
+				int tempInt = MainLogic (firstInt, tempLast);
+				if (tempInt == result) {
+					tempFlag = true;
+				}
+			}
+
+			if (!tempFlag) {
+				StartCoroutine (SetMiss ());
+			}
 		} else {
 			lastString = cardString[length];
+			lastInt = int.Parse (lastString);
 		}
 
+		// set label
 		SetLabel ();
 
 		if (firstString == null || lastString == null) {
 			return;
 		}
 
-		int tempResult = 0;
-		switch (problemSign) {
-		case "+" : // +
-			tempResult = int.Parse (firstString) + int.Parse (lastString);
-			break;
-		case "-" : // -
-			tempResult = int.Parse (firstString) - int.Parse (lastString);
-			break;
-		case "*" : // *
-			tempResult = int.Parse (firstString) * int.Parse (lastString);
-			break;
-		case "/" : // ÷
-			tempResult = int.Parse (firstString) / int.Parse (lastString);
-			if ((int.Parse (firstString) % int.Parse (lastString)) != 0) {
-				tempResult = -1;
-			}
-			break;
-		}
-
+		int tempResult = MainLogic (firstInt, lastInt);
 		if (tempResult == result) {
 			StartCoroutine (SetAttack ());
 		} else {
