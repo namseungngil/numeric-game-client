@@ -32,7 +32,7 @@ public class StartUIManager : UIManager
 		}
 
 		SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
-		SSSceneManager.Instance.Screen (Config.BATTLE);
+		SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
 	}
 
 	public void Request ()

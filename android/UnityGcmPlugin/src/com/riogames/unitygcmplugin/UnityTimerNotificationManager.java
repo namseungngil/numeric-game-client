@@ -5,15 +5,16 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.unity3d.player.UnityPlayer;
 
 public class UnityTimerNotificationManager {
 	
+	public final static String KEY = "timerNotificationKey";
+	public final static String TIMER = "timerNotification";
 	private static final String TAG = UnityTimerNotificationManager.class.getSimpleName();
-	public static String TITLE = "";
-	public static String TEXT = "";
 
 	public static void register(String str) {
 		
@@ -57,10 +58,15 @@ public class UnityTimerNotificationManager {
 		Intent intent = new Intent(activity, UnityTimerNotificationBroadcastRecevier.class);
 		Log.v(TAG, "Title : " + title);
 		Log.v(TAG, "Text : " + text);
-		TITLE = title;
-		TEXT = text;
-//		intent.putExtra("title", title);
-//		intent.putExtra("text", text);
+		
+		SharedPreferences pref = activity.getSharedPreferences(KEY, Activity.MODE_PRIVATE);
+		String tempTitleText = title + "," + text;
+		if (pref.getString(TIMER, "") != tempTitleText) {
+			SharedPreferences.Editor editor = pref.edit();
+			editor.putString (TIMER, tempTitleText);
+			editor.commit();
+		}
+
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(activity, 0, intent, 0);
 		
 		AlarmManager alarmManager = (AlarmManager)activity.getSystemService(Activity.ALARM_SERVICE);

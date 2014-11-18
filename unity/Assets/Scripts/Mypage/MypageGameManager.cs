@@ -82,10 +82,10 @@ public class MypageGameManager : GameManager
 
 		// set index
 		if (ind == -1) {
-			index = register.GetMyPage ();
+			index = register.GetStage ();
 		} else {
 			index = ind;
-			register.SetMyPage (index);
+			register.SetStage (index);
 		}
 
 		// Set static

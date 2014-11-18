@@ -47,12 +47,12 @@ public class Register
 		return PlayerPrefs.GetString (LOVE_TIME, LOVE_TIME_ERROR);
 	}
 
-	public void SetMyPage (int index)
+	public void SetStage (int index)
 	{
 		PlayerPrefs.SetInt (Config.MYPAGE, index);
 	}
 
-	public int GetMyPage ()
+	public int GetStage ()
 	{
 		return PlayerPrefs.GetInt (Config.MYPAGE);
 	}

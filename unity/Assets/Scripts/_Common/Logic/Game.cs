@@ -58,4 +58,17 @@ public class Game
 
 		return list;
 	}
+
+	public static string Scene (string s)
+	{
+		Register register = Register.Instance ();
+		int temp = register.GetStage ();
+		if (temp < 0) {
+			temp = 0;
+		}
+		
+		temp = temp / Config.STAGE_COLOR_COUNT;
+
+		return s + temp.ToString ();
+	}
 }

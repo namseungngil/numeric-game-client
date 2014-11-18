@@ -15,9 +15,6 @@ public class BattleUIManager : UIManager
 
 	public override void Start ()
 	{
-		Color myColor = new Color32 (47, 52, 40, 255);
-		Camera.main.backgroundColor = myColor;
-
 		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 

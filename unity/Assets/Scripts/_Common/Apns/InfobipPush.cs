@@ -226,6 +226,7 @@ public class InfobipPush : MonoBehaviour
         #if UNITY_IPHONE
         if (Application.platform == RuntimePlatform.IPhonePlayer)
         {
+			Debug.Log ("InfobipPush Register");
             GetInstance().StartCoroutine(Register_C(applicationId, applicationSecret, registrationData));
         }
         #elif UNITY_ANDROID

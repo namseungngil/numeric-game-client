@@ -42,9 +42,16 @@ void IBInitialization(char * appId, char * appSecret){
     NSString * applicationSecret = [NSString stringWithFormat:@"%s",appSecret];
     
     [InfobipPush initializeWithAppID:applicationId appSecret:applicationSecret];
-	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-                                                                           UIRemoteNotificationTypeSound |
-                                                                           UIRemoteNotificationTypeAlert)];
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+    else
+    {
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:
+         (UIUserNotificationTypeBadge | UIUserNotificationTypeSound | UIUserNotificationTypeAlert)];
+    }
 }
 
 void IBSetUserIdWithNSString(NSString *userId) {

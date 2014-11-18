@@ -147,12 +147,12 @@ public class BattleGameManager : GameManager
 			// score
 			if (FB.IsLoggedIn)
 			{
-				var query = new Dictionary<string, string>();
-				query[QueryModel.SCORE] = score.ToString();
-				query["type"] = numberMax.ToString ();
-				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
-					Debug.Log("Result: " + r.Text);
-				}, query);
+//				var query = new Dictionary<string, string>();
+//				query[QueryModel.SCORE] = score.ToString();
+//				query["type"] = numberMax.ToString ();
+//				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
+//					Debug.Log("Result: " + r.Text);
+//				}, query);
 			}
 		}
 

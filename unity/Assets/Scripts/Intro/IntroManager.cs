@@ -21,7 +21,6 @@ public class IntroManager : MonoBehaviour
 
 		text = defaultText;
 		Login ();
-
 	}
 
 	void Update ()

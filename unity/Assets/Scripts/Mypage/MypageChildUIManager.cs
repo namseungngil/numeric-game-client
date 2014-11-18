@@ -15,7 +15,7 @@ public class MypageChildUIManager : UIManager
 	public override void Start ()
 	{
 		Register register = Register.Instance ();
-		int temp = register.GetMyPage ();
+		int temp = register.GetStage ();
 
 
 		Color myColor = DataArray.color [temp];

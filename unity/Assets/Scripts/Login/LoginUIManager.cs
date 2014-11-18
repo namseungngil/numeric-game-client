@@ -50,14 +50,7 @@ public class LoginUIManager : UIManager
 
 	public void GameStart ()
 	{
-		int temp = register.GetMyPage ();
-		if (temp < 0) {
-			temp = 0;
-		}
-
-		temp = temp / Config.STAGE_COLOR_COUNT;
-
-		SSSceneManager.Instance.Screen (Config.MYPAGE + temp.ToString ());
+		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
 //		SSSceneManager.Instance.GoHome ();
 	}
 	
