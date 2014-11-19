@@ -35,4 +35,10 @@ public abstract class GameManager : MonoBehaviour
 		cameraShake = value;
 	}
 
+	void OnApplicationPause(bool pauseStatus) {
+		Debug.Log ("OnApplicationPause : " + pauseStatus);
+		if (!pauseStatus) {
+			Notification.CancelAll ();
+		}
+	}
 }

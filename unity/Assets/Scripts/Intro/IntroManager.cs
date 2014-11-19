@@ -15,11 +15,12 @@ public class IntroManager : MonoBehaviour
 	
 	void Start ()
 	{
+		Notification.CancelAll ();
+
 		time = 0;
-
 		uiLabel = GameObject.Find (Config.LABEL).GetComponent<UILabel> ();
-
 		text = defaultText;
+
 		Login ();
 	}
 

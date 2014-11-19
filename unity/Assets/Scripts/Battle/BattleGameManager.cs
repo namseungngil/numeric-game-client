@@ -29,7 +29,7 @@ public class BattleGameManager : GameManager
 	private const string PROBLEM_LABEL_TEXT = "Problem";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
-	private const float TIME_MAX = 90f;
+	private const float TIME_MAX = 60f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
@@ -86,7 +86,7 @@ public class BattleGameManager : GameManager
 	{
 		base.Update ();
 		if (gameStatus == GameStatus.Play) {
-			timerUILabel.text = "" + ((int)timer).ToString("N2");
+			timerUILabel.text = "" + timer.ToString("N2");
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
 				timer = 0;

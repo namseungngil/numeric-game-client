@@ -1,10 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../star-game-client/Assets/Scripts/Battle/Missile/PassMissile.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Logic/Notification.cs">
     <Files>
-      <File FileName="../../star-game-client/Assets/Scripts/_Common/Scene/StarSceneManager.cs" Line="1" Column="1" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Missile/PassMissile.cs" Line="55" Column="29" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Missile/MissileControl.cs" Line="12" Column="2" />
+      <File FileName="Assets/Scripts/_Common/Logic/Notification.cs" Line="44" Column="2" />
+      <File FileName="Assets/Scripts/Intro/IntroManager.cs" Line="19" Column="3" />
+      <File FileName="Assets/Scripts/_Common/Manager/GameManager.cs" Line="40" Column="8" />
+      <File FileName="Assets/Scripts/_Common/Component/LoveComponent.cs" Line="173" Column="21" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

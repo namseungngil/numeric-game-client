@@ -51,14 +51,17 @@ public class Notification
 			}
 		}
 #elif UNITY_IPHONE
-		int count = NotificationServices.localNotificationCount;
-		for (int i = 0; i < count; i++) {
-			LocalNotification localNotification = NotificationServices.GetLocalNotification (i);
-			if (localNotification.userInfo["id"] == ID) {
-				Debug.Log ("Cancel Notification found" + ID);
-				NotificationServices.CancelLocalNotification (localNotification);
-			}
-		}
+		NotificationServices.ClearLocalNotifications ();
+#endif
+	}
+
+	public static void CancelAll ()
+	{
+#if UNITY_IPHONE
+		LocalNotification localNotification = new LocalNotification ();
+		localNotification.applicationIconBadgeNumber = -1;
+		NotificationServices.PresentLocalNotificationNow (localNotification);
+		NotificationServices.CancelAllLocalNotifications ();
 #endif
 	}
 }
