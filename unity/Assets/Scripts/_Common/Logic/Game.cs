@@ -35,6 +35,7 @@ public class Game
 	public static string Scene (string s)
 	{
 		Register register = Register.Instance ();
+//		register.SetStage (0);
 		int temp = register.GetStage ();
 		if (temp < 0) {
 			temp = 0;

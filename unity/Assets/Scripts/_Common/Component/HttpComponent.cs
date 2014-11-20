@@ -107,8 +107,25 @@ public class HttpComponent : MonoBehaviour
 				Debug.Log (FACEBOOK_ID + " : " + facebookManager.userID ());
 				http.AddData (FACEBOOK_ID, facebookManager.userID ());
 			}
-			Request (flag);
 
+			http.OnDone = (WWW www) => {
+				Debug.Log (www.text);
+				httpOnDone ();
+			};
+			
+			// error
+			http.OnFail = (WWW www) => {
+				Debug.Log (www.error);
+				httpOnDone ();
+			};
+			
+			// timed out
+			http.OnDisposed = () => {
+				Debug.Log ("Timed out");
+				httpOnDone ();
+			};
+			
+			http.Request ();
 		} else {
 			httpOnDone ();
 		}
@@ -148,5 +165,10 @@ public class HttpComponent : MonoBehaviour
 	{
 		Debug.Log ("Http login");
 		StartCoroutine (RegGCMApnsFacebook (regGCMApnsFacebookWaitTime, synchrozization));
+	}
+
+	public void Clear (string id, string stage, string score)
+	{
+
 	}
 }

@@ -6,8 +6,6 @@ public class LoginUIManager : UIManager
 {
 	// gameobject
 	private GameObject facebookUI;
-	// component
-	private Register register;
 
 	public override void Awake ()
 	{
@@ -19,7 +17,6 @@ public class LoginUIManager : UIManager
 	public override void Start ()
 	{
 		facebookUI = GameObject.Find (Config.FACEBOOK);
-		register = Register.Instance ();
 	}
 
 	void Update ()

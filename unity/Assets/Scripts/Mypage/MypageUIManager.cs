@@ -5,8 +5,8 @@ using DATA;
 public class MypageUIManager : UIManager
 {
 	// const
-	private const string UP = "Up";
-	private const string Down = "Down";
+	private const string NEXT = "Next";
+	private const string BACK = "Back";
 	//gameobject
 	private GameObject upGameObject;
 	private GameObject downGameObject;
@@ -23,8 +23,8 @@ public class MypageUIManager : UIManager
 
 	public override void Start ()
 	{
-		upGameObject = GameObject.Find (UP);
-		downGameObject = GameObject.Find (Down);
+		upGameObject = GameObject.Find (NEXT);
+		downGameObject = GameObject.Find (BACK);
 		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();
 
 		if (!mypageGameManager.NextQuestStatus ()) {
@@ -57,5 +57,15 @@ public class MypageUIManager : UIManager
 		}
 		SenceData.stageLevel = temp;
 		SSSceneManager.Instance.PopUp (Config.START);
+	}
+
+	public void Next ()
+	{
+		mypageGameManager.NextQuest ();
+	}
+
+	public void Back ()
+	{
+		mypageGameManager.BackQuest ();
 	}
 }

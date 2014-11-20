@@ -10,7 +10,7 @@
 	// stage color
 	public const int STAGE_COLOR_COUNT = 3;
 	// max version
-	public const int MAX_VERSION = 99999;
+	public const int MAX_VALUE = 2100000000;
 	// URL
 	public const string URL = "http://namseungngil.cafe24.com/numeric/index.php/url/";
 	public const string BOARD_URL = "http://seungngil.tistory.com";
@@ -35,7 +35,6 @@
 	public const string LEVEL = "Level";
 	public const string SCORE = "Score";
 	public const string GRID = "Grid";
-	public const string HP = "HP";
 	public const string SOLIDCAMERA = "SolidCamera";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";

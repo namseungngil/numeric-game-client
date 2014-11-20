@@ -31,7 +31,7 @@ public class Notification
 		userInfo["id"] = ID;
 		
 		LocalNotification localNotification = new LocalNotification ();
-		localNotification.applicationIconBadgeNumber = 1;
+//		localNotification.applicationIconBadgeNumber = 1;
 		localNotification.fireDate = dateTime;
 		localNotification.alertBody = stringArray[2];
 		localNotification.soundName = LocalNotification.defaultSoundName;
@@ -51,7 +51,7 @@ public class Notification
 			}
 		}
 #elif UNITY_IPHONE
-		NotificationServices.ClearLocalNotifications ();
+		NotificationServices.CancelAllLocalNotifications ();
 #endif
 	}
 
@@ -61,7 +61,7 @@ public class Notification
 		LocalNotification localNotification = new LocalNotification ();
 		localNotification.applicationIconBadgeNumber = -1;
 		NotificationServices.PresentLocalNotificationNow (localNotification);
-		NotificationServices.CancelAllLocalNotifications ();
+		NotificationServices.ClearLocalNotifications ();
 #endif
 	}
 }

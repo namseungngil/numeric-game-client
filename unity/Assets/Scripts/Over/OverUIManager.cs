@@ -13,11 +13,14 @@ public class OverUIManager : UIManager
 
 	public void Retry ()
 	{
-		SSSceneManager.Instance.Reset ();
+		SSSceneManager.Instance.Close ();
+		SSSceneManager.Instance.DestroyScenesFrom (Config.BATTLE);
+		SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
 	}
 	
 	public void Next ()
 	{
-		SSSceneManager.Instance.Screen (SenceData.currentLevel);
+		SSSceneManager.Instance.DestroyScenesFrom (Config.BATTLE);
+		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
 	}
 }

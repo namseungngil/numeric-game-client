@@ -17,7 +17,6 @@ public class MypageChildUIManager : UIManager
 		Register register = Register.Instance ();
 		int temp = register.GetStage ();
 
-
 		Color myColor = DataArray.color [temp];
 
 		Camera.main.backgroundColor = myColor;

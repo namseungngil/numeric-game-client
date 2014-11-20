@@ -8,7 +8,7 @@ public class Query
 
 	protected Query ()
 	{
-		Debug.Log ("Query");
+//		Debug.Log ("Query");
 		sqliteDatabase = new SqliteDatabase ("numeric");
 	}
 
@@ -100,7 +100,7 @@ public class Query
 
 		query += ";";
 
-		Debug.Log (query);
+//		Debug.Log (query);
 
 		DataTable dataTabe = sqliteDatabase.ExecuteQuery (query);
 

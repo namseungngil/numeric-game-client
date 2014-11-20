@@ -9,7 +9,7 @@ public class LoveComponent : MonoBehaviour
 	private const string LOVE = "Love";
 	private const string LOVE_TIME = "LoveTime";
 	private const string LOVE_COUNT = "LoveCount";
-	private const int LOVE_RECOVERY = 60;
+	private const int LOVE_RECOVERY = 1200;
 	private const int TIMER = 1;
 	// component
 	private UILabel loveTimeUILabel;
@@ -112,18 +112,18 @@ public class LoveComponent : MonoBehaviour
 		timer = TIMER;
 
 		love = numericPlayerPrefs.GetLove ();
-		Debug.Log ("love : " + love);
+//		Debug.Log ("love : " + love);
 
 		if (love < Config.LOVE_MAX) {
 			string tempLoveTime = numericPlayerPrefs.GetLoveTime ();
 			if (tempLoveTime == "") {
 				SetLove (Config.LOVE_MAX);
 			}
-			Debug.Log ("tempLoveTime : " + tempLoveTime + " Length : " + tempLoveTime.Length);
+//			Debug.Log ("tempLoveTime : " + tempLoveTime + " Length : " + tempLoveTime.Length);
 
 			int[] dateArray = Date.Slice (tempLoveTime);
 
-			Debug.Log ("date : " + dateArray[0] + " _ " + dateArray[1] + " _ " + dateArray[2] + " _ " + dateArray[3] + " _ " + dateArray[4] + " _ " + dateArray[5]);
+//			Debug.Log ("date : " + dateArray[0] + " _ " + dateArray[1] + " _ " + dateArray[2] + " _ " + dateArray[3] + " _ " + dateArray[4] + " _ " + dateArray[5]);
 
 			DateTime start = new DateTime (dateArray[0], dateArray[1], dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
 			DateTime end = DateTime.Now;
@@ -148,8 +148,6 @@ public class LoveComponent : MonoBehaviour
 			} else {
 				loveTime = (int)(LOVE_RECOVERY - seconds);
 			}
-
-			Debug.Log ("loveTime : " + loveTime);
 		}
 	}
 
@@ -161,6 +159,7 @@ public class LoveComponent : MonoBehaviour
 			numericPlayerPrefs.SetLove (love, time);
 		}
 
+		Notification.Unregister ();
 		if (love < Config.LOVE_MAX) {
 			int tempInt = (Config.LOVE_MAX - love) * LOVE_RECOVERY;
 			string tempTime = DateTime.Now.AddSeconds (tempInt).ToString (Config.DATA_TIME);
@@ -169,8 +168,6 @@ public class LoveComponent : MonoBehaviour
 				tempTime, Config.GAME_TITME, NOTIFICATION_TEXT 
 			};
 			Notification.Register (tempString);
-		} else {
-			Notification.Unregister ();
 		}
 	}
 	

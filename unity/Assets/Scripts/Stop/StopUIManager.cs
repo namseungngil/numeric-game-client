@@ -28,7 +28,8 @@ public class StopUIManager : UIManager
 
 	public void Out ()
 	{
-		SSSceneManager.Instance.GoHome ();
+		SSSceneManager.Instance.DestroyScenesFrom (Config.BATTLE);
+		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
 	}
 
 	public void Restart ()

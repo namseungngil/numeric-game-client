@@ -13,6 +13,8 @@ public class SettingUIManager : UIManager
 
 	public void SoundBack ()
 	{
+		QueryModel queryModel = QueryModel.Instance ();
+		queryModel.DummyData ();
 	}
 	
 	public void SoundButton ()

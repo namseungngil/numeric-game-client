@@ -1,11 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Logic/Notification.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Data/DATA.cs">
     <Files>
-      <File FileName="Assets/Scripts/_Common/Logic/Notification.cs" Line="44" Column="2" />
-      <File FileName="Assets/Scripts/Intro/IntroManager.cs" Line="19" Column="3" />
-      <File FileName="Assets/Scripts/_Common/Manager/GameManager.cs" Line="40" Column="8" />
-      <File FileName="Assets/Scripts/_Common/Component/LoveComponent.cs" Line="173" Column="21" />
+      <File FileName="Assets/Scripts/Loading/LoadingControl.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Loading/LoadingUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Intro/IntroUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="46" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Config/Config.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Component/LoveComponent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageChildUIManager.cs" Line="3" Column="9" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/Query.cs" Line="1" Column="1" />
+      <File FileName="Assets/SSSystem/Scripts/SSApplication.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Login/LoginUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Logic/Game.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Intro/IntroManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/SSSystem/Scripts/SSSceneManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Component/CloudComponent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Data/DATA.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -69,7 +69,7 @@ public class BattleGameManager : GameManager
 	{
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
-		hpUILabel = GameObject.Find (Config.HP).GetComponent<UILabel> ();
+		hpUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
 		panel100 = GameObject.Find (Config.PANEL100);
@@ -86,12 +86,13 @@ public class BattleGameManager : GameManager
 	{
 		base.Update ();
 		if (gameStatus == GameStatus.Play) {
-			timerUILabel.text = "" + timer.ToString("N2");
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
 				timer = 0;
 				StartCoroutine (Over ());
 			}
+
+			timerUILabel.text = "" + timer.ToString("N2");
 		}
 	}
 
@@ -467,6 +468,7 @@ public class BattleGameManager : GameManager
 		clearCount = 0;
 		missCount = 0;
 		hitCount = 0;
+		score = 0;
 		score1 = 0;
 		score2 = 0;
 		score3 = 0;
@@ -484,6 +486,7 @@ public class BattleGameManager : GameManager
 		score3 = list [2];
 
 		hpUILabel.text = "" + score;
+		timerUILabel.text = "" + timer.ToString("N2");
 
 		panel100.SetActive (false);
 		panel200.SetActive (false);

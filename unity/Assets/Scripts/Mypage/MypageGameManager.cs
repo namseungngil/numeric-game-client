@@ -70,6 +70,7 @@ public class MypageGameManager : GameManager
 		register = Register.Instance ();
 		index = 0;
 		nextFlag = false;
+
 		SetQuest ();
 	}
 
@@ -86,6 +87,11 @@ public class MypageGameManager : GameManager
 		} else {
 			index = ind;
 			register.SetStage (index);
+
+			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
+			SSSceneManager.Instance.Reset ();
+			SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
+			return;
 		}
 
 		// Set static
@@ -125,11 +131,10 @@ public class MypageGameManager : GameManager
 
 			for (int i = 0; i < dataTable.Rows.Count; i++) {
 				int score = (int)dataTable [i] [QueryModel.SCORE];
-				Debug.Log (score);
+
 				int stage = int.Parse (quest[i].myself.name);
 
 				List<int> list = Game.Score (stage);
-				Debug.Log (list[0] + " : " + list[1] + " : " + list[2]);
 				if (score >= list[0]) {
 					quest[i].star1.gameObject.SetActive (true);
 					if (score >= list[1]) {
@@ -178,7 +183,7 @@ public class MypageGameManager : GameManager
 	public bool NextQuestStatus ()
 	{
 		if (nextFlag) {
-			if (index < map.Length) {
+			if (index < (map.Length * Config.STAGE_COLOR_COUNT) - 1) {
 				return true;
 			}
 		}

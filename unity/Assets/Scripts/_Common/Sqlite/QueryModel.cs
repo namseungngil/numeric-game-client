@@ -59,6 +59,9 @@ public class QueryModel : Query
 			bool flag = false;
 
 			if (int.Parse (score) > (int)dataTable[0][SCORE]) {
+				if (int.Parse (score) > Config.MAX_VALUE) {
+					score = Config.MAX_VALUE.ToString ();
+				}
 				flag = true;
 			} else {
 				data[2] = dataTable[0][SCORE].ToString ();
@@ -90,7 +93,7 @@ public class QueryModel : Query
 
 			if (flag) {
 				int tempVersion = (int)dataTable[0][VERSION] + 1;
-				if (tempVersion > Config.MAX_VERSION) {
+				if (tempVersion > Config.MAX_VALUE) {
 					tempVersion = 1;
 				}
 			
@@ -107,5 +110,21 @@ public class QueryModel : Query
 	public void DBDelete ()
 	{
 		ALLDELETE (QUEST_USER);
+	}
+
+	// dummy
+	public void DummyData ()
+	{
+		int stage = 100;
+		for (int i = 0; i < stage; i++) {
+			BattleClear (
+				(i + 9).ToString (),
+				(999999).ToString (),
+				(99999).ToString (),
+				(99999).ToString (),
+				(99999).ToString (),
+				(0).ToString ()
+				);
+		}
 	}
 }

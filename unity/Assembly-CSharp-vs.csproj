@@ -387,7 +387,8 @@
      <Compile Include="Assets\Scripts\Debug\NumericDebug.cs" />
      <Compile Include="Assets\Scripts\Intro\IntroManager.cs" />
      <Compile Include="Assets\Scripts\Intro\IntroUIManager.cs" />
-     <Compile Include="Assets\Scripts\Loading\LoadingPopup.cs" />
+     <Compile Include="Assets\Scripts\Loading\LoadingControl.cs" />
+     <Compile Include="Assets\Scripts\Loading\LoadingUIManager.cs" />
      <Compile Include="Assets\Scripts\Login\LoginGameManager.cs" />
      <Compile Include="Assets\Scripts\Login\LoginUIManager.cs" />
      <Compile Include="Assets\Scripts\Love\LoveFacebookManager.cs" />
