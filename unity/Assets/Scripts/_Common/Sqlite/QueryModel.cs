@@ -48,12 +48,14 @@ public class QueryModel : Query
 	}
 
 	// new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
-	public bool BattleClear (string stage, string score, string time, string hit, string clear, string miss, string date = "")
+	public string[] BattleClear (string stage, string score, string time, string hit, string clear, string miss, string date = "")
 	{
 		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + "=" + stage);
 		if (date == "") {
 			date = Date ();
 		}
+
+		bool returnflag = true;
 		string[] data = new string[] {stage, "1", score, time, hit, clear, miss, date};
 		if (dataTable.Rows.Count > 0) {
 			bool flag = false;
@@ -98,12 +100,19 @@ public class QueryModel : Query
 				}
 			
 				data[1] = "" + tempVersion;
-				return UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
+				returnflag = UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
 			} else {
-				return true;
+				returnflag = false;
 			}
+
 		} else {
-			return INSERT (QUEST_USER, questUserColumnName, data);
+			returnflag = INSERT (QUEST_USER, questUserColumnName, data);
+		}
+
+		if (returnflag) {
+			return data;
+		} else {
+			return null;
 		}
 	}
 
@@ -119,7 +128,7 @@ public class QueryModel : Query
 		for (int i = 0; i < stage; i++) {
 			BattleClear (
 				(i + 9).ToString (),
-				(999999).ToString (),
+				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),

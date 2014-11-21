@@ -29,13 +29,14 @@ public class BattleGameManager : GameManager
 	private const string PROBLEM_LABEL_TEXT = "Problem";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
+	private const string PROGRESS_BAR = "Progress Bar";
+	private const string GUAGE_STAR0 = "guage_star0";
 	private const float TIME_MAX = 60f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
 	// component
 	private GameStatus gameStatus;
-	private UILabel[] cardUILabel = new UILabel[Config.CARD_COUNT];
 	private UILabel problemUILabel;
 	private UILabel timerUILabel;
 	private UILabel hpUILabel;
@@ -44,7 +45,12 @@ public class BattleGameManager : GameManager
 	private UILabel panel200UILabel;
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
+	private UIProgressBar uIProgressbar;
+	private UISprite star1UISprite;
+	private UISprite star2UISprite;
+	private UISprite star3UISprite;
 	// array
+	private UILabel[] cardUILabel = new UILabel[Config.CARD_COUNT];
 	private string[] MARK_TEXT = new string[] {"?", "?"};
 	private string[] tempMark;
 	private string[] cardString = new string[Config.CARD_COUNT];
@@ -70,6 +76,10 @@ public class BattleGameManager : GameManager
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		hpUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
+		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
+		star1UISprite = GameObject.Find (Config.STAR1).GetComponent<UISprite> ();
+		star2UISprite = GameObject.Find (Config.STAR2).GetComponent<UISprite> ();
+		star3UISprite = GameObject.Find (Config.STAR3).GetComponent<UISprite> ();
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
 		panel100 = GameObject.Find (Config.PANEL100);
@@ -130,24 +140,19 @@ public class BattleGameManager : GameManager
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
 			string date = dataQuery.Date ();
-			dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
-
-			// Http
-			List<string> list = new List<string> ();
-			string[] tempBatleClear = new string[] {
-				numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date
-			};
-			for (int i = 0; i < tempBatleClear.Length; i++) {
-				list.Add (tempBatleClear[i]);
-			}
-
-//			httpComponent.Result (list);
-//			httpComponent.OnDone = () => {
-//			};
+			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
 			// score
 			if (FB.IsLoggedIn)
 			{
+				if (tempData != null) {
+					Dictionary<string, string> dictionary = new Dictionary<string, string> ();
+					for (int i = 0; i < tempData.Length; i++) {
+						dictionary.Add (dataQuery.questUserColumnName [i], tempData [i]);
+					}
+					httpComponent.Over (dictionary);
+				}
+
 //				var query = new Dictionary<string, string>();
 //				query[QueryModel.SCORE] = score.ToString();
 //				query["type"] = numberMax.ToString ();
@@ -320,6 +325,24 @@ public class BattleGameManager : GameManager
 		StartCoroutine (Shuffle ());
 	}
 
+	private void SetGuage ()
+	{
+		float temp = (float)score / (float)score3;
+		uIProgressbar.value = temp > 1 ? 1 : temp;
+
+		if (score >= score1 && star1UISprite.spriteName != GUAGE_STAR0) {
+			star1UISprite.spriteName = GUAGE_STAR0;
+		}
+
+		if (score >= score2 && star2UISprite.spriteName != GUAGE_STAR0) {
+			star2UISprite.spriteName = GUAGE_STAR0;
+		}
+
+		if (score >= score3 && star3UISprite.spriteName != GUAGE_STAR0) {
+			star3UISprite.spriteName = GUAGE_STAR0;
+		}
+	}
+
 	private IEnumerator SetAttack ()
 	{
 		clearCount++;
@@ -350,11 +373,13 @@ public class BattleGameManager : GameManager
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempFrist;
 		hpUILabel.text = "" + (score <= 0 ? 0 : score);
+		SetGuage ();
 		// Animation
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempLast;
 		hpUILabel.text = "" + (score <= 0 ? 0 : score);
+		SetGuage ();
 		// Animation
 
 		StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));

@@ -126,7 +126,7 @@ namespace HTTP
 			url = u;
 			headers = new Dictionary<string, string> ();
 			wWWFrom = new WWWForm ();
-			timeOut = 5f;
+			timeOut = 10f;
 			mDisposed = false;
 		}
 		

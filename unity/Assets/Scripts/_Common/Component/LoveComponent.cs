@@ -69,6 +69,13 @@ public class LoveComponent : MonoBehaviour
 
 	}
 
+	void OnApplicationPause(bool pauseStatus) {
+		Debug.Log ("LoveComponent OnApplicationPause : " + pauseStatus);
+		if (!pauseStatus) {
+			InitLove ();
+		}
+	}
+
 	private int ConvertTimeToSecond (string time)
 	{
 		int tempScond = 0;

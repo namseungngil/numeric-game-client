@@ -39,37 +39,6 @@ public class HttpComponent : MonoBehaviour
 		regGCMApnsFacebookCount = 0;
 	}
 
-	private void Callback (bool flag)
-	{
-		if (flag) {
-			Synchrozization ();
-		} else {
-			httpOnDone ();
-		}
-	}
-
-	private void Request (bool flag)
-	{
-		http.OnDone = (WWW www) => {
-			Debug.Log (www.text);
-			Callback (flag);
-		};
-		
-		// error
-		http.OnFail = (WWW www) => {
-			Debug.Log (www.error);
-			Callback (flag);
-		};
-		
-		// timed out
-		http.OnDisposed = () => {
-			Debug.Log ("Timed out");
-			Callback (flag);
-		};
-
-		http.Request ();
-	}
-
 	private IEnumerator RegGCMApnsFacebook (float time, bool synchrozization)
 	{
 		yield return new WaitForSeconds (time);
@@ -100,10 +69,7 @@ public class HttpComponent : MonoBehaviour
 			Debug.Log (DEVICE_KEY + " : " + key);
 			Debug.Log (GCM_APNS + " : " + id);
 
-			bool flag = false;
 			if (facebookManager.userID () != null) {
-				flag = synchrozization;
-
 				Debug.Log (FACEBOOK_ID + " : " + facebookManager.userID ());
 				http.AddData (FACEBOOK_ID, facebookManager.userID ());
 			}
@@ -131,44 +97,38 @@ public class HttpComponent : MonoBehaviour
 		}
 	}
 
-	private void Synchrozization ()
-	{
-		Debug.Log ("SetSynchrozization");
-		httpOnDone ();
-		////////////////////////////////////
-
-		////////////////////////////////////
-	}
-
-	private void QuestUser (List<string> list)
-	{
-		if (facebookManager.userID () == null) {
-			httpOnDone ();
-		}
-
-		string json = Json.Serialize (list);
-		Debug.Log (json);
-
-		string url = Config.URL + Config.BATTLE;
-		http = new WWWClient (this, url);
-		http.AddData ("json", json);
-
-		Request (false);
-	}
-
-	public void Result (List<string> list)
-	{
-		Debug.Log ("Http result");
-	}
-
 	public void Login (float regGCMApnsFacebookWaitTime, bool synchrozization = false)
 	{
 		Debug.Log ("Http login");
 		StartCoroutine (RegGCMApnsFacebook (regGCMApnsFacebookWaitTime, synchrozization));
 	}
 
-	public void Clear (string id, string stage, string score)
+	public void Over (Dictionary<string, string> data)
 	{
+		SSSceneManager.Instance.PopUp (Config.LOADING);
+		string url = Config.URL + Config.OVER;
+		http = new WWWClient (this, url);
+		http.AddData (Config.KEY_NAME, Config.KEY);
+		http.AddData (FACEBOOK_ID, FB.UserId);
+		foreach (KeyValuePair<string, string> kVP in data) {
+			http.AddData (kVP.Key, kVP.Value);
+		}
 
+		http.OnDone = (WWW www) => {
+			Debug.Log (www.text);
+			SSSceneManager.Instance.Close ();
+		};
+
+		http.OnFail = (WWW www) => {
+			Debug.Log (www.error);
+			SSSceneManager.Instance.Close ();
+		};
+
+		http.OnDisposed = () => {
+			Debug.Log ("Timed out");
+			SSSceneManager.Instance.Close ();
+		};
+
+		http.Request ();
 	}
 }

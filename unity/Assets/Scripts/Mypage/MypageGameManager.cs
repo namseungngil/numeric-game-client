@@ -25,9 +25,6 @@ public class MypageGameManager : GameManager
 	public const string DISABLE_QUEST = "-1";
 	private const int LAYERX = 4;
 	private const string BACKGROUND = "Background";
-	private const string STAR1 = "Star1";
-	private const string STAR2 = "Star2";
-	private const string STAR3 = "Star3";
 	private const string LOCK = "Lock";
 	private const string UNTAGGED = "Untagged";
 	// component
@@ -52,11 +49,11 @@ public class MypageGameManager : GameManager
 			foreach (UISprite u in uIButton.gameObject.GetComponentsInChildren<UISprite> ()) {
 				if (u.gameObject.name == BACKGROUND) {
 					tempQuestData.uISprite = u;
-				} else if (u.gameObject.name == STAR1) {
+				} else if (u.gameObject.name == Config.STAR1) {
 					tempQuestData.star1 = u;
-				} else if (u.gameObject.name == STAR2) {
+				} else if (u.gameObject.name == Config.STAR2) {
 					tempQuestData.star2 = u;
-				} else if (u.gameObject.name == STAR3) {
+				} else if (u.gameObject.name == Config.STAR3) {
 					tempQuestData.star3 = u;
 				} else if (u.gameObject.name == LOCK) {
 					tempQuestData.qlock = u;

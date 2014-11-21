@@ -27,12 +27,12 @@ public class StartUIManager : UIManager
 
 	public void GameStart ()
 	{
-		if (loveComponent != null) {
-			loveComponent.UseLove ();
-		}
+		if (loveComponent.UseLove ()) {
+			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
+			SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
+		} else {
 
-		SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
-		SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
+		}
 	}
 
 	public void Request ()
