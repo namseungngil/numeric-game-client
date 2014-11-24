@@ -72,7 +72,9 @@ public class LoveComponent : MonoBehaviour
 	void OnApplicationPause(bool pauseStatus) {
 		Debug.Log ("LoveComponent OnApplicationPause : " + pauseStatus);
 		if (!pauseStatus) {
-			InitLove ();
+			if (numericPlayerPrefs != null) {
+				InitLove ();
+			}
 		}
 	}
 
