@@ -117,16 +117,19 @@ public class HttpComponent : MonoBehaviour
 		http.OnDone = (WWW www) => {
 			Debug.Log (www.text);
 			SSSceneManager.Instance.Close ();
+			httpOnDone ();
 		};
 
 		http.OnFail = (WWW www) => {
 			Debug.Log (www.error);
 			SSSceneManager.Instance.Close ();
+			httpOnDone ();
 		};
 
 		http.OnDisposed = () => {
 			Debug.Log ("Timed out");
 			SSSceneManager.Instance.Close ();
+			httpOnDone ();
 		};
 
 		http.Request ();

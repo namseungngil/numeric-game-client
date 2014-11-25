@@ -80,12 +80,11 @@ public class Query
 			query += temp;
 			if (i < (columnName.Length - 1)) {
 				query += ",";
-			} else {
-				query += ";";
 			}
 		}
 
-		query += " " + whereQuery;
+		query += " " + whereQuery + ";";
+
 
 		return sqliteDatabase.ExecuteNonQuery (query);
 	}

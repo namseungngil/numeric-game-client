@@ -20,7 +20,7 @@ public class BattleUIManager : UIManager
 
 	public void BattleOnClick ()
 	{
-		Debug.Log ("BattleOnClick");
+//		Debug.Log ("BattleOnClick");
 		if (!battleGameManager.GetCheckStatus (GameStatus.Play)) {
 			return;
 		}

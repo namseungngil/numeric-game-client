@@ -31,6 +31,7 @@ public class BattleGameManager : GameManager
 	private const string NEXT = "Next";
 	private const string PROGRESS_BAR = "Progress Bar";
 	private const string GUAGE_STAR0 = "guage_star0";
+	private const string TIME = "Time";
 	private const float TIME_MAX = 60f;
 	// gameobject
 	private GameObject panel100;
@@ -46,6 +47,7 @@ public class BattleGameManager : GameManager
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
 	private UIProgressBar uIProgressbar;
+	private UIProgressBar timeUIProgressbar;
 	private UISprite star1UISprite;
 	private UISprite star2UISprite;
 	private UISprite star3UISprite;
@@ -77,6 +79,7 @@ public class BattleGameManager : GameManager
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		hpUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
+		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
 		star1UISprite = GameObject.Find (Config.STAR1).GetComponent<UISprite> ();
 		star2UISprite = GameObject.Find (Config.STAR2).GetComponent<UISprite> ();
 		star3UISprite = GameObject.Find (Config.STAR3).GetComponent<UISprite> ();
@@ -102,7 +105,9 @@ public class BattleGameManager : GameManager
 				StartCoroutine (Over ());
 			}
 
-			timerUILabel.text = "" + timer.ToString("N2");
+			float temp = timer / (float)TIME_MAX;
+			timeUIProgressbar.value = temp > 1 ? 1 : temp;
+			timerUILabel.text = "" + ((int)timer).ToString();
 		}
 	}
 
@@ -113,7 +118,7 @@ public class BattleGameManager : GameManager
 
 	private IEnumerator Over ()
 	{
-		gameStatus = GameStatus.Over;
+		SetStatus (GameStatus.Over);
 
 		bool flag = true;
 		if (score >= score3) {
@@ -142,6 +147,8 @@ public class BattleGameManager : GameManager
 			string date = dataQuery.Date ();
 			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
+			Debug.Log (tempData.Length);
+			Debug.Log (tempData);
 			// score
 			if (FB.IsLoggedIn)
 			{
@@ -150,6 +157,9 @@ public class BattleGameManager : GameManager
 					for (int i = 0; i < tempData.Length; i++) {
 						dictionary.Add (dataQuery.questUserColumnName [i], tempData [i]);
 					}
+					httpComponent.OnDone = () => {
+						SSSceneManager.Instance.PopUp (Config.OVER);
+					};
 					httpComponent.Over (dictionary);
 				}
 
@@ -159,16 +169,18 @@ public class BattleGameManager : GameManager
 //				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
 //					Debug.Log("Result: " + r.Text);
 //				}, query);
+			} else {
+				SSSceneManager.Instance.PopUp (Config.OVER);
 			}
+		} else {
+			SSSceneManager.Instance.PopUp (Config.OVER);
 		}
-
-		SSSceneManager.Instance.PopUp (Config.OVER);
 	}
 
 	private IEnumerator Ready ()
 	{
 		// Game status
-		gameStatus = GameStatus.Ready;
+		SetStatus (GameStatus.Ready);
 
 		panel200.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
@@ -188,7 +200,7 @@ public class BattleGameManager : GameManager
 	private IEnumerator Shuffle ()
 	{
 		// Game Status
-		gameStatus = GameStatus.Shuffle;
+		SetStatus (GameStatus.Shuffle);
 
 		firstString = null;
 		lastString = null;
@@ -298,7 +310,7 @@ public class BattleGameManager : GameManager
 
 		SetLabel ();
 
-		gameStatus = GameStatus.Play;
+		SetStatus (GameStatus.Play);
 	}
 
 	private void SetLabel ()
@@ -347,7 +359,7 @@ public class BattleGameManager : GameManager
 	{
 		clearCount++;
 		comboCount++;
-		gameStatus = GameStatus.Attack;
+		SetStatus (GameStatus.Attack);
 
 		int tempFrist = int.Parse (firstString);
 		int tempLast = int.Parse (lastString);
@@ -389,7 +401,7 @@ public class BattleGameManager : GameManager
 	{
 		missCount++;
 		comboCount = 0;
-		gameStatus = GameStatus.Miss;
+		SetStatus (GameStatus.Miss);
 
 		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
@@ -422,6 +434,15 @@ public class BattleGameManager : GameManager
 		}
 
 		return tempResult;
+	}
+
+	private void SetStatus (GameStatus gS)
+	{
+		if (gameStatus == GameStatus.Stop) {
+			return;
+		}
+
+		gameStatus = gS;
 	}
 
 	private int firstInt = 0;
@@ -474,7 +495,8 @@ public class BattleGameManager : GameManager
 		}
 	}
 
-	public bool GetCheckStatus (GameStatus gS) {
+	public bool GetCheckStatus (GameStatus gS)
+	{
 		return gameStatus == gS;
 	}
 
