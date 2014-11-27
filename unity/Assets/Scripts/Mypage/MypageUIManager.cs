@@ -7,11 +7,17 @@ public class MypageUIManager : UIManager
 	// const
 	private const string NEXT = "Next";
 	private const string BACK = "Back";
+	private const float MIN_SWIPTE_DISTANCE_PIXELS = 100f;
 	//gameobject
 	private GameObject upGameObject;
 	private GameObject downGameObject;
 	// component
 	private MypageGameManager mypageGameManager;
+	private Vector2 touchStartPos;
+	// variable
+	private bool popupFlag;
+	private bool touchStarted;
+	private float minSwipeDistancePixels;
 
 	public override void Awake ()
 	{
@@ -23,6 +29,10 @@ public class MypageUIManager : UIManager
 
 	public override void Start ()
 	{
+		popupFlag = false;
+		touchStarted = false;
+		minSwipeDistancePixels = MIN_SWIPTE_DISTANCE_PIXELS;
+
 		upGameObject = GameObject.Find (NEXT);
 		downGameObject = GameObject.Find (BACK);
 		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();
@@ -34,19 +44,88 @@ public class MypageUIManager : UIManager
 		if (!mypageGameManager.BackQuestStatus ()) {
 			downGameObject.SetActive (false);
 		}
+	}
 
+	void Update ()
+	{
+		if (Input.touchCount > 0) {
+			var touch = Input.touches [0];
+			
+			switch (touch.phase) {
+			case TouchPhase.Began:
+				touchStarted = true;
+				touchStartPos = touch.position;
+				break;
+			case TouchPhase.Ended:
+				if (touchStarted) {
+					TestForSwipeGesture (touch);
+					touchStarted = false;
+				}
+				break;
+			case TouchPhase.Canceled:				
+				touchStarted = false;
+				break;
+			case TouchPhase.Stationary:
+				break;
+			case TouchPhase.Moved:
+				break;
+			}
+		}
+	}
+
+	private void TestForSwipeGesture (Touch touch)
+	{
+		// test min distance
+		
+		var lastPos = touch.position;
+		var distance = Vector2.Distance (lastPos, touchStartPos);
+		
+		if (distance > minSwipeDistancePixels) {
+			float dy = lastPos.y - touchStartPos.y;
+			float dx = lastPos.x - touchStartPos.x;
+			
+			float angle = Mathf.Rad2Deg * Mathf.Atan2 (dx, dy);
+			
+			angle = (360 + angle - 45) % 360;
+			
+			Debug.Log (angle);
+			
+			if (angle < 90) {
+				// right
+			} else if (angle < 180) {
+				// down
+				Next ();
+			} else if (angle < 270) {
+				// left
+			} else {
+				// up
+				Back ();
+			}
+		}
+	}
+
+	private void PopupOnActive (SSController ctrl)
+	{
+		Debug.Log ("MypageUIManager popupOnActive");
+		popupFlag = true;
+	}
+
+	private void PopupOnDeActive (SSController ctrl)
+	{
+		Debug.Log ("MypageUIManager popupOnDeActive");
+		popupFlag = false;
 	}
 
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
-			SSSceneManager.Instance.PopUp (Config.LOVE);
+			SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeActive);
 		}
 	}
 
 	public void Setting ()
 	{
-		SSSceneManager.Instance.PopUp (Config.SETTING);	
+		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeActive);	
 	}
 
 	public void GameStart ()
@@ -56,16 +135,23 @@ public class MypageUIManager : UIManager
 			return;
 		}
 		SenceData.stageLevel = temp;
-		SSSceneManager.Instance.PopUp (Config.START);
+
+		SSSceneManager.Instance.PopUp (Config.START, null, PopupOnActive, PopupOnDeActive);
 	}
 
 	public void Next ()
 	{
+		if (popupFlag) {
+			return;
+		}
 		mypageGameManager.NextQuest ();
 	}
 
 	public void Back ()
 	{
+		if (popupFlag) {
+			return;
+		}
 		mypageGameManager.BackQuest ();
 	}
 }

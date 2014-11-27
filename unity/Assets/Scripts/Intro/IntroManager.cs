@@ -61,7 +61,7 @@ public class IntroManager : MonoBehaviour
 	{
 		HttpComponent httpManager = gameObject.GetComponent<HttpComponent> ();
 		httpManager.Login (Config.REG_GCM_APNS_FACEBOOK_WAIT, true);
-		httpManager.OnDone = () => {
+		httpManager.OnDone = (object obj) => {
 			LoginCallback ();
 		};
 	}

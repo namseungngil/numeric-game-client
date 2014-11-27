@@ -27,9 +27,10 @@ public class MypageGameManager : GameManager
 	private const string BACKGROUND = "Background";
 	private const string LOCK = "Lock";
 	private const string UNTAGGED = "Untagged";
+
 	// component
 	private QueryModel dataQuery;
-	Register register;
+	private Register register;
 	private UIAtlas uIAtlas;
 	// array
 	public UIAtlas[] map;
@@ -37,7 +38,7 @@ public class MypageGameManager : GameManager
 	// variable
 	private int index;
 	private bool nextFlag;
-
+	
 	void Start ()
 	{
 		GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ().Set ();
@@ -129,15 +130,15 @@ public class MypageGameManager : GameManager
 			for (int i = 0; i < dataTable.Rows.Count; i++) {
 				int score = (int)dataTable [i] [QueryModel.SCORE];
 
-				int stage = int.Parse (quest[i].myself.name);
+				int stage = int.Parse (quest [i].myself.name);
 
 				List<int> list = Game.Score (stage);
-				if (score >= list[0]) {
-					quest[i].star1.gameObject.SetActive (true);
-					if (score >= list[1]) {
-						quest[i].star2.gameObject.SetActive (true);
-						if (score >= list[2]) {
-							quest[i].star3.gameObject.SetActive (true);
+				if (score >= list [0]) {
+					quest [i].star1.gameObject.SetActive (true);
+					if (score >= list [1]) {
+						quest [i].star2.gameObject.SetActive (true);
+						if (score >= list [2]) {
+							quest [i].star3.gameObject.SetActive (true);
 						}
 					}
 				}
@@ -146,15 +147,20 @@ public class MypageGameManager : GameManager
 
 		// set next quest
 		if (!nextFlag) {
-			quest[dataTable.Rows.Count].uISprite.gameObject.SetActive (false);
+			quest [dataTable.Rows.Count].uISprite.gameObject.SetActive (false);
 		}
 
 		// set impossible quest
 		for (int i = dataTable.Rows.Count + 1; i < quest.Count; i++) {
-			quest[i].myself.name = DISABLE_QUEST;
-			quest[i].uISprite.gameObject.SetActive (false);
-			quest[i].qlock.gameObject.SetActive (true);
+			quest [i].myself.name = DISABLE_QUEST;
+			quest [i].uISprite.gameObject.SetActive (false);
+			quest [i].qlock.gameObject.SetActive (true);
 		}
+	}
+
+	protected override void AndroidBackButton ()
+	{
+		Application.Quit ();
 	}
 
 	public void NextQuest ()
@@ -195,10 +201,5 @@ public class MypageGameManager : GameManager
 		}
 
 		return false;
-	}
-
-	protected override void AndroidBackButton ()
-	{
-		Application.Quit ();
 	}
 }

@@ -37,6 +37,10 @@ public class StartUIManager : UIManager
 
 	public void Request ()
 	{
+		if (UIButton.current.name == FacebookManager.BUTTON) {
+			return;
+		}
+
 		if (startFacebookManager != null) {
 			string[] temp = new string[] {
 				UIButton.current.name

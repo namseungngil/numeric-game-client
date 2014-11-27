@@ -2,15 +2,32 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class StartFacebookManager : FacebookManager
 {
 	// gameobject
 	private GameObject ranks;
+	// compoent
+	private HttpComponent httpComponent;
+	// array
+	private static List<object> friends = null;
+	private List<string> rankFriendsList;
 
 	protected override void Start ()
 	{
+		ranks = gameObject.GetComponentInChildren<UIWidget> ().gameObject;
+		httpComponent = gameObject.GetComponentInParent<HttpComponent> ();
+
 		if (FB.IsLoggedIn) {
+			UITexture uITexture = GetChildObject (ranks, TEXTURE).GetComponent<UITexture> ();
+			UILabel uILabel1 = GetChildObject (ranks, LABEL1).GetComponent<UILabel> ();
+			UILabel uILabel2 = GetChildObject (ranks, LABEL2).GetComponent<UILabel> ();
+			if (userTexture != null) {
+				uITexture.mainTexture = userTexture;
+			}
+			uILabel1.text = QUESTION_MARK;
+			uILabel2.text = QUESTION_MARK;
 			QueryScores ();
 		}
 
@@ -18,16 +35,68 @@ public class StartFacebookManager : FacebookManager
 		if (temp != null) {
 			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
-
-		ranks = gameObject.GetComponentInChildren<UIWidget> ().gameObject;
-//		Test ();
 	}
 
 	private void QueryScores ()
 	{
-		FB.API (SCORES_QUERY, Facebook.HttpMethod.GET, ScoresCallback);
+		string tempFriends = FRIENDS_QUERY;
+		Debug.Log (tempFriends);
+
+		if (rankFriendsList != null && rankFriendsList.Count > 0) {
+			Rank ();
+		} else {
+			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
+		}
 	}
 
+	private void FriendsCallback (FBResult result)
+	{
+		Debug.Log ("FriendsCallback");
+		
+		if (result.Error != null) {
+			Debug.Log ("FriendsCallback error : " + result.Error);
+			
+			// Let's just try again
+			string temp = FRIENDS_QUERY;
+			FB.API (temp, Facebook.HttpMethod.GET, FriendsCallback);
+			return;
+		}
+		
+		friends = DeserializeJSONFriends (result.Text);
+		rankFriendsList = new List<string> ();
+		rankFriendsList.Add (FB.UserId);
+		Debug.Log ("StarFacebookManager friendsCallback count : " + friends.Count);
+
+		if (friends.Count > 0) {
+			foreach (Dictionary<string, object> friend in friends) {
+				rankFriendsList.Add (friend ["id"].ToString ());
+			}
+		}
+		Rank ();
+	}
+
+	private void Rank ()
+	{
+		if (rankFriendsList == null) {
+			return;
+		}
+
+		httpComponent.OnDone = (object obj) => {
+			Dictionary<string, int> dic;
+			if ((dic = obj as Dictionary<string, int>) != null) {
+				var items = from pair in dic
+					orderby pair.Value ascending
+						select pair;
+
+				foreach (KeyValuePair<string, int> kVP in items) {
+
+				}
+			}
+		};
+		
+		httpComponent.StartGame (rankFriendsList, SenceData.stageLevel);
+	}
+	
 	private void ScoresCallback (FBResult result)
 	{
 		Debug.Log ("ScoresCallback");
@@ -35,8 +104,8 @@ public class StartFacebookManager : FacebookManager
 			Debug.LogError (result.Error);
 			return;
 		}
-
-//		List<object> scores = new List<object> ();
+		
+		//		List<object> scores = new List<object> ();
 		Debug.Log (result.Text);
 		List<object> scoresList = DeserializeScores (result.Text);
 		if (scoresList.Count > 0) {
@@ -62,7 +131,7 @@ public class StartFacebookManager : FacebookManager
 				UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
 				UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
 				UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
-				UIButton uIButton = GetChildObject (gObj, "Button").GetComponent<UIButton> ();
+				UIButton uIButton = GetChildObject (gObj, BUTTON).GetComponent<UIButton> ();
 
 				rank ++;
 				uILabel1.text = rank.ToString ();
@@ -115,8 +184,6 @@ public class StartFacebookManager : FacebookManager
 			uILabel1.text = rank.ToString ();
 			uILabel2.text = name + "\n" + tempScore;
 			uIButton.name = i.ToString ();
-
-
 		}
 		
 		ranks.SetActive (false);

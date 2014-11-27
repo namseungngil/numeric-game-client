@@ -22,7 +22,7 @@ public class SceneComponent : MonoBehaviour
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), fadeTexture);
 	}
 
-	void FixedUpdaet ()
+	void FixedUpdate ()
 	{
 		currentColor = Color.Lerp (startColor, endColor, Time.time / time);
 	}

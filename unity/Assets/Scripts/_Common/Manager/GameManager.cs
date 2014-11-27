@@ -4,9 +4,8 @@ using System.Collections;
 public abstract class GameManager : MonoBehaviour
 {
 	// variable
-	private float cameraShake = 0;
-	private float shakeAmount = 0.7f;
-	private float decreaseFactor = 1.0f;
+	private float shakeAmount = 0.2f;
+	private float shakeTime = 0.2f;
 
 	protected virtual void Update ()
 	{
@@ -16,23 +15,13 @@ public abstract class GameManager : MonoBehaviour
 				AndroidBackButton ();
 			}
 		}
-
-		if (cameraShake > 0) {
-			Camera.main.transform.localPosition = Random.insideUnitSphere * shakeAmount;
-			cameraShake -= Time.deltaTime * decreaseFactor;
-
-			if (cameraShake < 0) {
-				cameraShake = 0;
-			}
-		}
-	
 	}
 
 	protected abstract void AndroidBackButton ();
 
-	protected void CameraShake (float value = 1.0f)
+	protected void CameraShake ()
 	{
-		cameraShake = value;
+		iTween.ShakePosition (Camera.main.transform.gameObject, iTween.Hash ("x", shakeAmount, "time", shakeTime));
 	}
 
 	void OnApplicationPause(bool pauseStatus) {

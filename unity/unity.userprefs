@@ -1,12 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Start/StartFacebookManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Root/SceneManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Root/SceneManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="110" Column="49" />
-      <File FileName="Assets/Scripts/Battle/BattleUIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="102" Column="28" />
+      <File FileName="Assets/Scripts/Start/StartFacebookManager.cs" Line="84" Column="43" />
+      <File FileName="Assets/Scripts/_Common/Manager/FacebookManager.cs" Line="28" Column="36" />
+      <File FileName="Assets/Scripts/Love/LoveFacebookManager.cs" Line="6" Column="51" />
+      <File FileName="Assets/Scripts/Love/LoveUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="38" Column="49" />
+      <File FileName="Assets/Scripts/Start/StartUIManager.cs" Line="52" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="161" Column="46" />
+      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="116" Column="21" />
+      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="168" Column="61" />
+      <File FileName="../../star-game-client/Assets/Scripts/Login/ResourceManager.cs" Line="144" Column="6" />
+      <File FileName="Assets/Scripts/Mypage/MypageFacebookManager.cs" Line="31" Column="40" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

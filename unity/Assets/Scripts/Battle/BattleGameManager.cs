@@ -32,7 +32,15 @@ public class BattleGameManager : GameManager
 	private const string PROGRESS_BAR = "Progress Bar";
 	private const string GUAGE_STAR0 = "guage_star0";
 	private const string TIME = "Time";
+	private const string BONUS = "Bonus";
+	private const string TIME_BACKGROUND = "TimeBackground";
+	private const string BATTLE_T00 = "battle_t00";
+	private const string BATTLE_T08 = "battle_t08";
+	private const string BATTLE_TIME01 = "battle_time01";
+	private const string BATTLE_TIME02 = "battle_time02";
+	private const string BATTLE_TIME03 = "battle_time03";
 	private const float TIME_MAX = 60f;
+	private const float BONUS_TIME = 5f;
 	// gameobject
 	private GameObject panel100;
 	private GameObject panel200;
@@ -51,6 +59,8 @@ public class BattleGameManager : GameManager
 	private UISprite star1UISprite;
 	private UISprite star2UISprite;
 	private UISprite star3UISprite;
+	private UISprite timerUISprite;
+	private UILabel bonusUILabel;
 	// array
 	private UILabel[] cardUILabel = new UILabel[Config.CARD_COUNT];
 	private string[] MARK_TEXT = new string[] {"?", "?"};
@@ -78,11 +88,14 @@ public class BattleGameManager : GameManager
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		hpUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
+		bonusUILabel = GameObject.Find (BONUS).GetComponent<UILabel> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
 		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
 		star1UISprite = GameObject.Find (Config.STAR1).GetComponent<UISprite> ();
 		star2UISprite = GameObject.Find (Config.STAR2).GetComponent<UISprite> ();
 		star3UISprite = GameObject.Find (Config.STAR3).GetComponent<UISprite> ();
+		timerUISprite = GameObject.Find (TIME_BACKGROUND).GetComponent<UISprite> ();
+
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
 		panel100 = GameObject.Find (Config.PANEL100);
@@ -105,15 +118,25 @@ public class BattleGameManager : GameManager
 				StartCoroutine (Over ());
 			}
 
-			float temp = timer / (float)TIME_MAX;
-			timeUIProgressbar.value = temp > 1 ? 1 : temp;
-			timerUILabel.text = "" + ((int)timer).ToString();
+			SetTimer ();
 		}
 	}
 
 	protected override void AndroidBackButton ()
 	{
 		battleUIManager.Stop ();
+	}
+
+	private void SetTimer ()
+	{
+		float temp = timer / (float)TIME_MAX;
+		if (temp <= 0.4) {
+			timerUISprite.spriteName = BATTLE_T08;
+		} else {
+			timerUISprite.spriteName = BATTLE_T00;
+		}
+		timeUIProgressbar.value = temp > 1 ? 1 : temp;
+		timerUILabel.text = "" + ((int)timer).ToString();
 	}
 
 	private IEnumerator Over ()
@@ -147,28 +170,19 @@ public class BattleGameManager : GameManager
 			string date = dataQuery.Date ();
 			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
-			Debug.Log (tempData.Length);
-			Debug.Log (tempData);
 			// score
 			if (FB.IsLoggedIn)
 			{
 				if (tempData != null) {
-					Dictionary<string, string> dictionary = new Dictionary<string, string> ();
+					Dictionary<string, string> dic = new Dictionary<string, string> ();
 					for (int i = 0; i < tempData.Length; i++) {
-						dictionary.Add (dataQuery.questUserColumnName [i], tempData [i]);
+						dic.Add (dataQuery.questUserColumnName [i], tempData [i]);
 					}
-					httpComponent.OnDone = () => {
+					httpComponent.OnDone = (object obj) => {
 						SSSceneManager.Instance.PopUp (Config.OVER);
 					};
-					httpComponent.Over (dictionary);
+					httpComponent.Over (dic);
 				}
-
-//				var query = new Dictionary<string, string>();
-//				query[QueryModel.SCORE] = score.ToString();
-//				query["type"] = numberMax.ToString ();
-//				FB.API(FacebookManager.ME_SCORE_QUERY, Facebook.HttpMethod.POST, delegate(FBResult r) {
-//					Debug.Log("Result: " + r.Text);
-//				}, query);
 			} else {
 				SSSceneManager.Instance.PopUp (Config.OVER);
 			}
@@ -221,10 +235,8 @@ public class BattleGameManager : GameManager
 
 		UILabel[] panel100UILabel = panel100.GetComponentsInChildren<UILabel> ();
 		int numberCount = 0;
-
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
-//				Debug.Log (temp[numberCount]);
 				cardUILabel[numberCount] = uiLabel;
 				cardString[numberCount] = temp[numberCount];
 				uiLabel.text = temp[numberCount];
@@ -235,6 +247,7 @@ public class BattleGameManager : GameManager
 		}
 
 		problemUILabel.text = "";
+		bonusUILabel.text = cardString [Random.Range (0, 9)];
 	}
 
 	private void ProblemLogic ()
@@ -265,7 +278,6 @@ public class BattleGameManager : GameManager
 
 			List<int> temp2Result = new List<int> ();
 			for (int i = tempInt.Count - 1; i >= 0; i--) {
-				Debug.Log (tempInt[i]);
 				for (int j = i - 1; j >= 0; j--) {
 					int cal2Result = tempInt[i] - tempInt[j];
 					temp2Result.Add (cal2Result);
@@ -367,6 +379,12 @@ public class BattleGameManager : GameManager
 			hitCount++;
 		}
 
+		int bonus = int.Parse (bonusUILabel.text);
+		if (tempFrist == bonus || tempLast == bonus) {
+			timer += BONUS_TIME;
+			SetTimer ();
+		}
+
 		string tempString = "Attack";
 		int tempCombo = comboCount - 1;
 		if (tempCombo >= 1) {
@@ -449,7 +467,6 @@ public class BattleGameManager : GameManager
 	private int lastInt = 0;
 	public void SetNumber (int length)
 	{
-		Debug.Log (gameStatus);
 		if (gameStatus != GameStatus.Play || firstString == cardString[length]) {
 			return;
 		}
@@ -487,7 +504,6 @@ public class BattleGameManager : GameManager
 		}
 
 		int tempResult = MainLogic (firstInt, lastInt);
-		Debug.Log ("result : " + tempResult);
 		if (tempResult == result) {
 			StartCoroutine (SetAttack ());
 		} else {

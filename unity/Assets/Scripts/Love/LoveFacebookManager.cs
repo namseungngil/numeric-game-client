@@ -6,16 +6,16 @@ using MiniJSON;
 public class LoveFacebookManager : FacebookManager
 {
 	// gameobject
-	private GameObject firend;
+	public GameObject firend;
 	// component
 	private LoveUIManager loveUIManager;
 	// array
 	private List<object> friends = null;
-
+	
 	protected override void Start ()
 	{
+		Debug.Log ("LoveFacebookManager Start");
 		count = 0;
-		firend = gameObject.GetComponentInChildren<UIToggle> ().gameObject;
 		loveUIManager = gameObject.GetComponentInParent<LoveUIManager> ();
 		if (loveUIManager != null) {
 			uIManager = loveUIManager;
@@ -26,7 +26,16 @@ public class LoveFacebookManager : FacebookManager
 			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
 
-		Friends ();
+		string tempFriends = FRIENDS_QUERY;
+		
+		if (FB.IsLoggedIn) {
+//			if (friends != null && friends.Count > 0) {
+//				FriendsView ();
+//			} else {
+			Debug.Log (tempFriends);
+			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
+//			}
+		}
 	}
 
 	private void FriendsCallback (FBResult result)
@@ -43,72 +52,46 @@ public class LoveFacebookManager : FacebookManager
 		}
 		
 		friends = DeserializeJSONFriends (result.Text);
-		Debug.Log ("friend count : " + friends.Count);
 
+		FriendsView ();
+	}
+
+	private void FriendsView ()
+	{
+		Debug.Log ("friend count : " + friends.Count);
+		Debug.Log (firend);
 		if (friends.Count > 0) {
-			foreach (Dictionary<string, object> friend in friends) {
-				Debug.Log ("[" + (string)friend ["first_name"] + " - " + (string)friend ["last_name"] + "]");
-	
+			foreach (Dictionary<string, object> f in friends) {
+				Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
+				
 				GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-				gObj.name = friend ["id"].ToString ();
+				Debug.Log (gObj);
+				gObj.name = f ["id"].ToString ();
 				gObj.transform.parent = this.transform;
 				gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
 				Vector3 vector3 = gObj.transform.localPosition;
 				gObj.transform.localPosition = new Vector3 (0, vector3.y, vector3.z);
-
+				
 				UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
 				UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
 				UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
+				
+				uILabel1.text = f ["first_name"].ToString ();
+				uILabel2.text = f ["last_name"].ToString ();
 
-				uILabel1.text = friend ["first_name"].ToString ();
-				uILabel2.text = friend ["last_name"].ToString ();
-
-				LoadPictureAPI (GetPictureURL (friend ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
+				LoadPictureAPI (GetPictureURL (f ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
 				{
 					if (pictureTexture != null) {
 						uITexture.mainTexture = pictureTexture;
 					}
 				});
+
 			}
 
-			firend.SetActive (false);
 			gameObject.GetComponent<UIGrid> ().Reposition ();
 		} else {
 			// loading...
-			firend.SetActive (false);
-		}
-	}
-	
-	private void Friends ()
-	{
-		string tempFriends = FRIENDS_QUERY;
-		Debug.Log (tempFriends);
 
-//		for (int i = 0; i < 10; i++) {
-//			GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-//			gObj.name = i.ToString ();
-//			gObj.transform.parent = this.transform;
-//			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
-//			Vector3 vector3 = gObj.transform.localPosition;
-//			gObj.transform.localPosition = new Vector3 (0, vector3.y, vector3.z);
-//			
-//			UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
-//			UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
-//			UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
-//			
-//			uILabel1.text = i.ToString ();
-//			uILabel2.text = i.ToString ();
-//		}
-//
-//		firend.SetActive (false);
-//		gameObject.GetComponent<UIGrid> ().Reposition ();
-
-		if (friends != null) {
-			return;
-		}
-		
-		if (FB.IsLoggedIn) {
-			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
 		}
 	}
 }

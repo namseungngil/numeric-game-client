@@ -9,21 +9,25 @@ public class FacebookManager : MonoBehaviour
 {
 	// const
 	public const string ME_SCORE_QUERY = "/me/scores";
+	protected const string ME_QUERY = "/me?fields=id,frist_name,last_name";
 	protected const string SCORES_QUERY = "/app/scores?fields=score,user.limit(20)";
 	protected const string FRIENDS_QUERY = "/me?fields=friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+	protected const string INVITABLE_FRIENDS_QUERY = "/me?fields=invitable_friends.fields(id)";
 	protected const int TEXTURE_SIZE = 128;
+	public const string BUTTON = "Button";
 	protected const string TEXTURE = "Texture";
 	protected const string LABEL1 = "Label1";
 	protected const string LABEL2 = "Label2";
+	protected const string QUESTION_MARK = "?";
 	
 //	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
 
 	// component
+	public static Texture userTexture;
+	public static string userFristName;
+	public static string userLastName;
 	protected LoveComponent loveComponent;
 	protected UIManager uIManager;
-	protected Texture userTexture;
-	// array
-//	protected List<object> friends = null;
 	// variable
 	protected int count;
 	 
@@ -155,6 +159,18 @@ public class FacebookManager : MonoBehaviour
 		userTexture = texture;
 	}
 
+	protected Dictionary<string, string> DeserializeJSONProfile(string response)
+	{
+		var responseObject = Json.Deserialize(response) as Dictionary<string, object>;
+		object nameH;
+		var profile = new Dictionary<string, string>();
+		if (responseObject.TryGetValue("first_name", out nameH))
+		{
+			profile["first_name"] = (string)nameH;
+		}
+		return profile;
+	}
+	
 	protected Dictionary<string, string> RandomFriend(List<object> friends)
 	{
 		var fd = ((Dictionary<string, object>)(friends[UnityEngine.Random.Range(0, friends.Count)]));
@@ -169,6 +185,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected List<object> DeserializeJSONFriends (string response)
 	{
+//		Debug.Log (response);
 		var responseObject = Json.Deserialize(response) as Dictionary<string, object>;
 		object friendsH;
 		var friends = new List<object>();

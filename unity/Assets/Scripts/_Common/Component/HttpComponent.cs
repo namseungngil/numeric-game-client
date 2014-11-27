@@ -1,25 +1,31 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using HTTP;
 using MiniJSON;
 
 public class HttpComponent : MonoBehaviour
 {
 	// delegate
-	public delegate void FinishedDelegate ();
-	public FinishedDelegate OnDone
-	{
+	public delegate void FinishedDelegate (object obj);
+
+	public FinishedDelegate OnDone {
 		set {
 			httpOnDone = value;
 		}
 	}
+
 	private FinishedDelegate httpOnDone;
 
 	// const
 	private const string DEVICE_KEY = "deviceKey";
 	private const string GCM_APNS = "GCMApns";
 	private const string FACEBOOK_ID = "facebookID";
+	private const string FACEBOOK_JSON = "facebookJson";
+	private const string RESULT = "result";
+	private const string COMMA = ",";
 	// component
 	private GCMComponent gCMComponent;
 	private ApnsComponent apnsComponent;
@@ -76,24 +82,32 @@ public class HttpComponent : MonoBehaviour
 
 			http.OnDone = (WWW www) => {
 				Debug.Log (www.text);
-				httpOnDone ();
+				httpOnDone (null);
 			};
 			
 			// error
 			http.OnFail = (WWW www) => {
 				Debug.Log (www.error);
-				httpOnDone ();
+				httpOnDone (null);
 			};
 			
 			// timed out
 			http.OnDisposed = () => {
 				Debug.Log ("Timed out");
-				httpOnDone ();
+				httpOnDone (null);
 			};
 			
 			http.Request ();
 		} else {
-			httpOnDone ();
+			httpOnDone (null);
+		}
+	}
+
+	private void PopupCancel ()
+	{
+		GameObject gObj = GameObject.Find (Config.LOADING);
+		if (gObj != null) {
+			gObj.GetComponent<LoadingUIManager> ().Cancel ();
 		}
 	}
 
@@ -105,7 +119,8 @@ public class HttpComponent : MonoBehaviour
 
 	public void Over (Dictionary<string, string> data)
 	{
-		SSSceneManager.Instance.PopUp (Config.LOADING);
+		Debug.Log ("HttpComponent Over");
+//		SSSceneManager.Instance.PopUp (Config.LOADING);
 		string url = Config.URL + Config.OVER;
 		http = new WWWClient (this, url);
 		http.AddData (Config.KEY_NAME, Config.KEY);
@@ -116,20 +131,63 @@ public class HttpComponent : MonoBehaviour
 
 		http.OnDone = (WWW www) => {
 			Debug.Log (www.text);
-			SSSceneManager.Instance.Close ();
-			httpOnDone ();
+//			PopupCancel ();
+			httpOnDone (null);
 		};
 
 		http.OnFail = (WWW www) => {
 			Debug.Log (www.error);
-			SSSceneManager.Instance.Close ();
-			httpOnDone ();
+//			PopupCancel ();
+			httpOnDone (null);
 		};
 
 		http.OnDisposed = () => {
 			Debug.Log ("Timed out");
-			SSSceneManager.Instance.Close ();
-			httpOnDone ();
+//			PopupCancel ();
+			httpOnDone (null);
+		};
+
+		http.Request ();
+	}
+
+	public void StartGame (List<string> l, string stage)
+	{
+		Debug.Log ("HttpComponent Start");
+		string url = Config.URL + Config.START;
+		http = new WWWClient (this, url);
+		http.AddData (Config.KEY_NAME, Config.KEY);
+		http.AddData (FACEBOOK_ID, FB.UserId);
+		http.AddData (QueryModel.STAGE, stage);
+
+		string temp = Json.Serialize (l);
+		Debug.Log (temp);
+		http.AddData (FACEBOOK_JSON, temp);
+
+		http.OnDone = (WWW www) => {
+			Debug.Log (www.text);
+			Dictionary <string, int> dic = new Dictionary<string, int> ();
+
+			IDictionary iDictionary = (IDictionary)Json.Deserialize (www.text);
+			IList iList = (IList)iDictionary [RESULT];
+			if (iList.Count > 0) {
+				foreach (string str in iList) {
+					string[] tempString = str.Split (new string[] {COMMA}, StringSplitOptions.None);
+					dic.Add (tempString [0], int.Parse (tempString [1]));
+				}
+				httpOnDone (dic);
+			} else {
+				httpOnDone (null);
+			}
+		};
+
+		http.OnFail = (WWW www) => {
+			Debug.Log (www.error);
+			httpOnDone (null);
+		};
+
+		http.OnDisposed = () => {
+			Debug.Log ("Time out");
+			httpOnDone (null);
 		};
 
 		http.Request ();

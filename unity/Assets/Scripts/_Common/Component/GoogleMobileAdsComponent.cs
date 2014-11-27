@@ -14,9 +14,9 @@ public class GoogleMobileAdsComponent: MonoBehaviour
 		bannerView.Show ();
 	}
 
-//    void OnGUI()
-//    {
-//        // Puts some basic buttons onto the screen.
+    void OnGUI()
+    {
+        // Puts some basic buttons onto the screen.
 //        GUI.skin.button.fontSize = (int) (0.05f * Screen.height);
 //
 //        Rect requestBannerRect = new Rect(0.1f * Screen.width, 0.05f * Screen.height,
@@ -25,14 +25,14 @@ public class GoogleMobileAdsComponent: MonoBehaviour
 //        {
 //            RequestBanner();
 //        }
-//
+
 //        Rect showBannerRect = new Rect(0.1f * Screen.width, 0.175f * Screen.height,
 //                                       0.8f * Screen.width, 0.1f * Screen.height);
 //        if (GUI.Button(showBannerRect, "Show Banner"))
 //        {
 //            bannerView.Show();
 //        }
-//
+
 //        Rect hideBannerRect = new Rect(0.1f * Screen.width, 0.3f * Screen.height,
 //                                       0.8f * Screen.width, 0.1f * Screen.height);
 //        if (GUI.Button(hideBannerRect, "Hide Banner"))
@@ -67,7 +67,7 @@ public class GoogleMobileAdsComponent: MonoBehaviour
 //        {
 //            interstitial.Destroy();
 //        }
-//    }
+    }
 
     private void RequestBanner()
     {

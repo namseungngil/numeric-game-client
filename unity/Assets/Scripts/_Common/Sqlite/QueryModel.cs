@@ -109,11 +109,7 @@ public class QueryModel : Query
 			returnflag = INSERT (QUEST_USER, questUserColumnName, data);
 		}
 
-		if (returnflag) {
-			return data;
-		} else {
-			return null;
-		}
+		return data;
 	}
 
 	public void DBDelete ()

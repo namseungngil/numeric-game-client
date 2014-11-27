@@ -18,6 +18,8 @@
 	// systemLanguage
 	public const string KOREAN = "Korean";
 	public const string JAPANESE = "Japanese";
+	// layer
+	public const string PUI = "PUI";
 	// gameobject
 	public const string UIROOT = "UI Root (2D)";
 	public const string LABEL = "Label";
