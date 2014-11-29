@@ -6,28 +6,28 @@ public class MypageFacebookManager : FacebookManager
 	protected override void Start ()
 	{
 		if (FB.IsLoggedIn) {
+			Debug.Log ("Me Data");
 			if (userTexture == null) {
 				MyPicktureCallback (userTexture);
-			}
-
-			if (userFristName == null || userLastName == null) {
-				FB.API(ME_QUERY, Facebook.HttpMethod.GET, APICallback);
 			}
 		}
 	}
 
-	void APICallback(FBResult result)
+	public void SetMeFicture (UITexture u)
 	{
-		if (result.Error != null)
-		{
-			Debug.Log (result.Error);
-			// Let's just try again
-			FB.API(ME_QUERY, Facebook.HttpMethod.GET, APICallback);
-			return;
+		if (FB.IsLoggedIn) {
+			Debug.Log ("Me Data");
+			if (userTexture == null) {
+				LoadPictureAPI (GetPictureURL (FB.UserId, TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
+				{
+					if (pictureTexture != null) {
+						userTexture = pictureTexture;
+						u.mainTexture = pictureTexture;
+					}
+				});
+			} else {
+				u.mainTexture = userTexture;
+			}
 		}
-//		
-		var profile = DeserializeJSONProfile(result.Text);
-		userFristName = profile ["first_name"];
-		userLastName = profile ["last_name"];
 	}
 }

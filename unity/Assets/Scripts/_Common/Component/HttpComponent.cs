@@ -166,11 +166,15 @@ public class HttpComponent : MonoBehaviour
 		http.OnDone = (WWW www) => {
 			Debug.Log (www.text);
 			Dictionary <string, int> dic = new Dictionary<string, int> ();
-
 			IDictionary iDictionary = (IDictionary)Json.Deserialize (www.text);
+
 			IList iList = (IList)iDictionary [RESULT];
 			if (iList.Count > 0) {
 				foreach (string str in iList) {
+					if (str == "null") {
+						httpOnDone (null);
+						return;
+					}
 					string[] tempString = str.Split (new string[] {COMMA}, StringSplitOptions.None);
 					dic.Add (tempString [0], int.Parse (tempString [1]));
 				}

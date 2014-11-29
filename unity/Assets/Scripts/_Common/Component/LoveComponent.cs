@@ -61,10 +61,14 @@ public class LoveComponent : MonoBehaviour
 			if (loveTimeUILabel != null) {
 				loveTimeUILabel.text = timeLabel;
 			}
+		} else {
+			if (loveTimeUILabel != null) {
+				loveTimeUILabel.text = "MAX";
+			}
 		}
 		
 		if (loveCountUILabel != null) {
-			loveCountUILabel.text = "" + love + "/" + Config.LOVE_MAX;
+			loveCountUILabel.text = love.ToString ();
 		}
 
 	}

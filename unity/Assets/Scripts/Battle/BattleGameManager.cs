@@ -42,8 +42,8 @@ public class BattleGameManager : GameManager
 	private const float TIME_MAX = 60f;
 	private const float BONUS_TIME = 5f;
 	// gameobject
+	private GameObject panel1;
 	private GameObject panel100;
-	private GameObject panel200;
 	// component
 	private GameStatus gameStatus;
 	private UILabel problemUILabel;
@@ -98,12 +98,12 @@ public class BattleGameManager : GameManager
 
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
+		panel1 = GameObject.Find (Config.PANEL1);
 		panel100 = GameObject.Find (Config.PANEL100);
-		panel200 = GameObject.Find (Config.PANEL200);
 
-		panel200Animation = panel200.GetComponentInChildren<Animation> ();
-		panel200UILabel = panel200.GetComponentInChildren<UILabel> ();
-		panel200TweenPosition = panel200.GetComponentInChildren<TweenPosition> ();
+		panel200Animation = panel100.GetComponentInChildren<Animation> ();
+		panel200UILabel = panel100.GetComponentInChildren<UILabel> ();
+		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> ();
 
 		BattleStart ();
 	}
@@ -154,7 +154,7 @@ public class BattleGameManager : GameManager
 			flag = false;
 		}
 
-		panel200.SetActive (true);
+		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 
 		string temp = TIME_OVER_TEXT;
@@ -196,7 +196,7 @@ public class BattleGameManager : GameManager
 		// Game status
 		SetStatus (GameStatus.Ready);
 
-		panel200.SetActive (true);
+		panel100.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
 		panel200UILabel.text = READY_TEXT;
@@ -206,8 +206,8 @@ public class BattleGameManager : GameManager
 		panel200UILabel.text = START_TEXT;
 		yield return new WaitForSeconds (START_TIME);
 
-		panel200.SetActive (false);
-		panel100.SetActive (true);
+		panel100.SetActive (false);
+		panel1.SetActive (true);
 		StartCoroutine (Shuffle ());
 	}
 
@@ -233,7 +233,7 @@ public class BattleGameManager : GameManager
 		}
 		temp = RandomArray.RandomizeStrings (temp);
 
-		UILabel[] panel100UILabel = panel100.GetComponentsInChildren<UILabel> ();
+		UILabel[] panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
 		int numberCount = 0;
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
@@ -394,11 +394,11 @@ public class BattleGameManager : GameManager
 			tempLast += tempCombo;
 		}
 
-		panel200.SetActive (true);
+		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.text = tempString;
 		yield return new WaitForSeconds (ATTACK_TIME);
-		panel200.SetActive (false);
+		panel100.SetActive (false);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempFrist;
@@ -421,11 +421,11 @@ public class BattleGameManager : GameManager
 		comboCount = 0;
 		SetStatus (GameStatus.Miss);
 
-		panel200.SetActive (true);
+		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.text = "Miss";
 		yield return new WaitForSeconds (MISS_TIME);
-		panel200.SetActive (false);
+		panel100.SetActive (false);
 
 		StartCoroutine (SetNextStatusWait (MISS_TIME / 2));
 	}
@@ -540,7 +540,7 @@ public class BattleGameManager : GameManager
 		timer = TIME_MAX;
 
 		// Set numer max
-		numberMax = int.Parse (SenceData.stageLevel);
+		numberMax = int.Parse (SceneData.stageLevel);
 
 		List<int> list = Game.Score (numberMax);
 		// Set score1
@@ -549,10 +549,10 @@ public class BattleGameManager : GameManager
 		score3 = list [2];
 
 		hpUILabel.text = "" + score;
-		timerUILabel.text = "" + timer.ToString("N2");
+		timerUILabel.text = ((int)timer).ToString("");
 
+		panel1.SetActive (false);
 		panel100.SetActive (false);
-		panel200.SetActive (false);
 		
 		StartCoroutine (Ready ());
 	}

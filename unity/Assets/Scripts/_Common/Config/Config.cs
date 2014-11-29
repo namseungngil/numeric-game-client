@@ -26,6 +26,7 @@
 	public const string GAME_MANAGER = "GameManager";
 	public const string ROOT_MANAGER = "RootManager";
 	public const string FACEBOOK = "Facebook";
+	public const string PANEL1 = "Panel:1";
 	public const string PANEL100 = "Panel:100";
 	public const string PANEL200 = "Panel:200";
 	public const string PANEL1000 = "Panel:1000";
@@ -34,6 +35,9 @@
 	public const string STAR1 = "Star1";
 	public const string STAR2 = "Star2";
 	public const string STAR3 = "Star3";
+	public const string RANK1 = "Rank1";
+	public const string RANK2 = "Rank2";
+	public const string RANK3 = "Rank3";
 	public const string LEVEL = "Level";
 	public const string SCORE = "Score";
 	public const string GRID = "Grid";

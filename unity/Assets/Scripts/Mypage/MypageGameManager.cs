@@ -9,11 +9,13 @@ public class MypageGameManager : GameManager
 	{
 		public GameObject myself = null;
 		public UILabel uILabel = null;
+		public UITexture uITexture = null;
 		public UISprite uISprite = null;
 		public UISprite star1 = null;
 		public UISprite star2 = null;
 		public UISprite star3 = null;
 		public UISprite qlock = null;
+		public int score = 0;
 
 		public QuestData (GameObject gO, UILabel uL)
 		{
@@ -27,11 +29,11 @@ public class MypageGameManager : GameManager
 	private const string BACKGROUND = "Background";
 	private const string LOCK = "Lock";
 	private const string UNTAGGED = "Untagged";
-
 	// component
 	private QueryModel dataQuery;
 	private Register register;
 	private UIAtlas uIAtlas;
+	private MypageFacebookManager mypageFacebookManager;
 	// array
 	public UIAtlas[] map;
 	private List<QuestData> quest;
@@ -41,11 +43,12 @@ public class MypageGameManager : GameManager
 	
 	void Start ()
 	{
+		mypageFacebookManager = gameObject.GetComponent<MypageFacebookManager> ();
 		GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ().Set ();
 
 		quest = new List<QuestData> ();
-		GameObject panel200 = GameObject.Find (Config.PANEL200);
-		foreach (UIButton uIButton in panel200.GetComponentsInChildren<UIButton> ()) {
+		GameObject panel100 = GameObject.Find (Config.PANEL100);
+		foreach (UIButton uIButton in panel100.GetComponentsInChildren<UIButton> ()) {
 			QuestData tempQuestData = new QuestData (uIButton.gameObject, uIButton.gameObject.GetComponentInChildren<UILabel> ());
 			foreach (UISprite u in uIButton.gameObject.GetComponentsInChildren<UISprite> ()) {
 				if (u.gameObject.name == BACKGROUND) {
@@ -61,6 +64,7 @@ public class MypageGameManager : GameManager
 				}
 			}
 
+			tempQuestData.uITexture = uIButton.gameObject.GetComponentInChildren<UITexture> ();
 			quest.Add (tempQuestData);
 		}
 
@@ -93,7 +97,7 @@ public class MypageGameManager : GameManager
 		}
 
 		// Set static
-		SenceData.currentLevel = Config.MYPAGE + (index / Config.STAGE_COLOR_COUNT).ToString ();
+//		SceneData.currentLevel = Config.MYPAGE + (index / Config.STAGE_COLOR_COUNT).ToString ();
 
 		// set map
 		foreach (UISprite uS in gameObject.GetComponentsInChildren<UISprite> ()) {
@@ -115,6 +119,7 @@ public class MypageGameManager : GameManager
 			qD.star2.gameObject.SetActive (false);
 			qD.star3.gameObject.SetActive (false);
 			qD.qlock.gameObject.SetActive (false);
+			qD.uITexture.gameObject.SetActive (false);
 
 			tempMin++;
 		}
@@ -123,14 +128,15 @@ public class MypageGameManager : GameManager
 		DataTable dataTable = dataQuery.MypageQuestList (index);
 
 		if (dataTable.Rows.Count > 0) {
+//			Debug.Log ("dataTable row count : " + dataTable.Rows.Count);
 			if (dataTable.Rows.Count == Config.CHAPTER_IN_QUEST) {
 				nextFlag = true;
 			}
 
 			for (int i = 0; i < dataTable.Rows.Count; i++) {
 				int score = (int)dataTable [i] [QueryModel.SCORE];
-
 				int stage = int.Parse (quest [i].myself.name);
+				quest [i].score = score;
 
 				List<int> list = Game.Score (stage);
 				if (score >= list [0]) {
@@ -148,6 +154,9 @@ public class MypageGameManager : GameManager
 		// set next quest
 		if (!nextFlag) {
 			quest [dataTable.Rows.Count].uISprite.gameObject.SetActive (false);
+			quest [dataTable.Rows.Count].uITexture.gameObject.SetActive (true);
+
+			mypageFacebookManager.SetMeFicture (quest [dataTable.Rows.Count].uITexture);
 		}
 
 		// set impossible quest
@@ -201,5 +210,17 @@ public class MypageGameManager : GameManager
 		}
 
 		return false;
+	}
+
+	public string Score (string stage)
+	{
+		int score = 0;
+		foreach (QuestData qD in quest) {
+			if (qD.myself.name == stage) {
+				score = qD.score;
+			}
+		}
+
+		return score.ToString ();
 	}
 }

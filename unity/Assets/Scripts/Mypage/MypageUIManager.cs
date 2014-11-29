@@ -134,7 +134,9 @@ public class MypageUIManager : UIManager
 		if (temp == MypageGameManager.DISABLE_QUEST) {
 			return;
 		}
-		SenceData.stageLevel = temp;
+
+		SceneData.score = mypageGameManager.Score (temp);
+		SceneData.stageLevel = temp;
 
 		SSSceneManager.Instance.PopUp (Config.START, null, PopupOnActive, PopupOnDeActive);
 	}

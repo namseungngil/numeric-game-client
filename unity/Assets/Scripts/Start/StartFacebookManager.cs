@@ -6,34 +6,27 @@ using System.Linq;
 
 public class StartFacebookManager : FacebookManager
 {
-	// gameobject
-	private GameObject ranks;
 	// compoent
 	private HttpComponent httpComponent;
 	// array
+	private List<GameObject> rank;
 	private static List<object> friends = null;
 	private List<string> rankFriendsList;
 
 	protected override void Start ()
 	{
-		ranks = gameObject.GetComponentInChildren<UIWidget> ().gameObject;
+		rank = new List<GameObject> ();
+		rank.Add (GameObject.Find ("S" + Config.RANK1));
+		rank.Add (GameObject.Find ("S" + Config.RANK2));
+		rank.Add (GameObject.Find ("S" + Config.RANK3));
+		foreach (GameObject gObj in rank) {
+			gObj.SetActive (false);
+		}
+
 		httpComponent = gameObject.GetComponentInParent<HttpComponent> ();
 
 		if (FB.IsLoggedIn) {
-			UITexture uITexture = GetChildObject (ranks, TEXTURE).GetComponent<UITexture> ();
-			UILabel uILabel1 = GetChildObject (ranks, LABEL1).GetComponent<UILabel> ();
-			UILabel uILabel2 = GetChildObject (ranks, LABEL2).GetComponent<UILabel> ();
-			if (userTexture != null) {
-				uITexture.mainTexture = userTexture;
-			}
-			uILabel1.text = QUESTION_MARK;
-			uILabel2.text = QUESTION_MARK;
 			QueryScores ();
-		}
-
-		GameObject temp = GameObject.Find (Config.ROOT_MANAGER);
-		if (temp != null) {
-			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
 	}
 
@@ -42,7 +35,7 @@ public class StartFacebookManager : FacebookManager
 		string tempFriends = FRIENDS_QUERY;
 		Debug.Log (tempFriends);
 
-		if (rankFriendsList != null && rankFriendsList.Count > 0) {
+		if (friends != null && friends.Count > 0) {
 			Rank ();
 		} else {
 			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
@@ -61,17 +54,18 @@ public class StartFacebookManager : FacebookManager
 			FB.API (temp, Facebook.HttpMethod.GET, FriendsCallback);
 			return;
 		}
-		
+
+		DeserializeJSONProfile (result.Text);
 		friends = DeserializeJSONFriends (result.Text);
 		rankFriendsList = new List<string> ();
 		rankFriendsList.Add (FB.UserId);
-		Debug.Log ("StarFacebookManager friendsCallback count : " + friends.Count);
 
 		if (friends.Count > 0) {
 			foreach (Dictionary<string, object> friend in friends) {
 				rankFriendsList.Add (friend ["id"].ToString ());
 			}
 		}
+
 		Rank ();
 	}
 
@@ -84,109 +78,62 @@ public class StartFacebookManager : FacebookManager
 		httpComponent.OnDone = (object obj) => {
 			Dictionary<string, int> dic;
 			if ((dic = obj as Dictionary<string, int>) != null) {
-				var items = from pair in dic
-					orderby pair.Value ascending
-						select pair;
+				var items = dic.Values.ToList ();
+				items.Sort ();
 
-				foreach (KeyValuePair<string, int> kVP in items) {
+				int count = dic.Count ();
+				foreach (var key in items) {
+					count--;
 
+					rank [count].SetActive (true);
+					GameObject gObj = rank [count];
+					UITexture uITexture = gObj.GetComponent<UITexture> ();
+					UIButton uIButton = GetChildObject (gObj, BUTTON).GetComponent<UIButton> ();
+					UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
+					UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
+
+					string id = MypageGameManager.DISABLE_QUEST;
+					string score = key.ToString ();
+
+					foreach (KeyValuePair<string, int> kVP in dic) {
+						if (kVP.Value == (int)key) {
+							id = kVP.Key;
+							break;
+						}
+					}
+
+					dic.Remove (id);
+					uIButton.name = id;
+					uILabel2.text = score;
+
+					if (id == FB.UserId) {
+						uILabel1.text = userFristName + " " + userLastName;
+						if (userTexture != null) {
+							uITexture.mainTexture = userTexture;
+						}
+						uIButton.gameObject.SetActive (false);
+						continue;
+					}
+
+					if (friends.Count > 0) {
+						foreach (Dictionary<string, object> f in friends) {
+							if (id == f ["id"].ToString ()) {
+								uILabel1.text = (string)f ["first_name"] + " " + (string)f ["last_name"];
+
+								LoadPictureAPI (GetPictureURL (f ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
+								{
+									if (pictureTexture != null) {
+										uITexture.mainTexture = pictureTexture;
+									}
+								});
+								break;
+							}
+						}
+					}
 				}
 			}
 		};
 		
-		httpComponent.StartGame (rankFriendsList, SenceData.stageLevel);
-	}
-	
-	private void ScoresCallback (FBResult result)
-	{
-		Debug.Log ("ScoresCallback");
-		if (result.Error != null) {
-			Debug.LogError (result.Error);
-			return;
-		}
-		
-		//		List<object> scores = new List<object> ();
-		Debug.Log (result.Text);
-		List<object> scoresList = DeserializeScores (result.Text);
-		if (scoresList.Count > 0) {
-			Debug.Log ("scoreList : " + scoresList.Count);
-			int rank = 0;
-			foreach (object score in scoresList) {
-				Dictionary<string, object> entry = (Dictionary<string, object>)score;
-				string tempScore = "" + entry ["score"];
-				if (int.Parse (tempScore) == 0) {
-					continue;
-				}
-				Dictionary<string, object> user = (Dictionary<string, object>)entry ["user"];
-
-				string name = (string)user ["name"];
-				string userID = (string)user ["id"];
-
-				GameObject gObj = Instantiate (ranks, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-				
-				gObj.transform.parent = this.transform;
-				gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
-				gObj.name = userID;
-
-				UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
-				UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
-				UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
-				UIButton uIButton = GetChildObject (gObj, BUTTON).GetComponent<UIButton> ();
-
-				rank ++;
-				uILabel1.text = rank.ToString ();
-				uILabel2.text = name + "\n" + tempScore;
-				uIButton.name = userID;
-
-				// me
-				if (string.Equals (userID, FB.UserId)) {
-					// this entry is the current player
-					uIButton.gameObject.SetActive (false);
-				}
-
-				LoadPictureAPI (GetPictureURL (userID, TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture => {
-					if (pictureTexture != null) {
-						uITexture.mainTexture = pictureTexture;
-					}
-				});
-			}
-
-			scoresList.Sort (delegate(object firstObj,
-			                     object secondObj) {
-				return -getScoreFromEntry (firstObj).CompareTo (getScoreFromEntry (secondObj));
-			});
-
-			ranks.SetActive (false);
-			gameObject.GetComponent<UIGrid> ().Reposition ();
-		} else {
-			// loading...
-			ranks.SetActive (false);
-		}
-	}
-
-	private void Test ()
-	{
-		int rank = 0;
-		for (int i = 0; i < 20; i++) {
-			GameObject gObj = Instantiate (ranks, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-			gObj.transform.parent = this.transform;
-			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
-			
-			string name = i.ToString ();
-			string tempScore = i.ToString ();
-			
-			UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
-			UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
-			UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
-			UIButton uIButton = GetChildObject (gObj, "Button").GetComponent<UIButton> ();
-			
-			rank ++;
-			uILabel1.text = rank.ToString ();
-			uILabel2.text = name + "\n" + tempScore;
-			uIButton.name = i.ToString ();
-		}
-		
-		ranks.SetActive (false);
-		gameObject.GetComponent<UIGrid> ().Reposition ();
+		httpComponent.StartGame (rankFriendsList, SceneData.stageLevel);
 	}
 }

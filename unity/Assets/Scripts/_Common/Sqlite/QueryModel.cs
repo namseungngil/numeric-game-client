@@ -47,6 +47,13 @@ public class QueryModel : Query
 		return dataTable;
 	}
 
+	public DataTable MypageStage (int stage)
+	{
+		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + "=" + stage);
+
+		return dataTable;
+	}
+
 	// new string[] {questStage, version, questScore, questTime, questHit, questClear, questMiss, questDate};
 	public string[] BattleClear (string stage, string score, string time, string hit, string clear, string miss, string date = "")
 	{
