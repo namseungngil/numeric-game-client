@@ -402,6 +402,7 @@
      <Compile Include="Assets\Scripts\Root\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Setting\SettingUIManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartFacebookManager.cs" />
+     <Compile Include="Assets\Scripts\Start\StartGameManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
      <Compile Include="Assets\Scripts\Stop\StopUIManager.cs" />
      <Compile Include="Assets\Scripts\Test\TestScript.cs" />
@@ -425,9 +426,11 @@
      <Compile Include="Assets\Scripts\_Common\Component\InputEffectComponent.cs" />
      <Compile Include="Assets\Scripts\_Common\Component\LoveComponent.cs" />
      <Compile Include="Assets\Scripts\_Common\Component\SceneComponent.cs" />
-     <Compile Include="Assets\Scripts\_Common\Component\SwapeCompoent.cs" />
+     <Compile Include="Assets\Scripts\_Common\Component\SwipeCompoent.cs" />
      <Compile Include="Assets\Scripts\_Common\Component\WebviewComponent.cs" />
      <Compile Include="Assets\Scripts\_Common\Config\Config.cs" />
+     <Compile Include="Assets\Scripts\_Common\Control\ButtonSoundControl.cs" />
+     <Compile Include="Assets\Scripts\_Common\Control\SoundControl.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\DATA.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\Register.cs" />
      <Compile Include="Assets\Scripts\_Common\Date\Date.cs" />

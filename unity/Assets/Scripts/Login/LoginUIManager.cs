@@ -6,6 +6,8 @@ public class LoginUIManager : UIManager
 {
 	// gameobject
 	private GameObject facebookUI;
+	// component
+	private LoginGameManager loginGameManager;
 
 	public override void Awake ()
 	{
@@ -17,31 +19,15 @@ public class LoginUIManager : UIManager
 	public override void Start ()
 	{
 		facebookUI = GameObject.Find (Config.FACEBOOK);
+		loginGameManager = gameObject.GetComponent<LoginGameManager> ();
 	}
 
-	void Update ()
+	protected override void Update ()
 	{
 		if (FB.IsLoggedIn) {
 			facebookUI.SetActive (false);
 		} else {
 			facebookUI.SetActive (true);
-		}
-	}
-	
-	private void LoginCallback (FBResult result)
-	{
-		if (result.Error != null) {
-		// "Error Response:\n" + result.Error;
-			Debug.Log ("Error Response:\n" + result.Error);
-		// debugText = result.Error;
-		} else if (!FB.IsLoggedIn) {
-		// "Login cancelled by Player";
-			Debug.Log ("Login cancelled by Player");
-		} else {
-		// "Login was successful!";
-			Debug.Log ("Login was successful!");
-			
-			gameObject.GetComponent<HttpComponent> ().Login (0);
 		}
 	}
 
@@ -53,9 +39,7 @@ public class LoginUIManager : UIManager
 	
 	public void FacebookLogin ()
 	{
-		if (!FB.IsLoggedIn) {
-			FB.Login ("email, publish_actions", LoginCallback);
-		}
+		loginGameManager.FacebookLogin ();
 	}
 
 	public void Setting ()

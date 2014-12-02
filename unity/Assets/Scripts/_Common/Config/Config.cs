@@ -62,6 +62,7 @@
 	public const string OVER = "Over";
 	public const string STOP = "Stop";
 	public const string WEBVIEW = "Webview";
+	public const string INTRO = "Intro";
 	// image
 	public const string STAR_EMPTY = "empty";
 	public const string STAR_FULL = "full";
@@ -77,7 +78,7 @@
 	// wait
 	public const float REG_GCM_APNS_FACEBOOK_WAIT = 2f;
 	// love max
-	public const int LOVE_MAX = 5;
+	public const int LOVE_MAX = 7;
 	// time
 	public const string DATA_TIME = "yyyyMMddHHmmss";
 	// card count

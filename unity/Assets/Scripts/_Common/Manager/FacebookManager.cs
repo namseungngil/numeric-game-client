@@ -107,6 +107,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected void CallFBInit ()
 	{
+		Debug.Log ("FacebookManager CallFBInit");
 		FB.Init (OnInitComplete, OnHideUnity);
 	}
 	

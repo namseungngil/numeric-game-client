@@ -1,21 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Component/HttpComponent.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Intro/IntroManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Start/StartFacebookManager.cs" Line="137" Column="24" />
-      <File FileName="Assets/Scripts/_Common/Manager/FacebookManager.cs" Line="148" Column="35" />
-      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="5" Column="31" />
-      <File FileName="Assets/Scripts/Start/StartUIManager.cs" Line="49" Column="34" />
-      <File FileName="Assets/Scripts/_Common/Sqlite/QueryModel.cs" Line="67" Column="16" />
-      <File FileName="Assets/Scripts/_Common/Logic/Game.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="140" Column="3" />
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Config/Config.cs" Line="48" Column="55" />
-      <File FileName="Assets/Scripts/_Common/Sence/SceneData.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Component/LoveComponent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Component/SwapeCompoent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageFacebookManager.cs" Line="15" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="175" Column="25" />
+      <File FileName="Assets/Scripts/Intro/IntroManager.cs" Line="99" Column="2" />
+      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="161" Column="13" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/QueryModel.cs" Line="95" Column="41" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/Query.cs" Line="152" Column="3" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

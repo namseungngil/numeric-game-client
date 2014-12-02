@@ -108,9 +108,8 @@ public class BattleGameManager : GameManager
 		BattleStart ();
 	}
 
-	protected override void Update ()
+	void Update ()
 	{
-		base.Update ();
 		if (gameStatus == GameStatus.Play) {
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
@@ -120,11 +119,6 @@ public class BattleGameManager : GameManager
 
 			SetTimer ();
 		}
-	}
-
-	protected override void AndroidBackButton ()
-	{
-		battleUIManager.Stop ();
 	}
 
 	private void SetTimer ()

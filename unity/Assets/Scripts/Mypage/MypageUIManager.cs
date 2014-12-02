@@ -45,9 +45,11 @@ public class MypageUIManager : UIManager
 			downGameObject.SetActive (false);
 		}
 	}
-
-	void Update ()
+	
+	protected override void Update ()
 	{
+		base.Update ();
+
 		if (Input.touchCount > 0) {
 			var touch = Input.touches [0];
 			

@@ -167,11 +167,6 @@ public class MypageGameManager : GameManager
 		}
 	}
 
-	protected override void AndroidBackButton ()
-	{
-		Application.Quit ();
-	}
-
 	public void NextQuest ()
 	{
 		if (!NextQuestStatus ()) {

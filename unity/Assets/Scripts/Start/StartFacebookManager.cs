@@ -23,11 +23,7 @@ public class StartFacebookManager : FacebookManager
 			gObj.SetActive (false);
 		}
 
-		httpComponent = gameObject.GetComponentInParent<HttpComponent> ();
-
-		if (FB.IsLoggedIn) {
-			QueryScores ();
-		}
+		httpComponent = gameObject.GetComponent<HttpComponent> ();
 	}
 
 	private void QueryScores ()
@@ -36,7 +32,7 @@ public class StartFacebookManager : FacebookManager
 		Debug.Log (tempFriends);
 
 		if (friends != null && friends.Count > 0) {
-			Rank ();
+			RankExecute ();
 		} else {
 			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
 		}
@@ -66,10 +62,10 @@ public class StartFacebookManager : FacebookManager
 			}
 		}
 
-		Rank ();
+		RankExecute ();
 	}
 
-	private void Rank ()
+	private void RankExecute ()
 	{
 		if (rankFriendsList == null) {
 			return;
@@ -135,5 +131,12 @@ public class StartFacebookManager : FacebookManager
 		};
 		
 		httpComponent.StartGame (rankFriendsList, SceneData.stageLevel);
+	}
+
+	public void Rank ()
+	{
+		if (FB.IsLoggedIn) {
+			QueryScores ();
+		}
 	}
 }

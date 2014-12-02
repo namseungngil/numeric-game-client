@@ -7,6 +7,7 @@ public class QueryModel : Query
 {
 	// instance
 	private static QueryModel instance;
+
 	public static QueryModel Instance ()
 	{
 		if (instance == null) {
@@ -29,12 +30,105 @@ public class QueryModel : Query
 
 	private QueryModel ()
 	{
-		questUserColumnName = new string[] {STAGE, VERSION, SCORE, TIME, HIT, CLEAR, MISS, DATE};
+		questUserColumnName = new string[] {
+			STAGE,
+			VERSION,
+			SCORE,
+			TIME,
+			HIT,
+			CLEAR,
+			MISS,
+			DATE
+		};
 	}
 
 	public string Date ()
 	{
 		return DateTime.Now.ToString (Config.DATA_TIME);
+	}
+
+	public void SyncGet (Dictionary<string, string> d)
+	{
+		List<string> allData = new List<string> ();
+		string[] stageData = new string[d.Count];
+		int i = 0;
+		foreach (KeyValuePair<string, string> kVP in d) {
+			stageData [i] = kVP.Key;
+			allData.Add (kVP.Key);
+			i++;
+		}
+
+		DataTable dataTable = SELECT_SYNC (QUEST_USER, STAGE, stageData);
+		if (dataTable.Rows.Count > 0) {
+			Dictionary<string, string> tempDic = new Dictionary<string, string> ();
+			for (int j = 0; j < dataTable.Rows.Count; j++) {
+				if ((int)dataTable [j] [QueryModel.SCORE] < int.Parse (d [dataTable [j] [QueryModel.STAGE].ToString ()])) {
+					tempDic.Add (dataTable [j] [QueryModel.STAGE].ToString (), dataTable [j] [QueryModel.SCORE].ToString ());
+				}
+
+				d.Remove (dataTable [j] [QueryModel.STAGE].ToString ());
+			}
+
+			if (tempDic.Count > 0) {
+				string[] whereData = new string[dataTable.Rows.Count];
+				string[] dataData = new string[dataTable.Rows.Count];
+
+				int index = 0;
+				foreach (KeyValuePair<string, string> kVP in tempDic) {
+					whereData [i] = kVP.Key;
+					dataData [i] = kVP.Value;
+					index++;
+				}
+
+				UPDATE_BATCH (QUEST_USER, STAGE, SCORE, whereData, dataData);
+			}
+		}
+
+		allData.Sort ();
+		int stage = Config.CARD_COUNT;
+		Dictionary<string, string> dic = new Dictionary<string, string> ();
+		foreach (string value in stageData) {
+			if (value == stage.ToString ()) {
+
+			} else {
+				for (int n = stage; n < int.Parse (value); n++) {
+					List<int> scoreList = Game.Score (n);
+					dic.Add (n.ToString (), scoreList [0].ToString ());
+					stage++;
+				}
+			}
+			stage++;
+		}
+
+		string[][] data = new string[d.Count + dic.Count][];
+		int k = 0;
+		string date = Date ();
+
+		foreach (KeyValuePair<string, string> kvP in d) {
+			data [k] = new string[] {
+				kvP.Key, "1", kvP.Value, "0", "0", "0", "0", date
+			};
+			k++;
+		}
+
+		if (dic.Count > 0) {
+			foreach (KeyValuePair<string, string> kvP in dic) {
+				data [k] = new string[] {
+					kvP.Key, "1", kvP.Value, "0", "0", "0", "0", date
+				};
+				k++;
+			}
+		}
+
+		if (data.Length > 0) {
+			INSERT_BATCH (QUEST_USER, questUserColumnName, data);
+		}
+	}
+
+	public DataTable QuestList ()
+	{
+		DataTable dataTable = SELECT (QUEST_USER);
+		return dataTable;
 	}
 
 	public DataTable MypageQuestList (int index)
@@ -47,7 +141,7 @@ public class QueryModel : Query
 		return dataTable;
 	}
 
-	public DataTable MypageStage (int stage)
+	public DataTable MypageStage (string stage)
 	{
 		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + "=" + stage);
 
@@ -63,50 +157,59 @@ public class QueryModel : Query
 		}
 
 		bool returnflag = true;
-		string[] data = new string[] {stage, "1", score, time, hit, clear, miss, date};
+		string[] data = new string[] {
+			stage,
+			"1",
+			score,
+			time,
+			hit,
+			clear,
+			miss,
+			date
+		};
 		if (dataTable.Rows.Count > 0) {
 			bool flag = false;
 
-			if (int.Parse (score) > (int)dataTable[0][SCORE]) {
+			if (int.Parse (score) > (int)dataTable [0] [SCORE]) {
 				if (int.Parse (score) > Config.MAX_VALUE) {
 					score = Config.MAX_VALUE.ToString ();
 				}
 				flag = true;
 			} else {
-				data[2] = dataTable[0][SCORE].ToString ();
+				data [2] = dataTable [0] [SCORE].ToString ();
 			}
 
-			if (int.Parse (time) < (int)dataTable[0][TIME]) {
+			if (int.Parse (time) < (int)dataTable [0] [TIME]) {
 				flag = true;
 			} else {
-				data[3] = dataTable[0][TIME].ToString ();
+				data [3] = dataTable [0] [TIME].ToString ();
 			}
 
-			if (int.Parse (hit) > (int)dataTable[0][HIT]) {
+			if (int.Parse (hit) > (int)dataTable [0] [HIT]) {
 				flag = true;
 			} else {
-				data[4] = dataTable[0][HIT].ToString ();
+				data [4] = dataTable [0] [HIT].ToString ();
 			}
 
-			if (int.Parse (clear) > (int)dataTable[0][CLEAR]) {
+			if (int.Parse (clear) > (int)dataTable [0] [CLEAR]) {
 				flag = true;
 			} else {
-				data[5] = dataTable[0][CLEAR].ToString ();
+				data [5] = dataTable [0] [CLEAR].ToString ();
 			}
 
-			if (int.Parse (miss) < (int)dataTable[0][MISS]) {
+			if (int.Parse (miss) < (int)dataTable [0] [MISS]) {
 				flag = true;
 			} else {
-				data[6] = dataTable[0][MISS].ToString ();
+				data [6] = dataTable [0] [MISS].ToString ();
 			}
 
 			if (flag) {
-				int tempVersion = (int)dataTable[0][VERSION] + 1;
+				int tempVersion = (int)dataTable [0] [VERSION] + 1;
 				if (tempVersion > Config.MAX_VALUE) {
 					tempVersion = 1;
 				}
 			
-				data[1] = "" + tempVersion;
+				data [1] = "" + tempVersion;
 				returnflag = UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
 			} else {
 				returnflag = false;
@@ -128,15 +231,20 @@ public class QueryModel : Query
 	public void DummyData ()
 	{
 		int stage = 100;
+
+		string [][] data = new string [stage][];
+
 		for (int i = 0; i < stage; i++) {
-			BattleClear (
+			data [i] = new string [] {
 				(i + 9).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
 				(0).ToString ()
-				);
+			};
 		}
+
+		INSERT_BATCH (QUEST_USER, questUserColumnName, data);
 	}
 }

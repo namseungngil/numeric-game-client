@@ -125,18 +125,14 @@ public class LoveComponent : MonoBehaviour
 		timer = TIMER;
 
 		love = numericPlayerPrefs.GetLove ();
-//		Debug.Log ("love : " + love);
 
 		if (love < Config.LOVE_MAX) {
 			string tempLoveTime = numericPlayerPrefs.GetLoveTime ();
 			if (tempLoveTime == "") {
 				SetLove (Config.LOVE_MAX);
 			}
-//			Debug.Log ("tempLoveTime : " + tempLoveTime + " Length : " + tempLoveTime.Length);
 
 			int[] dateArray = Date.Slice (tempLoveTime);
-
-//			Debug.Log ("date : " + dateArray[0] + " _ " + dateArray[1] + " _ " + dateArray[2] + " _ " + dateArray[3] + " _ " + dateArray[4] + " _ " + dateArray[5]);
 
 			DateTime start = new DateTime (dateArray[0], dateArray[1], dateArray[2], dateArray[3], dateArray[4], dateArray[5]);
 			DateTime end = DateTime.Now;
@@ -150,13 +146,17 @@ public class LoveComponent : MonoBehaviour
 					upLove++;
 				}
 
+				if (upLove == 0) {
+					return;
+				}
+
 				love += upLove;
 				if (love >= Config.LOVE_MAX) {
 					love = Config.LOVE_MAX;
 					SetLove (love);
 				} else {
-					int tempSeconds = (int)(seconds * temp);
-					SetLove (love, start.AddSeconds (tempSeconds).ToString (Config.DATA_TIME));
+					int tempSeconds = (int)(seconds % LOVE_RECOVERY);
+					SetLove (love, end.AddSeconds (tempSeconds).ToString (Config.DATA_TIME));
 				}
 			} else {
 				loveTime = (int)(LOVE_RECOVERY - seconds);

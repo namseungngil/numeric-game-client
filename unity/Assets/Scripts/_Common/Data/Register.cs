@@ -4,6 +4,8 @@ using System.Collections;
 public class Register
 {
 	// const
+	private const string BACKSOUND = "BackSound";
+	private const string BUTTONSOUND = "ButtonSound";
 	private const string LOVE = "Love";
 	private const string LOVE_FLAG = "LoveFlag";
 	private const string LOVE_TIME = "LoveTime";
@@ -55,5 +57,45 @@ public class Register
 	public int GetStage ()
 	{
 		return PlayerPrefs.GetInt (Config.MYPAGE);
+	}
+
+	public void SetBackSound (bool flag)
+	{
+		int temp = 0;
+		if (!flag) {
+			temp = 1;
+		}
+	
+		PlayerPrefs.SetInt (BACKSOUND, temp);
+	}
+
+	public bool GetBackSound ()
+	{
+		bool flag = true;
+		if (PlayerPrefs.GetInt (BACKSOUND) > 0) {
+			flag = false;
+		}
+
+		return flag;
+	}
+
+	public void SetButtonSound (bool flag)
+	{
+		int temp = 0;
+		if (!flag) {
+			temp = 1;
+		}
+		
+		PlayerPrefs.SetInt (BUTTONSOUND, temp);
+	}
+
+	public bool GetButtonSound ()
+	{
+		bool flag = true;
+		if (PlayerPrefs.GetInt (BUTTONSOUND) > 0) {
+			flag = false;
+		}
+		
+		return flag;
 	}
 }
