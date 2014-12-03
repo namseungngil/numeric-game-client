@@ -231,6 +231,15 @@ public class BattleGameManager : GameManager
 		return RandomArray.RandomizeStrings<string> (arr);
 	}
 
+	private List<string> SetCardCount (List<string> list, List<string> get, int count)
+	{
+		for (int i = 0; i < count; i++) {
+			list.Add (get [i]);
+		}
+
+		return list;
+	}
+
 	private void CardLogic (int number)
 	{
 		List<string> temp12 = new List<string> ();
@@ -250,60 +259,38 @@ public class BattleGameManager : GameManager
 			temp102 = CardSuffle (99, number);
 		}
 
+		List<string> temp = new List<string> ();
+		int tempCount = 9;
+		if (temp102.Count > 0) {
+			tempCount = 3;
+			temp = SetCardCount (temp, temp12, tempCount);
+			temp = SetCardCount (temp, temp101, tempCount);
+			temp = SetCardCount (temp, temp102, tempCount);
+		} else if (temp101.Count > 0) {
+			tempCount = 5;
+			temp = SetCardCount (temp, temp12, tempCount);
+			temp = SetCardCount (temp, temp101, Config.CARD_COUNT - tempCount);
+		} else {
+			temp = SetCardCount (temp, temp12, tempCount);
+		}
+
+		temp = RandomArray.RandomizeStrings<string> (temp);
+
 		List<UILabel> cardUILabel = new List<UILabel> ();
 		UILabel[] panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
 		int numberCount = 0;
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
 				cardUILabel.Add (uiLabel);
+				cardString [numberCount] = temp[numberCount];
+				uiLabel.text = temp[numberCount].ToString ();
 				numberCount ++;
 			} else if (uiLabel.name == PROBLEM_LABEL_TEXT) {
 				problemUILabel = uiLabel;
 			}
 		}
 
-		cardUILabel = RandomArray.RandomizeStrings<UILabel> (cardUILabel);
-
-		numberCount = 0;
-		int number12Count = 0;
-		int number101Count = 0;
-		int number102Count = 0;
-		foreach (UILabel uiLabel in cardUILabel) {
-			if (temp102.Count > 0) {
-				if (numberCount < 3) {
-					cardString [numberCount] = temp12 [number12Count];
-					uiLabel.text = temp12 [number12Count];
-					number12Count++;
-				} else if (numberCount < 6) {
-					cardString [numberCount] = temp101 [number101Count];
-					uiLabel.text = temp101 [number101Count];
-					number101Count++;
-				} else {
-					cardString [numberCount] = temp102 [number102Count];
-					uiLabel.text = temp102 [number102Count];
-					number102Count++;
-				}
-
-			} else if (temp101.Count > 0) {
-				if (numberCount < 5) {
-					cardString [numberCount] = temp12 [number12Count];
-					uiLabel.text = temp12 [number12Count];
-					number12Count++;
-				} else {
-					cardString [numberCount] = temp101 [number101Count];
-					uiLabel.text = temp101 [number101Count];
-					number101Count++;
-				}
-			} else {
-				cardString [numberCount] = temp12 [number12Count];
-				uiLabel.text = temp12 [number12Count];
-				number12Count++;
-			}
-			numberCount++;
-		}
-		
 		problemUILabel.text = "";
-
 		bonusUILabel.text = cardString [Random.Range (0, 9)];
 	}
 
@@ -610,7 +597,8 @@ public class BattleGameManager : GameManager
 
 		panel1.SetActive (false);
 		panel100.SetActive (false);
-		
+
+		gameStatus = GameStatus.Ready;
 		StartCoroutine (Ready ());
 	}
 
