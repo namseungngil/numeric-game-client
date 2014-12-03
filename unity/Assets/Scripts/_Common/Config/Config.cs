@@ -78,7 +78,7 @@
 	// wait
 	public const float REG_GCM_APNS_FACEBOOK_WAIT = 2f;
 	// love max
-	public const int LOVE_MAX = 7;
+	public const int LOVE_MAX = 10;
 	// time
 	public const string DATA_TIME = "yyyyMMddHHmmss";
 	// card count
