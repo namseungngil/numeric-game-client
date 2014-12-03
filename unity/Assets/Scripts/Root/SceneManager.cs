@@ -4,10 +4,13 @@ using System.Collections.Generic;
 
 public class SceneManager : SSSceneManager
 {
+	// const
+	private string BACKGROUND = "Background";
 	[SerializeField]
-	AudioClip[] m_Clips;
-	
-	Dictionary<string, AudioClip> m_Audios;
+	public AudioClip[]
+		m_Clips;
+	// array
+	private Dictionary<string, AudioClip> m_Audios;
 	
 	protected override void Awake ()
 	{
@@ -18,9 +21,10 @@ public class SceneManager : SSSceneManager
 		m_SolidCamera.AddComponent<AudioSource> ();
 		m_SolidCamera.audio.loop = true;
 		
-//		m_Audios = new Dictionary<string, AudioClip> ();
-//		m_Audios.Add ("S1", m_Clips[0]);
-//		m_Audios.Add ("S2", m_Clips[1]);
+		m_Audios = new Dictionary<string, AudioClip> ();
+		m_Audios.Add (BACKGROUND, m_Clips [0]);
+
+		PlayBGM (BACKGROUND);
 	}
 	
 	protected override void PlayBGM (string bgmName)
@@ -28,19 +32,27 @@ public class SceneManager : SSSceneManager
 		AudioSource source = Camera.main.audio;
 		AudioClip clip = source.clip;
 		
-		if (clip != null && clip.name == bgmName && source.isPlaying) return;
-		
-//		source.clip = m_Audios [bgmName];
+		if (clip != null && clip.name == bgmName && source.isPlaying) {
+			return;
+		}
+
+		source.clip = m_Audios [bgmName];
 		source.clip.name = bgmName;
-		source.Play();
+
+		Register register = Register.Instance ();
+		if (!register.GetBackSound ()) {
+			return;
+		}
+
+		source.Play ();
 	}
 	
 	protected override void StopBGM ()
 	{
-		Camera.main.audio.Stop();
+		Camera.main.audio.Stop ();
 	}
 	
-	protected override void OnAnimationFinish(string sceneName)
+	protected override void OnAnimationFinish (string sceneName)
 	{
 	}
 }

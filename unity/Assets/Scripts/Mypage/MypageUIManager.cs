@@ -21,8 +21,8 @@ public class MypageUIManager : UIManager
 
 	public override void Awake ()
 	{
-		BgmType = Bgm.NONE;
-		BgmName = string.Empty;
+		BgmType = Bgm.SAME;
+//		BgmName = string.Empty;
 		
 		IsCache = false;
 	}
@@ -89,8 +89,6 @@ public class MypageUIManager : UIManager
 			float angle = Mathf.Rad2Deg * Mathf.Atan2 (dx, dy);
 			
 			angle = (360 + angle - 45) % 360;
-			
-			Debug.Log (angle);
 			
 			if (angle < 90) {
 				// right

@@ -6,7 +6,6 @@ public class MypageFacebookManager : FacebookManager
 	protected override void Start ()
 	{
 		if (FB.IsLoggedIn) {
-			Debug.Log ("Me Data");
 			if (userTexture == null) {
 				MyPicktureCallback (userTexture);
 			}
@@ -16,7 +15,6 @@ public class MypageFacebookManager : FacebookManager
 	public void SetMeFicture (UITexture u)
 	{
 		if (FB.IsLoggedIn) {
-			Debug.Log ("Me Data");
 			if (userTexture == null) {
 				LoadPictureAPI (GetPictureURL (FB.UserId, TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
 				{

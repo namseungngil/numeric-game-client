@@ -135,8 +135,6 @@ public class StartFacebookManager : FacebookManager
 
 	public void Rank ()
 	{
-		if (FB.IsLoggedIn) {
-			QueryScores ();
-		}
+		QueryScores ();
 	}
 }

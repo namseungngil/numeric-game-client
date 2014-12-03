@@ -8,6 +8,7 @@ public class SoundControl : MonoBehaviour
 	void Awake ()
 	{
 		Register register = Register.Instance ();
+		Debug.Log (register.GetBackSound ());
 
 		audioSource = gameObject.GetComponent<AudioSource> ();
 		audioSource.playOnAwake = register.GetBackSound ();

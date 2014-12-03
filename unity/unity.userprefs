@@ -1,12 +1,17 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Intro/IntroManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Intro/IntroManager.cs" Line="99" Column="2" />
-      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="161" Column="13" />
-      <File FileName="Assets/Scripts/_Common/Sqlite/QueryModel.cs" Line="95" Column="41" />
-      <File FileName="Assets/Scripts/_Common/Sqlite/Query.cs" Line="152" Column="3" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="225" Column="1" />
+      <File FileName="Assets/Scripts/Start/StartGameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Start/StartFacebookManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Component/HttpComponent.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Setting/SettingUIManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Sqlite/QueryModel.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageFacebookManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="225" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

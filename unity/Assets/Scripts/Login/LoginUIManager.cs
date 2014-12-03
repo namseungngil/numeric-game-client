@@ -11,8 +11,8 @@ public class LoginUIManager : UIManager
 
 	public override void Awake ()
 	{
-		BgmType = Bgm.NONE;
-		BgmName = string.Empty;
+		BgmType = Bgm.SAME;
+//		BgmName = string.Empty;
 		
 		IsCache = false;
 	}

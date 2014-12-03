@@ -21,23 +21,24 @@ public class StartGameManager : MonoBehaviour
 
 	private void Score ()
 	{
+		Debug.Log ("StartGameManager Score");
 		if (!FB.IsLoggedIn) {
 			return;
 		}
 
 		int tempScore = int.Parse (SceneData.score);
 		if (tempScore > 0) {
-			httpComponent.OnDone = (object obj) => {
-				Debug.Log ("StartGameManager Score OnDone");
-				startFacebookManager.Rank ();
-			};
-
 			DataTable dataTable = queryModel.MypageStage (SceneData.stageLevel);
 			if (dataTable.Rows.Count > 0) {
+				httpComponent.OnDone = (object obj) => {
+					Debug.Log ("httpComponent OnDone");
+					startFacebookManager.Rank ();
+				};
+
 				Dictionary<string, string> dic = new Dictionary<string, string> ();
 
 				foreach (string s in queryModel.questUserColumnName) {
-					dic.Add (s, (string)dataTable[0][s]);
+					dic.Add (s, dataTable[0][s].ToString ());
 				}
 
 				httpComponent.Over (dic, false);

@@ -78,6 +78,8 @@ public class LoveComponent : MonoBehaviour
 		if (!pauseStatus) {
 			if (numericPlayerPrefs != null) {
 				InitLove ();
+			} else {
+				SetNotification ();
 			}
 		}
 	}
@@ -155,7 +157,7 @@ public class LoveComponent : MonoBehaviour
 					love = Config.LOVE_MAX;
 					SetLove (love);
 				} else {
-					int tempSeconds = (int)(seconds % LOVE_RECOVERY);
+					int tempSeconds = loveTime;
 					SetLove (love, end.AddSeconds (tempSeconds).ToString (Config.DATA_TIME));
 				}
 			} else {
@@ -170,17 +172,6 @@ public class LoveComponent : MonoBehaviour
 			numericPlayerPrefs.SetLove (love);
 		} else {
 			numericPlayerPrefs.SetLove (love, time);
-		}
-
-		Notification.Unregister ();
-		if (love < Config.LOVE_MAX) {
-			int tempInt = (Config.LOVE_MAX - love) * LOVE_RECOVERY;
-			string tempTime = DateTime.Now.AddSeconds (tempInt).ToString (Config.DATA_TIME);
-
-			string[] tempString = new string[] {
-				tempTime, Config.GAME_TITME, NOTIFICATION_TEXT 
-			};
-			Notification.Register (tempString);
 		}
 	}
 	
@@ -235,5 +226,19 @@ public class LoveComponent : MonoBehaviour
 	public void Set ()
 	{
 		Start ();
+	}
+
+	public void SetNotification ()
+	{
+		Notification.Unregister ();
+		if (love < Config.LOVE_MAX) {
+			int tempInt = (Config.LOVE_MAX - love) * LOVE_RECOVERY;
+			string tempTime = DateTime.Now.AddSeconds (tempInt).ToString (Config.DATA_TIME);
+			
+			string[] tempString = new string[] {
+				tempTime, Config.GAME_TITME, NOTIFICATION_TEXT 
+			};
+			Notification.Register (tempString);
+		}
 	}
 }

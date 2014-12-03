@@ -105,7 +105,7 @@ public class HttpComponent : MonoBehaviour
 
 	private void OverCallback (SSController s = null)
 	{
-		Debug.Log ("OverCallback " + s.name);
+		Debug.Log ("OverCallback");
 
 		http.OnDone = (WWW www) => {
 			Debug.Log (www.text);

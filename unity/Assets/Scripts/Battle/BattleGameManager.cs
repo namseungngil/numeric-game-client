@@ -62,10 +62,9 @@ public class BattleGameManager : GameManager
 	private UISprite timerUISprite;
 	private UILabel bonusUILabel;
 	// array
-	private UILabel[] cardUILabel = new UILabel[Config.CARD_COUNT];
-	private string[] MARK_TEXT = new string[] {"?", "?"};
+	private string[] MARK_TEXT;
 	private string[] tempMark;
-	private string[] cardString = new string[Config.CARD_COUNT];
+	private string[] cardString;
 	// variable
 	private string labelString;
 	private string problemSign;
@@ -105,6 +104,9 @@ public class BattleGameManager : GameManager
 		panel200UILabel = panel100.GetComponentInChildren<UILabel> ();
 		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> ();
 
+		MARK_TEXT = new string[] {"?", "?"};
+		cardString = new string[Config.CARD_COUNT];
+
 		BattleStart ();
 	}
 
@@ -130,7 +132,7 @@ public class BattleGameManager : GameManager
 			timerUISprite.spriteName = BATTLE_T00;
 		}
 		timeUIProgressbar.value = temp > 1 ? 1 : temp;
-		timerUILabel.text = "" + ((int)timer).ToString();
+		timerUILabel.text = "" + ((int)timer).ToString ();
 	}
 
 	private IEnumerator Over ()
@@ -165,8 +167,7 @@ public class BattleGameManager : GameManager
 			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
 			// score
-			if (FB.IsLoggedIn)
-			{
+			if (FB.IsLoggedIn) {
 				if (tempData != null) {
 					Dictionary<string, string> dic = new Dictionary<string, string> ();
 					for (int i = 0; i < tempData.Length; i++) {
@@ -218,29 +219,91 @@ public class BattleGameManager : GameManager
 		ProblemLogic ();
 	}
 
+	private List<string> CardSuffle (int start, int last)
+	{
+		List<string> arr = new List<string> ();
+
+		for (int i = start; i < last; i++) {
+			int tempString = i + 1;
+			arr.Add (tempString.ToString ());
+		}
+
+		return RandomArray.RandomizeStrings<string> (arr);
+	}
+
 	private void CardLogic (int number)
 	{
-		string[] temp = new string[number];
-		for (int i = 0; i < number; i++) {
-			int tempString = i + 1;
-			temp[i] = tempString.ToString ();
-		}
-		temp = RandomArray.RandomizeStrings (temp);
+		List<string> temp12 = new List<string> ();
+		List<string> temp101 = new List<string> ();
+		List<string> temp102 = new List<string> ();
 
+		if (number <= 20) {
+			temp12 = CardSuffle (0, number);
+		}
+		if (number > 20 && number <= 110) {
+			temp12 = CardSuffle (0, 9);
+			temp101 = CardSuffle (9, number);
+		} 
+		if (number > 110) {
+			temp12 = CardSuffle (0, 9);
+			temp101 = CardSuffle (9, 99);
+			temp102 = CardSuffle (99, number);
+		}
+
+		List<UILabel> cardUILabel = new List<UILabel> ();
 		UILabel[] panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
 		int numberCount = 0;
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
-				cardUILabel[numberCount] = uiLabel;
-				cardString[numberCount] = temp[numberCount];
-				uiLabel.text = temp[numberCount];
+				cardUILabel.Add (uiLabel);
 				numberCount ++;
 			} else if (uiLabel.name == PROBLEM_LABEL_TEXT) {
 				problemUILabel = uiLabel;
 			}
 		}
 
+		cardUILabel = RandomArray.RandomizeStrings<UILabel> (cardUILabel);
+
+		numberCount = 0;
+		int number12Count = 0;
+		int number101Count = 0;
+		int number102Count = 0;
+		foreach (UILabel uiLabel in cardUILabel) {
+			if (temp102.Count > 0) {
+				if (numberCount < 3) {
+					cardString [numberCount] = temp12 [number12Count];
+					uiLabel.text = temp12 [number12Count];
+					number12Count++;
+				} else if (numberCount < 6) {
+					cardString [numberCount] = temp101 [number101Count];
+					uiLabel.text = temp101 [number101Count];
+					number101Count++;
+				} else {
+					cardString [numberCount] = temp102 [number102Count];
+					uiLabel.text = temp102 [number102Count];
+					number102Count++;
+				}
+
+			} else if (temp101.Count > 0) {
+				if (numberCount < 5) {
+					cardString [numberCount] = temp12 [number12Count];
+					uiLabel.text = temp12 [number12Count];
+					number12Count++;
+				} else {
+					cardString [numberCount] = temp101 [number101Count];
+					uiLabel.text = temp101 [number101Count];
+					number101Count++;
+				}
+			} else {
+				cardString [numberCount] = temp12 [number12Count];
+				uiLabel.text = temp12 [number12Count];
+				number12Count++;
+			}
+			numberCount++;
+		}
+		
 		problemUILabel.text = "";
+
 		bonusUILabel.text = cardString [Random.Range (0, 9)];
 	}
 
@@ -249,20 +312,19 @@ public class BattleGameManager : GameManager
 		int numberFirst = Random.Range (0, 5);
 		int numberLast = Random.Range (5, 9);
 		
-		numberFirst = int.Parse (cardString[numberFirst]);
-		numberLast = int.Parse (cardString[numberLast]);
+		numberFirst = int.Parse (cardString [numberFirst]);
+		numberLast = int.Parse (cardString [numberLast]);
 		
 		// +-×÷＝★♠♥♣
 		tempMark = MARK_TEXT;
-		tempMark = RandomArray.RandomizeStrings (tempMark);
 		int mark = Random.Range (1, 5);
 		problemSign = "";
 		switch (mark) {
-		case 1 : // +
+		case 1: // +
 			result = numberFirst + numberLast;
 			problemSign = "+";
 			break;
-		case 2 : // -
+		case 2: // -
 			List<int> tempInt = new List<int> ();
 			foreach (string i in cardString) {
 				tempInt.Add (int.Parse (i));
@@ -273,26 +335,26 @@ public class BattleGameManager : GameManager
 			List<int> temp2Result = new List<int> ();
 			for (int i = tempInt.Count - 1; i >= 0; i--) {
 				for (int j = i - 1; j >= 0; j--) {
-					int cal2Result = tempInt[i] - tempInt[j];
+					int cal2Result = tempInt [i] - tempInt [j];
 					temp2Result.Add (cal2Result);
 				}
 			}
 
-			result = temp2Result[Random.Range (0, temp2Result.Count)];
+			result = temp2Result [Random.Range (0, temp2Result.Count)];
 			problemSign = "-";
 			break;
-		case 3 : // ×
+		case 3: // ×
 			result = numberFirst * numberLast;
 			problemSign = "*";
 			break;
-		case 4 : // ÷
+		case 4: // ÷
 			List<int> temp4Result = new List<int> ();
 
 			foreach (string temp in cardString) {
 				for (int i = 0; i < cardString.Length; i++) {
-					if (temp != cardString[i]) {
+					if (temp != cardString [i]) {
 						int calFirst = int.Parse (temp);
-						int calLast = int.Parse (cardString[i]);
+						int calLast = int.Parse (cardString [i]);
 						if ((calFirst % calLast) == 0) {
 							int cal4Result = calFirst / calLast;
 							temp4Result.Add (cal4Result);
@@ -305,7 +367,7 @@ public class BattleGameManager : GameManager
 				ProblemLogic ();
 			}
 
-			result = temp4Result[Random.Range (0, temp4Result.Count)];
+			result = temp4Result [Random.Range (0, temp4Result.Count)];
 			problemSign = "/";
 			break;
 		}
@@ -321,8 +383,8 @@ public class BattleGameManager : GameManager
 
 	private void SetLabel ()
 	{
-		string tempFirst = tempMark[0];
-		string tempLast = tempMark[1];
+		string tempFirst = tempMark [0];
+		string tempLast = tempMark [1];
 
 		if (firstString != null) {
 			tempFirst = firstString;
@@ -428,16 +490,16 @@ public class BattleGameManager : GameManager
 	{
 		int tempResult = -1;
 		switch (problemSign) {
-		case "+" : // +
+		case "+": // +
 			tempResult = first + last;
 			break;
-		case "-" : // -
+		case "-": // -
 			tempResult = first - last;
 			break;
-		case "*" : // *
+		case "*": // *
 			tempResult = first * last;
 			break;
-		case "/" : // ÷
+		case "/": // ÷
 			tempResult = first / last;
 			if ((first % last) != 0) {
 				tempResult = -1;
@@ -459,14 +521,15 @@ public class BattleGameManager : GameManager
 
 	private int firstInt = 0;
 	private int lastInt = 0;
+
 	public void SetNumber (int length)
 	{
-		if (gameStatus != GameStatus.Play || firstString == cardString[length]) {
+		if (gameStatus != GameStatus.Play || firstString == cardString [length]) {
 			return;
 		}
 
 		if (firstString == null) {
-			firstString = cardString[length];
+			firstString = cardString [length];
 			firstInt = int.Parse (firstString);
 
 			bool tempFlag = false;
@@ -486,7 +549,7 @@ public class BattleGameManager : GameManager
 				StartCoroutine (SetMiss ());
 			}
 		} else {
-			lastString = cardString[length];
+			lastString = cardString [length];
 			lastInt = int.Parse (lastString);
 		}
 
@@ -543,7 +606,7 @@ public class BattleGameManager : GameManager
 		score3 = list [2];
 
 		hpUILabel.text = "" + score;
-		timerUILabel.text = ((int)timer).ToString("");
+		timerUILabel.text = ((int)timer).ToString ("");
 
 		panel1.SetActive (false);
 		panel100.SetActive (false);

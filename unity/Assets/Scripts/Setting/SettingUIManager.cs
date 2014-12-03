@@ -4,36 +4,36 @@ using System.Collections;
 public class SettingUIManager : UIManager
 {
 	// const
-	private const string LOGOUT = "Logout";
+	private const string SCENEMANAGER = "SceneManager";
 	private const string SOUND = "Sound";
+	private const string LOGIN_BACK = "LoginBack";
 	// gameobject
 	private GameObject logout;
 	// component
 	private Register register;
-	private SoundControl soundControl;
+	private SceneManager sceneManager;
 
 	public override void Awake ()
 	{
-		BgmType = Bgm.NONE;
-		BgmName = string.Empty;
+		BgmType = Bgm.SAME;
+//		BgmName = string.Empty;
 
-		IsCache = true;
+		IsCache = false;
 	}
 
 	public override void Start ()
 	{
-		logout = GameObject.Find (LOGOUT);
-		if (FB.IsLoggedIn) {
-			logout.SetActive (true);
-		} else {
-			logout.SetActive (false);
+		sceneManager = GameObject.Find (SCENEMANAGER).GetComponent<SceneManager> ();
+
+		if (GameObject.Find (Config.LOGIN) != null) {
+			GameObject.Find (LOGIN_BACK).SetActive (false);
+		}
+
+		if (GameObject.Find (Config.MYPAGE) != null) {
+
 		}
 
 		register = Register.Instance ();
-		GameObject temp = GameObject.Find (SOUND);
-		if (temp != null) {
-			soundControl = temp.GetComponent<SoundControl> ();
-		}
 	}
 
 	public void SoundBack ()
@@ -41,13 +41,9 @@ public class SettingUIManager : UIManager
 		bool flag = register.GetBackSound ();
 
 		if (flag) {
-
+			Camera.main.audio.Stop ();
 		} else {
-
-		}
-
-		if (soundControl != null) {
-			soundControl.Set (!flag);
+			Camera.main.audio.Play ();
 		}
 
 		register.SetBackSound (!flag);
@@ -65,15 +61,10 @@ public class SettingUIManager : UIManager
 
 		register.SetButtonSound (!flag);
 	}
-	
-	public void Guide ()
-	{
-	}
 
-	public void Logout ()
+	public void LoginBack ()
 	{
-		FB.Logout ();
-		logout.SetActive (false);
+		SSSceneManager.Instance.GoHome ();
 	}
 
 	public void CheatKey ()

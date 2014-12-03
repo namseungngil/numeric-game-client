@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
+using System.Collections.Generic;
 
 public class RandomArray
 {
-	public static string[] RandomizeStrings (string[] arr)
+	public static List<T> RandomizeStrings<T> (List<T> arr)
 	{
-		for (int t = 0; t < arr.Length; t++ )
+		for (int t = 0; t < arr.Count; t++ )
 		{
-			string tmp = arr[t];
-			int r = Random.Range(t, arr.Length);
+			T tmp = arr[t];
+			int r = Random.Range(t, arr.Count);
 			arr[t] = arr[r];
 			arr[r] = tmp;
 		}
