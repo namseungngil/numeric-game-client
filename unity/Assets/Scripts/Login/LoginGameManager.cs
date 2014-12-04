@@ -43,7 +43,5 @@ public class LoginGameManager : GameManager
 		}
 
 		SSSceneManager.Instance.PopUp (Config.LOADING, null, PopupCallback);
-
-		FB.Login ("email, publish_actions", LoginCallback);
 	}
 }

@@ -22,10 +22,6 @@ public class BattleGameManager : GameManager
 	private const float MISS_TIME = 1f;
 	private const float OVER_TIME = 2f;
 	private const float SHUFFLE_TIME = 1f;
-	private const string READY_TEXT = "Ready";
-	private const string START_TEXT = "Start";
-	private const string TIME_OVER_TEXT = "Time Over";
-	private const string CLEAR_TEXT = "Clear";
 	private const string PROBLEM_LABEL_TEXT = "Problem";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
@@ -69,7 +65,7 @@ public class BattleGameManager : GameManager
 	private string labelString;
 	private string problemSign;
 	private int numberMax;
-	private float timer;
+	public float timer;
 	private int clearCount;
 	private int missCount;
 	private int hitCount;
@@ -139,6 +135,8 @@ public class BattleGameManager : GameManager
 	{
 		SetStatus (GameStatus.Over);
 
+		SceneData.score = score.ToString ();
+
 		bool flag = true;
 		if (score >= score3) {
 			// star3
@@ -153,9 +151,9 @@ public class BattleGameManager : GameManager
 		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 
-		string temp = TIME_OVER_TEXT;
+		string temp = "TIME OVER";
 		if (flag) {
-			temp = CLEAR_TEXT;
+			temp = "CLEAR";
 		}
 		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (OVER_TIME);
@@ -194,11 +192,11 @@ public class BattleGameManager : GameManager
 		panel100.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
-		panel200UILabel.text = READY_TEXT;
+		panel200UILabel.text = "READY";
 		yield return new WaitForSeconds (READY_TIME);
 
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
-		panel200UILabel.text = START_TEXT;
+		panel200UILabel.text = "GO";
 		yield return new WaitForSeconds (START_TIME);
 
 		panel100.SetActive (false);
@@ -428,10 +426,12 @@ public class BattleGameManager : GameManager
 			SetTimer ();
 		}
 
-		string tempString = "Attack";
+		panel200UILabel.color = new Color32 (255, 143, 0, 255);
+		string tempString = "GOOD";
 		int tempCombo = comboCount - 1;
 		if (tempCombo >= 1) {
-			tempString = "Combo +";
+			panel200UILabel.color = new Color32 (255, 112, 95, 255);
+			tempString = "COMBO +";
 			tempString += "" + tempCombo;
 			tempFrist += tempCombo;
 			tempLast += tempCombo;
@@ -466,7 +466,8 @@ public class BattleGameManager : GameManager
 
 		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
-		panel200UILabel.text = "Miss";
+		panel200UILabel.color = new Color32 (158, 0, 167, 255);
+		panel200UILabel.text = "MISS";
 		yield return new WaitForSeconds (MISS_TIME);
 		panel100.SetActive (false);
 

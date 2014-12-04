@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class StartGameManager : MonoBehaviour
 {
 	// component
-	private StartFacebookManager startFacebookManager;
+	private RankFacebookManager rankFacebookManager;
 	private HttpComponent httpComponent;
 	private QueryModel queryModel;
 
 	void Start ()
 	{
-		startFacebookManager = gameObject.GetComponent<StartFacebookManager> ();
+		rankFacebookManager = gameObject.GetComponent<RankFacebookManager> ();
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
 		queryModel = QueryModel.Instance ();
@@ -32,7 +32,7 @@ public class StartGameManager : MonoBehaviour
 			if (dataTable.Rows.Count > 0) {
 				httpComponent.OnDone = (object obj) => {
 					Debug.Log ("httpComponent OnDone");
-					startFacebookManager.Rank ();
+					rankFacebookManager.Rank ();
 				};
 
 				Dictionary<string, string> dic = new Dictionary<string, string> ();
@@ -43,10 +43,10 @@ public class StartGameManager : MonoBehaviour
 
 				httpComponent.Over (dic, false);
 			} else {
-				startFacebookManager.Rank ();
+				rankFacebookManager.Rank ();
 			}
 		} else {
-			startFacebookManager.Rank ();
+			rankFacebookManager.Rank ();
 		}
 	}
 }

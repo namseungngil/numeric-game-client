@@ -44,9 +44,6 @@
 	public const string SOLIDCAMERA = "SolidCamera";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";
-	public const string ANIMATION_CHECKMARK = "Checkmark";
-	public const string ANIMATION_WINDOW_BACK = "Window - Back";
-	public const string ANIMATION_WINDOW_FORWARD = "Window - Forward";
 	// device
 	public const string ANDROID = "1";
 	public const string IPHONE = "2";

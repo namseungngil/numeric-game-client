@@ -24,6 +24,11 @@ public class LoveUIManager : UIManager
 		loveFacebookManager = GameObject.Find (GRIDLIST).GetComponent<LoveFacebookManager> ();
 		list = new List<string> ();
 	}
+
+	protected override void Update ()
+	{
+		base.Update ();
+	}
 	
 	public void Check ()
 	{

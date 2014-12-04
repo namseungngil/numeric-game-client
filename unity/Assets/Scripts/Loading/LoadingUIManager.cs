@@ -10,4 +10,9 @@ public class LoadingUIManager : UIManager
 		
 		IsCache = false;
 	}
+
+	protected override void Update ()
+	{
+		base.Update ();
+	}
 }

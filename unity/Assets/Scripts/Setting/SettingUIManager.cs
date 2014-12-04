@@ -6,12 +6,17 @@ public class SettingUIManager : UIManager
 	// const
 	private const string SCENEMANAGER = "SceneManager";
 	private const string SOUND = "Sound";
-	private const string LOGIN_BACK = "LoginBack";
+	private const string LOGIN_BACK = "Back";
+	private const string SOUND_BACK = "SoundBack";
+	private const string SOUND_BUTTON = "SoundButton";
+	private const string MYPSET_OFF = "myPset_off";
+	private const string MYPSET_ON = "myPset_on";
 	// gameobject
 	private GameObject logout;
 	// component
 	private Register register;
-	private SceneManager sceneManager;
+	private UISprite soundBack;
+	private UISprite soundButton;
 
 	public override void Awake ()
 	{
@@ -23,17 +28,26 @@ public class SettingUIManager : UIManager
 
 	public override void Start ()
 	{
-		sceneManager = GameObject.Find (SCENEMANAGER).GetComponent<SceneManager> ();
+		register = Register.Instance ();
 
 		if (GameObject.Find (Config.LOGIN) != null) {
 			GameObject.Find (LOGIN_BACK).SetActive (false);
 		}
 
-		if (GameObject.Find (Config.MYPAGE) != null) {
+		soundBack = GameObject.Find (SOUND_BACK).GetComponent<UISprite> ();
+		soundButton = GameObject.Find (SOUND_BUTTON).GetComponent<UISprite> ();
 
+		if (!register.GetBackSound ()) {
+			soundBack.spriteName = MYPSET_ON;
 		}
+		if (!register.GetButtonSound ()) {
+			soundButton.spriteName = MYPSET_ON;
+		}
+	}
 
-		register = Register.Instance ();
+	protected override void Update ()
+	{
+		base.Update ();
 	}
 
 	public void SoundBack ()
@@ -42,8 +56,10 @@ public class SettingUIManager : UIManager
 
 		if (flag) {
 			Camera.main.audio.Stop ();
+			soundBack.spriteName = MYPSET_ON;
 		} else {
 			Camera.main.audio.Play ();
+			soundBack.spriteName = MYPSET_OFF;
 		}
 
 		register.SetBackSound (!flag);
@@ -54,9 +70,9 @@ public class SettingUIManager : UIManager
 		bool flag = register.GetButtonSound ();
 
 		if (flag) {
-
+			soundBack.spriteName = MYPSET_ON;
 		} else {
-
+			soundBack.spriteName = MYPSET_OFF;
 		}
 
 		register.SetButtonSound (!flag);
@@ -64,6 +80,7 @@ public class SettingUIManager : UIManager
 
 	public void LoginBack ()
 	{
+		SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
 		SSSceneManager.Instance.GoHome ();
 	}
 

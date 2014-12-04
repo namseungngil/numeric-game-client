@@ -18,6 +18,11 @@ public class BattleUIManager : UIManager
 		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 
+	protected override void Update ()
+	{
+		base.Update ();
+	}
+
 	public void BattleOnClick ()
 	{
 //		Debug.Log ("BattleOnClick");

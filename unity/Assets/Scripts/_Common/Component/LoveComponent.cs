@@ -14,7 +14,7 @@ public class LoveComponent : MonoBehaviour
 	// component
 	private UILabel loveTimeUILabel;
 	private UILabel loveCountUILabel;
-	private Register numericPlayerPrefs;
+	private Register register;
 	private QueryModel dataQuery;
 	// variable
 	private int love;
@@ -23,7 +23,7 @@ public class LoveComponent : MonoBehaviour
 
 	void Start ()
 	{
-		numericPlayerPrefs = Register.Instance ();
+		register = Register.Instance ();
 		dataQuery = QueryModel.Instance ();
 		GameObject loveGameObject = GameObject.Find (LOVE);
 		if (loveGameObject != null) {
@@ -36,6 +36,8 @@ public class LoveComponent : MonoBehaviour
 			}
 		}
 
+		loveTime = 0;
+		timer = TIMER;
 		InitLove ();
 	}
 
@@ -76,10 +78,11 @@ public class LoveComponent : MonoBehaviour
 	void OnApplicationPause(bool pauseStatus) {
 		Debug.Log ("LoveComponent OnApplicationPause : " + pauseStatus);
 		if (!pauseStatus) {
-			if (numericPlayerPrefs != null) {
+			if (register != null) {
+				loveTime = 0;
 				InitLove ();
 			} else {
-				SetNotification ();
+
 			}
 		}
 	}
@@ -124,14 +127,17 @@ public class LoveComponent : MonoBehaviour
 	
 	private void InitLove ()
 	{
-		timer = TIMER;
+		love = register.GetLove ();
 
-		love = numericPlayerPrefs.GetLove ();
+		if (loveTime > 0) {
+			return;
+		}
 
 		if (love < Config.LOVE_MAX) {
-			string tempLoveTime = numericPlayerPrefs.GetLoveTime ();
+			string tempLoveTime = register.GetLoveTime ();
 			if (tempLoveTime == "") {
 				SetLove (Config.LOVE_MAX);
+				return;
 			}
 
 			int[] dateArray = Date.Slice (tempLoveTime);
@@ -157,8 +163,8 @@ public class LoveComponent : MonoBehaviour
 					love = Config.LOVE_MAX;
 					SetLove (love);
 				} else {
-					int tempSeconds = loveTime;
-					SetLove (love, end.AddSeconds (tempSeconds).ToString (Config.DATA_TIME));
+					int tempSeconds = upLove * LOVE_RECOVERY;
+					SetLove (love, start.AddSeconds (tempSeconds).ToString (Config.DATA_TIME));
 				}
 			} else {
 				loveTime = (int)(LOVE_RECOVERY - seconds);
@@ -169,10 +175,12 @@ public class LoveComponent : MonoBehaviour
 	private void SetLove (int love, string time = "")
 	{
 		if (time == "") {
-			numericPlayerPrefs.SetLove (love);
+			register.SetLove (love);
 		} else {
-			numericPlayerPrefs.SetLove (love, time);
+			register.SetLove (love, time);
 		}
+
+		SetNotification ();
 	}
 	
 	private IEnumerator TimerLove ()
@@ -196,7 +204,7 @@ public class LoveComponent : MonoBehaviour
 		}
 
 		if (loveCountUILabel != null) {
-			loveCountUILabel.text = "" + love + "/" + Config.LOVE_MAX;
+			loveCountUILabel.text = "" + love;
 		}
 	}
 

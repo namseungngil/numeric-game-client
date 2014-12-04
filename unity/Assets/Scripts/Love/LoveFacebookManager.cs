@@ -85,7 +85,6 @@ public class LoveFacebookManager : FacebookManager
 						uITexture.mainTexture = pictureTexture;
 					}
 				});
-
 			}
 
 			gameObject.GetComponent<UIGrid> ().Reposition ();

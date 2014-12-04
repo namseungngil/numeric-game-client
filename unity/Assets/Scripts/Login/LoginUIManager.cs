@@ -8,6 +8,7 @@ public class LoginUIManager : UIManager
 	private GameObject facebookUI;
 	// component
 	private LoginGameManager loginGameManager;
+	private UILabel uILabel;
 
 	public override void Awake ()
 	{
@@ -19,27 +20,35 @@ public class LoginUIManager : UIManager
 	public override void Start ()
 	{
 		facebookUI = GameObject.Find (Config.FACEBOOK);
+		uILabel = facebookUI.GetComponentInChildren<UILabel> ();
 		loginGameManager = gameObject.GetComponent<LoginGameManager> ();
 	}
 
 	protected override void Update ()
 	{
+		base.Update ();
+
 		if (FB.IsLoggedIn) {
-			facebookUI.SetActive (false);
+//			facebookUI.SetActive (false);
+			uILabel.text = "LOGOUT";
 		} else {
-			facebookUI.SetActive (true);
+//			facebookUI.SetActive (true);
+			uILabel.text = "LOGIN";
 		}
 	}
 
 	public void GameStart ()
 	{
 		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
-//		SSSceneManager.Instance.GoHome ();
 	}
 	
 	public void FacebookLogin ()
 	{
-		loginGameManager.FacebookLogin ();
+		if (FB.IsLoggedIn) {
+			FB.Logout ();
+		} else {
+			loginGameManager.FacebookLogin ();
+		}
 	}
 
 	public void Setting ()

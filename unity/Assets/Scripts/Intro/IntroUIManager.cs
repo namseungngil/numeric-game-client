@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class IntroUIManager : SSController
+public class IntroUIManager : UIManager
 {
 	public override void Awake ()
 	{
@@ -9,5 +9,10 @@ public class IntroUIManager : SSController
 //		BgmName = string.Empty;
 
 		IsCache = false;
+	}
+
+	protected override void Update ()
+	{
+		base.Update ();
 	}
 }

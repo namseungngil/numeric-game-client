@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -401,7 +401,7 @@
      <Compile Include="Assets\Scripts\Over\OverUIManager.cs" />
      <Compile Include="Assets\Scripts\Root\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Setting\SettingUIManager.cs" />
-     <Compile Include="Assets\Scripts\Start\StartFacebookManager.cs" />
+     <Compile Include="Assets\Scripts\Start\RankFacebookManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartGameManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
      <Compile Include="Assets\Scripts\Stop\StopUIManager.cs" />
@@ -430,7 +430,6 @@
      <Compile Include="Assets\Scripts\_Common\Component\WebviewComponent.cs" />
      <Compile Include="Assets\Scripts\_Common\Config\Config.cs" />
      <Compile Include="Assets\Scripts\_Common\Control\ButtonSoundControl.cs" />
-     <Compile Include="Assets\Scripts\_Common\Control\SoundControl.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\DATA.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\Register.cs" />
      <Compile Include="Assets\Scripts\_Common\Date\Date.cs" />
@@ -442,6 +441,7 @@
      <Compile Include="Assets\Scripts\_Common\Logic\RandomArray.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\FacebookManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\GameManager.cs" />
+     <Compile Include="Assets\Scripts\_Common\Manager\ResultManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\UIManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Namespace\ASSETBUNDLE.cs" />
      <Compile Include="Assets\Scripts\_Common\Namespace\HTTP.cs" />

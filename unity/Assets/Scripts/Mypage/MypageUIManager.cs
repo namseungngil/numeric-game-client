@@ -14,6 +14,8 @@ public class MypageUIManager : UIManager
 	// component
 	private MypageGameManager mypageGameManager;
 	private Vector2 touchStartPos;
+	// array
+	private UISprite[] uiSpriteList;
 	// variable
 	private bool popupFlag;
 	private bool touchStarted;
@@ -104,16 +106,29 @@ public class MypageUIManager : UIManager
 		}
 	}
 
+	private void SetUISprite (bool flag)
+	{
+		if (uiSpriteList == null) {
+			uiSpriteList = gameObject.GetComponentsInChildren<UISprite> ();
+		}
+
+		foreach (UISprite uS in uiSpriteList) {
+			uS.gameObject.SetActive (flag);
+		}
+	}
+
 	private void PopupOnActive (SSController ctrl)
 	{
 		Debug.Log ("MypageUIManager popupOnActive");
 		popupFlag = true;
+
 	}
 
 	private void PopupOnDeActive (SSController ctrl)
 	{
 		Debug.Log ("MypageUIManager popupOnDeActive");
 		popupFlag = false;
+
 	}
 
 	public void Love ()

@@ -18,6 +18,11 @@ public class StopUIManager : UIManager
 		battleGameManager = GameObject.Find (Config.BATTLE).GetComponent<BattleGameManager> ();
 	}
 
+	protected override void Update ()
+	{
+		base.Update ();
+	}
+
 	public void Continue ()
 	{
 		if (battleGameManager != null) {

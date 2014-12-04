@@ -12,8 +12,8 @@ public class IntroManager : MonoBehaviour
 	private QueryModel queryModel;
 	// variable
 	private string text;
-	private string defaultText = "Loading";
-	private string lastText = "Loading....";
+	private string defaultText = "LOADING";
+	private string lastText = "LOADING....";
 	private float time;
 	
 	void Start ()

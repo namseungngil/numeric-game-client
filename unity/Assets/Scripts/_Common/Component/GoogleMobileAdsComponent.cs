@@ -82,7 +82,11 @@ public class GoogleMobileAdsComponent: MonoBehaviour
         #endif
 
         // Create a 320x50 banner at the top of the screen.
+        #if UNITY_IPHONE
         bannerView = new BannerView(adUnitId, AdSize.Banner, AdPosition.Bottom);
+		#else
+		bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
+		#endif
         // Register for ad events.
         bannerView.AdLoaded += HandleAdLoaded;
         bannerView.AdFailedToLoad += HandleAdFailedToLoad;
