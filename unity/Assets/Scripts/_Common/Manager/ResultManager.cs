@@ -18,6 +18,8 @@ public class ResultManager : UIManager
 	protected UISprite star1;
 	protected UISprite star2;
 	protected UISprite star3;
+	// array
+	protected List<GameObject> starList;
 
 	public override void Awake ()
 	{
@@ -43,9 +45,14 @@ public class ResultManager : UIManager
 		stage.text = SceneData.stageLevel; 
 		score.text = SceneData.score;
 		maxScore.text = Game.Score (int.Parse (SceneData.stageLevel)) [2].ToString ();
-		
-		star1 = GameObject.Find ("S" + Config.STAR1).GetComponent<UISprite> ();
-		star2 = GameObject.Find ("S" + Config.STAR2).GetComponent<UISprite> ();
-		star3 = GameObject.Find ("S" + Config.STAR3).GetComponent<UISprite> ();
+
+		starList = new List<GameObject> ();
+		starList.Add (GameObject.Find ("S" + Config.STAR1));
+		starList.Add (GameObject.Find ("S" + Config.STAR2));
+		starList.Add (GameObject.Find ("S" + Config.STAR3));
+
+		star1 = starList [0].GetComponent<UISprite> ();
+		star2 = starList [1].GetComponent<UISprite> ();
+		star3 = starList [2].GetComponent<UISprite> ();
 	}
 }

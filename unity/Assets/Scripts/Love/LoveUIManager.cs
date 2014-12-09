@@ -6,10 +6,19 @@ public class LoveUIManager : UIManager
 {
 	// const
 	private const string GRIDLIST = "GridList";
+	private const string SEND = "Send";
+	private const string MYPINVITE_CHECK10 = "myPinvite_check10";
+	private const string MYPINVITE_CHECK11 = "myPinvite_check11";
+	// gameobject
+	private GameObject send;
+	private GameObject gridList;
 	// component
 	private LoveFacebookManager loveFacebookManager;
+	private UISprite allUISprite;
 	// array
 	private List<string> list;
+	private List<LoveToggleControl> allUIToggle;
+	private bool allFlag;
 
 	public override void Awake ()
 	{
@@ -21,8 +30,14 @@ public class LoveUIManager : UIManager
 	
 	public override void Start ()
 	{
-		loveFacebookManager = GameObject.Find (GRIDLIST).GetComponent<LoveFacebookManager> ();
+		send = GameObject.Find (SEND);
+		gridList = GameObject.Find (GRIDLIST);
+		loveFacebookManager = gridList.GetComponent<LoveFacebookManager> ();
+
 		list = new List<string> ();
+		allFlag = false;
+
+		send.SetActive (false);
 	}
 
 	protected override void Update ()
@@ -30,9 +45,8 @@ public class LoveUIManager : UIManager
 		base.Update ();
 	}
 	
-	public void Check ()
+	public void Check (UIToggle uIToggle)
 	{
-		UIToggle uIToggle = UIToggle.current.gameObject.GetComponent<UIToggle> ();
 		if (uIToggle.value) {
 			if (!list.Contains (uIToggle.name)) {
 				list.Add (uIToggle.name);
@@ -45,6 +59,12 @@ public class LoveUIManager : UIManager
 			if (list.Contains (uIToggle.name)) {
 				list.Remove (uIToggle.name);
 			}
+		}
+
+		if (list.Count > 0) {
+			send.SetActive (true);
+		} else {
+			send.SetActive (false);
 		}
 	}
 
@@ -61,6 +81,44 @@ public class LoveUIManager : UIManager
 			}
 			Debug.Log ("Request : " + temp.Length);
 			loveFacebookManager.onChallengeClicked (temp);
+		}
+	}
+
+	private void AllCheck ()
+	{
+		if (allFlag) {
+			allUISprite.spriteName = MYPINVITE_CHECK10;
+		} else {
+			allUISprite.spriteName = MYPINVITE_CHECK11;
+		}
+	}
+
+	public void All ()
+	{
+		if (allUISprite == null) {
+			allUISprite = Logic.GetChildObject (UIButton.current.gameObject, "Background").GetComponent<UISprite> ();
+		}
+
+		if (allUIToggle == null) {
+			allUIToggle = new List<LoveToggleControl> ();
+			foreach (LoveToggleControl lTC in gridList.GetComponentsInChildren<LoveToggleControl> ()) {
+				Debug.Log (lTC.name);
+				allUIToggle.Add (lTC);
+			}
+		}
+
+		if (allFlag) {
+			allFlag = false;
+			allUISprite.spriteName = MYPINVITE_CHECK10;
+		} else {
+			allFlag = true;
+			allUISprite.spriteName = MYPINVITE_CHECK11;
+		}
+
+		if (allUIToggle != null && allUIToggle.Count > 0) {
+			foreach (LoveToggleControl ltC in allUIToggle) {
+				ltC.OnEnabled (allFlag);
+			}
 		}
 	}
 }

@@ -35,21 +35,21 @@ public class GCMReceiver : MonoBehaviour {
 	}
 	
 	void OnRegistered (string registrationId) {
-		Debug.Log ("Registered: " + registrationId);
+//		Debug.Log ("Registered: " + registrationId);
 		if (_onRegistered != null) {
 			_onRegistered (registrationId);
 		}
 	}
 	
 	void OnUnregistered (string registrationId) {
-		Debug.Log ("Unregistered: " + registrationId);
+//		Debug.Log ("Unregistered: " + registrationId);
 		if (_onUnregistered != null) {
 			_onUnregistered (registrationId);
 		}
 	}
 	
 	void OnDeleteMessages (string total) {
-		Debug.Log ("DeleteMessages: " + total);
+//		Debug.Log ("DeleteMessages: " + total);
 		if (_onDeleteMessages != null) {
 			int totalCnt = System.Convert.ToInt32 (total);
 			_onDeleteMessages (totalCnt);

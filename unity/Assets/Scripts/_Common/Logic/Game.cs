@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class Game
@@ -30,6 +31,11 @@ public class Game
 		list.Add (max);
 
 		return list;
+	}
+
+	public static int QuestSence (int stage)
+	{
+		return (int)((stage - Config.CARD_COUNT) / Config.CHAPTER_IN_QUEST);
 	}
 
 	public static string Scene (string s)

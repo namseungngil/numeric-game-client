@@ -57,7 +57,7 @@ public class HttpComponent : MonoBehaviour
 		id = apnsComponent.TokenID ();
 		key = Config.IPHONE;
 #endif
-		
+
 		if ((id == null || id == "") && regGCMApnsFacebookCount < regGCMApnsFacebookCountMax) {
 			Debug.Log ("Re RegGCMApnsFacebook.");
 			StartCoroutine (RegGCMApnsFacebook (Config.REG_GCM_APNS_FACEBOOK_WAIT));

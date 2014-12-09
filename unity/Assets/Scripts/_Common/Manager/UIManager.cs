@@ -3,6 +3,9 @@ using System.Collections;
 
 public class UIManager : SSController
 {
+	// const
+	protected const string CANCEL = "Cancel";
+
 	protected virtual void Update ()
 	{
 		if (Application.platform == RuntimePlatform.Android) {

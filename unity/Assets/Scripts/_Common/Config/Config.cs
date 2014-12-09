@@ -1,7 +1,7 @@
 ﻿public class Config
 {
 	// title
-	public const string GAME_TITME = "Number Battle";
+	public const string GAME_TITME = "TwoTouch";
 	// key
 	public const string KEY = "riogamesnumeric88!#";
 	// content size
@@ -42,6 +42,7 @@
 	public const string SCORE = "Score";
 	public const string GRID = "Grid";
 	public const string SOLIDCAMERA = "SolidCamera";
+	public const string EFFECTCAMERA = "EffectCamera";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";
 	// device
@@ -81,4 +82,6 @@
 	// card count
 	public const int CARD_COUNT = 9;
 	public const int CHAPTER_IN_QUEST = 16;
+	// position
+	public const float EFFECT_Z = 5f;
 }

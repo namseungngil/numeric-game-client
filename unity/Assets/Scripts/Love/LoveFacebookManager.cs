@@ -9,12 +9,9 @@ public class LoveFacebookManager : FacebookManager
 	public GameObject firend;
 	// component
 	private LoveUIManager loveUIManager;
-	// array
-	private List<object> friends = null;
 	
 	protected override void Start ()
 	{
-		Debug.Log ("LoveFacebookManager Start");
 		count = 0;
 		loveUIManager = gameObject.GetComponentInParent<LoveUIManager> ();
 		if (loveUIManager != null) {
@@ -26,71 +23,111 @@ public class LoveFacebookManager : FacebookManager
 			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
 
-		string tempFriends = FRIENDS_QUERY;
-		
 		if (FB.IsLoggedIn) {
-//			if (friends != null && friends.Count > 0) {
-//				FriendsView ();
-//			} else {
-			Debug.Log (tempFriends);
-			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
-//			}
+			if (friends != null && friends.Count > 0) {
+				InvitableFriendsCallback ();
+			} else {
+				FriendsCallback ();
+			}
 		}
 	}
 
-	private void FriendsCallback (FBResult result)
+	private void FriendsCallback (FBResult result = null)
 	{
 		Debug.Log ("FriendsCallback");
-		
-		if (result.Error != null) {
+
+		bool flag = false;
+		if (result == null) {
+			flag = true;
+		}
+
+		if (!flag && result.Error != null) {
 			Debug.Log ("FriendsCallback error : " + result.Error);
-			
-			// Let's just try again
+			flag = true;
+		}
+
+		if (flag) {
 			string temp = FRIENDS_QUERY;
 			FB.API (temp, Facebook.HttpMethod.GET, FriendsCallback);
 			return;
 		}
-		
+
 		friends = DeserializeJSONFriends (result.Text);
+
+		if (invitableFriends != null && invitableFriends.Count > 0) {
+			FriendsView ();
+		} else {
+			InvitableFriendsCallback ();
+		}
+	}
+
+	private void InvitableFriendsCallback (FBResult result = null)
+	{
+		Debug.Log ("InvitableFriendsCallback");
+
+		bool flag = false;
+		if (result == null) {
+			flag = true;
+		}
+
+		if (!flag && result.Error != null) {
+			Debug.Log ("InvitableFriendsCallback error : " + result.Error);
+			flag = true;
+		}
+
+		if (flag) {
+			string temp = INVITABLE_FRIENDS_QUERY;
+			FB.API (temp, Facebook.HttpMethod.GET, InvitableFriendsCallback);
+			return;
+		}
+
+		invitableFriends = DeserializeJSONFriends (result.Text);
 
 		FriendsView ();
 	}
 
+	private void SetFriends (List<object> l)
+	{
+		foreach (Dictionary<string, object> f in l) {
+			Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
+			
+			GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
+			Debug.Log (gObj);
+			gObj.name = f ["id"].ToString ();
+			gObj.transform.parent = this.transform;
+			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
+			Vector3 vector3 = gObj.transform.localPosition;
+			gObj.transform.localPosition = new Vector3 (0, vector3.y, vector3.z);
+			
+			UITexture uITexture = Logic.GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
+			UILabel uILabel1 = Logic.GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
+			UILabel uILabel2 = Logic.GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
+			
+			uILabel1.text = f ["first_name"].ToString ();
+			uILabel2.text = f ["last_name"].ToString ();
+			
+			LoadPictureAPI (GetPictureURL (f ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
+			                {
+				if (pictureTexture != null) {
+					uITexture.mainTexture = pictureTexture;
+				}
+			});
+		}
+	}
+
 	private void FriendsView ()
 	{
-		Debug.Log ("friend count : " + friends.Count);
-		Debug.Log (firend);
-		if (friends.Count > 0) {
-			foreach (Dictionary<string, object> f in friends) {
-				Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
-				
-				GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-				Debug.Log (gObj);
-				gObj.name = f ["id"].ToString ();
-				gObj.transform.parent = this.transform;
-				gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
-				Vector3 vector3 = gObj.transform.localPosition;
-				gObj.transform.localPosition = new Vector3 (0, vector3.y, vector3.z);
-				
-				UITexture uITexture = GetChildObject (gObj, TEXTURE).GetComponent<UITexture> ();
-				UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
-				UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
-				
-				uILabel1.text = f ["first_name"].ToString ();
-				uILabel2.text = f ["last_name"].ToString ();
+		Debug.Log ("Friends count : " + friends.Count);
+		Debug.Log ("InvitableFriends count : " + invitableFriends.Count);
 
-				LoadPictureAPI (GetPictureURL (f ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
-				{
-					if (pictureTexture != null) {
-						uITexture.mainTexture = pictureTexture;
-					}
-				});
-			}
-
-			gameObject.GetComponent<UIGrid> ().Reposition ();
-		} else {
-			// loading...
-
+		if (friends != null && friends.Count > 0) {
+			SetFriends (friends);
 		}
+
+		if (invitableFriends != null && invitableFriends.Count > 0) {
+			SetFriends (invitableFriends);
+		}
+
+		gameObject.GetComponent<UIGrid> ().Reposition ();
 	}
 }

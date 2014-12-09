@@ -75,8 +75,8 @@ public class QueryModel : Query
 
 				int index = 0;
 				foreach (KeyValuePair<string, string> kVP in tempDic) {
-					whereData [i] = kVP.Key;
-					dataData [i] = kVP.Value;
+					whereData [index] = kVP.Key;
+					dataData [index] = kVP.Value;
 					index++;
 				}
 

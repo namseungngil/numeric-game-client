@@ -98,7 +98,7 @@ public class Query
 		string query = "UPDATE " + tableName + " SET " + dataName + " = CASE " + whereName + " ";
 
 		for (int i = 0; i < where.Length; i++) {
-			query += "WHERE " + where [i] + " THEN " + data [i] + " ";
+			query += "WHEN " + where [i] + " THEN " + data [i] + " ";
 		}
 
 		query += "END WHERE " + whereName + " IN (";

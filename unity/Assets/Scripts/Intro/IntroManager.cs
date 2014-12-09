@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class IntroManager : MonoBehaviour
+public class IntroManager : GameManager
 {
 	// const
 	private const float WAIT_SECOND = 1f;
@@ -18,8 +18,6 @@ public class IntroManager : MonoBehaviour
 	
 	void Start ()
 	{
-		Notification.CancelAll ();
-
 		time = 0;
 		uiLabel = GameObject.Find (Config.LABEL).GetComponent<UILabel> ();
 		text = defaultText;
@@ -44,23 +42,21 @@ public class IntroManager : MonoBehaviour
 		}
 	}
 
-	private IEnumerator SetUILabel ()
+	private void OnInitComplete ()
 	{
-		yield return new WaitForSeconds (WAIT_SECOND);
-		
-		if (text == lastText) {
-			text = defaultText;
-		}
-		
-		text += ".";
-		uiLabel.text = text;
-		
-		StartCoroutine (SetUILabel ());
+		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
+		HttpLogin ();
+	}
+	
+	private void OnHideUnity (bool isGameShown)
+	{
+		Debug.Log ("Is game showing? " + isGameShown);
+		HttpLogin ();
 	}
 
 	private void Login ()
 	{
-		HttpLogin ();
+		FB.Init (OnInitComplete, OnHideUnity);
 	}
 
 	private void HttpLogin ()
@@ -69,7 +65,7 @@ public class IntroManager : MonoBehaviour
 			Sync ();
 		};
 
-		httpComponent.Login (Config.REG_GCM_APNS_FACEBOOK_WAIT);
+		httpComponent.Login (0);
 	}
 
 	private void Sync ()

@@ -59,13 +59,13 @@ public class InputEffectComponent : MonoBehaviour
 		temp.transform.parent = gameObject.transform;
 	}
 
-//	private Vector3 GetNGUIPostion ()
-//	{
-//		Vector3 uipos = NGUITools.FindCameraForLayer (gameObject.layer).camera.ScreenToWorldPoint (Input.mousePosition);
-//		float x = uipos.x;
-//		float y = uipos.y;
-//		float z = uipos.z;
-//
-//		return new Vector3 (x, y, z);
-//	}
+	private Vector3 GetNGUIPostion ()
+	{
+		Vector3 uipos = NGUITools.FindCameraForLayer (gameObject.layer).camera.ScreenToWorldPoint (Input.mousePosition);
+		float x = uipos.x;
+		float y = uipos.y;
+		float z = uipos.z;
+
+		return new Vector3 (x, y, z);
+	}
 }

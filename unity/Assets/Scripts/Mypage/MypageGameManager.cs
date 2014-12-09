@@ -32,7 +32,6 @@ public class MypageGameManager : GameManager
 	// component
 	private QueryModel dataQuery;
 	private Register register;
-	private UIAtlas uIAtlas;
 	private MypageFacebookManager mypageFacebookManager;
 	// array
 	public UIAtlas[] map;
@@ -73,7 +72,17 @@ public class MypageGameManager : GameManager
 		index = 0;
 		nextFlag = false;
 
+		// set last stage
+		if (SceneData.lastStage == 0) {
+			SceneData.lastStage = Game.Quest (LastIndex ()) [1];
+		}
+
 		SetQuest ();
+	}
+
+	private int LastIndex ()
+	{
+		return (map.Length * Config.STAGE_COLOR_COUNT) - 1;
 	}
 
 	private void SetQuest (int ind = -1)
@@ -85,7 +94,12 @@ public class MypageGameManager : GameManager
 
 		// set index
 		if (ind == -1) {
-			index = register.GetStage ();
+			if (SceneData.nextStage != "") {
+				index = Game.QuestSence (int.Parse (SceneData.nextStage));
+				register.SetStage (index);
+			} else {
+				index = register.GetStage ();
+			}
 		} else {
 			index = ind;
 			register.SetStage (index);
@@ -190,7 +204,7 @@ public class MypageGameManager : GameManager
 	public bool NextQuestStatus ()
 	{
 		if (nextFlag) {
-			if (index < (map.Length * Config.STAGE_COLOR_COUNT) - 1) {
+			if (index < LastIndex ()) {
 				return true;
 			}
 		}

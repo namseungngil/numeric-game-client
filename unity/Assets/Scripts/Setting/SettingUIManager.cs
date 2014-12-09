@@ -7,8 +7,8 @@ public class SettingUIManager : UIManager
 	private const string SCENEMANAGER = "SceneManager";
 	private const string SOUND = "Sound";
 	private const string LOGIN_BACK = "Back";
-	private const string SOUND_BACK = "SoundBack";
-	private const string SOUND_BUTTON = "SoundButton";
+	private const string SOUND_BACK = "BackSprite";
+	private const string SOUND_BUTTON = "ButtonSprite";
 	private const string MYPSET_OFF = "myPset_off";
 	private const string MYPSET_ON = "myPset_on";
 	// gameobject
@@ -70,9 +70,9 @@ public class SettingUIManager : UIManager
 		bool flag = register.GetButtonSound ();
 
 		if (flag) {
-			soundBack.spriteName = MYPSET_ON;
+			soundButton.spriteName = MYPSET_ON;
 		} else {
-			soundBack.spriteName = MYPSET_OFF;
+			soundButton.spriteName = MYPSET_OFF;
 		}
 
 		register.SetButtonSound (!flag);

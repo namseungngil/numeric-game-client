@@ -46,6 +46,10 @@ public class MypageUIManager : UIManager
 		if (!mypageGameManager.BackQuestStatus ()) {
 			downGameObject.SetActive (false);
 		}
+
+		if (SceneData.nextStage != "") {
+			StartCoroutine (NextGameStart ());
+		}
 	}
 	
 	protected override void Update ()
@@ -75,6 +79,13 @@ public class MypageUIManager : UIManager
 				break;
 			}
 		}
+	}
+
+	private IEnumerator NextGameStart ()
+	{
+		yield return new WaitForSeconds (0.5f);
+		GameStart (SceneData.nextStage);
+		SceneData.nextStage = "";
 	}
 
 	private void TestForSwipeGesture (Touch touch)
@@ -121,14 +132,12 @@ public class MypageUIManager : UIManager
 	{
 		Debug.Log ("MypageUIManager popupOnActive");
 		popupFlag = true;
-
 	}
 
 	private void PopupOnDeActive (SSController ctrl)
 	{
 		Debug.Log ("MypageUIManager popupOnDeActive");
 		popupFlag = false;
-
 	}
 
 	public void Love ()
@@ -143,9 +152,12 @@ public class MypageUIManager : UIManager
 		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeActive);	
 	}
 
-	public void GameStart ()
+	public void GameStart (string temp = null)
 	{
-		string temp = UIButton.current.name.ToString ();
+		if (temp == null) {
+			temp = UIButton.current.name.ToString ();
+		}
+
 		if (temp == MypageGameManager.DISABLE_QUEST) {
 			return;
 		}

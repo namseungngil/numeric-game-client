@@ -11,20 +11,22 @@ public class FacebookManager : MonoBehaviour
 	public const string ME_SCORE_QUERY = "/me/scores";
 	protected const string SCORES_QUERY = "/app/scores?fields=score,user.limit(20)";
 	protected const string FRIENDS_QUERY = "/me?fields=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
-	protected const string INVITABLE_FRIENDS_QUERY = "me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
+	protected const string INVITABLE_FRIENDS_QUERY = "/me?invitable_friends=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+//	protected const string INVITABLE_FRIENDS_QUERY = "me?fields=friends.fields(first_name,id,picture.width(128).height(128)),invitable_friends.fields(first_name,id,picture.width(128).height(128))";
 	protected const int TEXTURE_SIZE = 128;
 	public const string BUTTON = "Button";
 	protected const string TEXTURE = "Texture";
 	protected const string LABEL1 = "Label1";
 	protected const string LABEL2 = "Label2";
 	protected const string QUESTION_MARK = "?";
-	
-//	protected const string FRIENDS_QUERY_STRING = "/v2.0/me?fields=id,first_name,friends.limit(100).fields(first_name,id,picture.width(128).height(128)),invitable_friends.limit(100).fields(first_name,id,picture.width(128).height(128))";
 
 	// component
 	public static Texture userTexture;
 	public static string userFristName;
 	public static string userLastName;
+	public static List<object> friends = null;
+	public static List<object> invitableFriends = null;
+
 	protected LoveComponent loveComponent;
 	protected UIManager uIManager;
 	// variable
@@ -102,7 +104,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected virtual void Start ()
 	{
-		CallFBInit ();
+//		CallFBInit ();
 	}
 
 	protected void CallFBInit ()
@@ -220,21 +222,6 @@ public class FacebookManager : MonoBehaviour
 	{
 		Dictionary<string,object> entry = (Dictionary<string,object>)obj;
 		return Convert.ToInt32 (entry ["score"]);
-	}
-
-	protected GameObject GetChildObject (GameObject gO, string strName)
-	{ 
-		Transform[] AllData = gO.GetComponentsInChildren<Transform> (); 
-		GameObject target = null;
-		
-		foreach (Transform Obj in AllData) { 
-			if (Obj.name == strName) { 
-				target = Obj.gameObject;
-				break;
-			} 
-		}
-		
-		return target;
 	}
 
 	protected void MeProfileCallback (FBResult result)

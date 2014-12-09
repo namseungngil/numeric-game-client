@@ -38,14 +38,20 @@ public class BattleGameManager : GameManager
 	private const float TIME_MAX = 60f;
 	private const float BONUS_TIME = 5f;
 	// gameobject
+	public GameObject goodEffect;
+	public GameObject missEffect;
+	public GameObject clearEffect;
+	public GameObject timeOverEffect;
 	private GameObject panel1;
 	private GameObject panel100;
 	// component
+	private EffectCameraManager effectCameraManager;
 	private GameStatus gameStatus;
 	private UILabel problemUILabel;
 	private UILabel timerUILabel;
-	private UILabel hpUILabel;
+	private UILabel scoreUILabel;
 	private Animation panel200Animation;
+	private Animation scoreAnimation;
 	private TweenPosition panel200TweenPosition;
 	private UILabel panel200UILabel;
 	private BattleUIManager battleUIManager;
@@ -80,9 +86,10 @@ public class BattleGameManager : GameManager
 	
 	void Start ()
 	{
+		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
-		hpUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
+		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		bonusUILabel = GameObject.Find (BONUS).GetComponent<UILabel> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
 		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
@@ -96,6 +103,7 @@ public class BattleGameManager : GameManager
 		panel1 = GameObject.Find (Config.PANEL1);
 		panel100 = GameObject.Find (Config.PANEL100);
 
+		scoreAnimation = scoreUILabel.gameObject.GetComponent<Animation> ();
 		panel200Animation = panel100.GetComponentInChildren<Animation> ();
 		panel200UILabel = panel100.GetComponentInChildren<UILabel> ();
 		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> ();
@@ -143,22 +151,31 @@ public class BattleGameManager : GameManager
 		} else if (score >= score2) {
 			// star2
 		} else if (score >= score1) {
-			// star3
+			// star1
 		} else {
 			flag = false;
 		}
 
 		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
+		panel200UILabel.color = new Color32 (255, 255, 255, 255);
 
 		string temp = "TIME OVER";
+		GameObject tempEffect = timeOverEffect;
 		if (flag) {
 			temp = "CLEAR";
+			tempEffect = clearEffect;
 		}
+
+		// effect
+		effectCameraManager.GUIOnEffect (tempEffect, panel200UILabel.gameObject);
 		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (OVER_TIME);
-
 		if (flag) {
+			// ad
+			GameObject ad = GameObject.Find (Config.ROOT_MANAGER);
+			ad.GetComponent<GoogleMobileAdsComponent> ().Ad ();
+
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
 			string date = dataQuery.Date ();
@@ -192,6 +209,7 @@ public class BattleGameManager : GameManager
 		panel100.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
+		panel200UILabel.color = new Color32 (255, 255, 255, 255);
 		panel200UILabel.text = "READY";
 		yield return new WaitForSeconds (READY_TIME);
 
@@ -265,7 +283,7 @@ public class BattleGameManager : GameManager
 			temp = SetCardCount (temp, temp101, tempCount);
 			temp = SetCardCount (temp, temp102, tempCount);
 		} else if (temp101.Count > 0) {
-			tempCount = 5;
+			tempCount = Random.Range (4, 6);
 			temp = SetCardCount (temp, temp12, tempCount);
 			temp = SetCardCount (temp, temp101, Config.CARD_COUNT - tempCount);
 		} else {
@@ -280,8 +298,8 @@ public class BattleGameManager : GameManager
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
 				cardUILabel.Add (uiLabel);
-				cardString [numberCount] = temp[numberCount];
-				uiLabel.text = temp[numberCount].ToString ();
+				cardString [numberCount] = temp [numberCount];
+				uiLabel.text = temp [numberCount].ToString ();
 				numberCount ++;
 			} else if (uiLabel.name == PROBLEM_LABEL_TEXT) {
 				problemUILabel = uiLabel;
@@ -408,6 +426,17 @@ public class BattleGameManager : GameManager
 		}
 	}
 
+	private void Effect (GameObject gO)
+	{
+		for (int i = 0; i < 30; i++) {
+			Vector3 screenPos = new Vector3 (Random.Range (0, Screen.width), Random.Range (0, Screen.height), 0);
+			Vector3 pos = effectCameraManager.Get ().ScreenToWorldPoint (screenPos);
+			pos.z += Config.EFFECT_Z;
+			GameObject gObj = Instantiate (gO, pos, Quaternion.identity) as GameObject;
+			gObj.transform.parent = effectCameraManager.Get ().transform;
+		}
+	}
+
 	private IEnumerator SetAttack ()
 	{
 		clearCount++;
@@ -440,20 +469,25 @@ public class BattleGameManager : GameManager
 		panel100.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.text = tempString;
+		// effect
+		Effect (goodEffect);
+
 		yield return new WaitForSeconds (ATTACK_TIME);
 		panel100.SetActive (false);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempFrist;
-		hpUILabel.text = "" + (score <= 0 ? 0 : score);
+		scoreUILabel.text = "" + (score <= 0 ? 0 : score);
 		SetGuage ();
 		// Animation
+		scoreAnimation.Play (Config.ANIMATION_BUTTON);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempLast;
-		hpUILabel.text = "" + (score <= 0 ? 0 : score);
+		scoreUILabel.text = "" + (score <= 0 ? 0 : score);
 		SetGuage ();
 		// Animation
+		scoreAnimation.Play (Config.ANIMATION_BUTTON);
 
 		StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));
 	}
@@ -468,6 +502,9 @@ public class BattleGameManager : GameManager
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.color = new Color32 (158, 0, 167, 255);
 		panel200UILabel.text = "MISS";
+		// effect
+		Effect (missEffect);
+
 		yield return new WaitForSeconds (MISS_TIME);
 		panel100.SetActive (false);
 
@@ -593,7 +630,7 @@ public class BattleGameManager : GameManager
 		score2 = list [1];
 		score3 = list [2];
 
-		hpUILabel.text = "" + score;
+		scoreUILabel.text = "" + score;
 		timerUILabel.text = ((int)timer).ToString ("");
 
 		panel1.SetActive (false);

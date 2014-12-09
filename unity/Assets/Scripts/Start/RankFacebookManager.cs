@@ -10,7 +10,6 @@ public class RankFacebookManager : FacebookManager
 	private HttpComponent httpComponent;
 	// array
 	private List<GameObject> rank;
-	private static List<object> friends = null;
 	private List<string> rankFriendsList;
 
 	protected override void Start ()
@@ -84,9 +83,9 @@ public class RankFacebookManager : FacebookManager
 					rank [count].SetActive (true);
 					GameObject gObj = rank [count];
 					UITexture uITexture = gObj.GetComponent<UITexture> ();
-					UIButton uIButton = GetChildObject (gObj, BUTTON).GetComponent<UIButton> ();
-					UILabel uILabel1 = GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
-					UILabel uILabel2 = GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
+					UIButton uIButton = Logic.GetChildObject (gObj, BUTTON).GetComponent<UIButton> ();
+					UILabel uILabel1 = Logic.GetChildObject (gObj, LABEL1).GetComponent<UILabel> ();
+					UILabel uILabel2 = Logic.GetChildObject (gObj, LABEL2).GetComponent<UILabel> ();
 
 					string id = MypageGameManager.DISABLE_QUEST;
 					string score = key.ToString ();
