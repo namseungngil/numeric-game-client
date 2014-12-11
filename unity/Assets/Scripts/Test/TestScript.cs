@@ -8,14 +8,17 @@ public class TestScript : MonoBehaviour
 //	NcCurveAnimation ncCurveAnimation;
 	LoveComponent loveManager;
 	public GameObject effect;
+	public GameObject[] effectef;
 	Camera effectCamera;
 	GameObject button1;
+	GameObject button2;
 
 	void Start ()
 	{
 		effectCamera = GameObject.Find ("EffectCamera").GetComponent<Camera> ();
 		loveManager = GameObject.Find (Config.GAME_MANAGER).GetComponent<LoveComponent> ();
 		button1 = GameObject.Find ("Button1");
+		button2 = GameObject.Find ("Button2");
 
 //		ncCurveAnimation = GameObject.Find ("FadeInOut").GetComponent<NcCurveAnimation> ();
 //		fxMakerAnimation = FXMakerAnimation.Instance ();
@@ -71,10 +74,18 @@ public class TestScript : MonoBehaviour
 
 	public void Button2 ()
 	{
-		Debug.Log ("Button2");
-		Notification.Unregister ();
+		foreach (GameObject gObj in effectef) {
+			GameObject g = Instantiate (gObj, new Vector3 (1000, 1000, 0), Quaternion.identity) as GameObject;
+			
+			
+			Camera guiCam = NGUITools.FindCameraForLayer (button1.gameObject.layer);
+			
+			Vector3 pos = effectCamera.ViewportToWorldPoint (guiCam.WorldToViewportPoint (button1.transform.position));
+			pos.z += 10;
+			g.transform.position = pos;
+		}
 
-//		fxMakerAnimation.FadeOut (ncCurveAnimation);
+
 	}
 
 	void OnMouseDrag() {

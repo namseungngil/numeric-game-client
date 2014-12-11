@@ -52,10 +52,8 @@ public class MypageUIManager : UIManager
 		}
 	}
 	
-	protected override void Update ()
+	void Update ()
 	{
-		base.Update ();
-
 		if (Input.touchCount > 0) {
 			var touch = Input.touches [0];
 			
@@ -70,7 +68,7 @@ public class MypageUIManager : UIManager
 					touchStarted = false;
 				}
 				break;
-			case TouchPhase.Canceled:				
+			case TouchPhase.Canceled:
 				touchStarted = false;
 				break;
 			case TouchPhase.Stationary:
@@ -81,11 +79,19 @@ public class MypageUIManager : UIManager
 		}
 	}
 
+	public override void OnKeyBack ()
+	{
+		if (popupFlag) {
+			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
+			SSSceneManager.Instance.GoHome ();
+		}
+	}
+
 	private IEnumerator NextGameStart ()
 	{
 		yield return new WaitForSeconds (0.5f);
-		GameStart (SceneData.nextStage);
 		SceneData.nextStage = "";
+		GameStart (SceneData.nextStage);
 	}
 
 	private void TestForSwipeGesture (Touch touch)
@@ -130,14 +136,16 @@ public class MypageUIManager : UIManager
 
 	private void PopupOnActive (SSController ctrl)
 	{
-		Debug.Log ("MypageUIManager popupOnActive");
+//		Debug.Log ("MypageUIManager popupOnActive");
 		popupFlag = true;
+		mypageGameManager.SetEffect (!popupFlag);
 	}
 
 	private void PopupOnDeActive (SSController ctrl)
 	{
-		Debug.Log ("MypageUIManager popupOnDeActive");
+//		Debug.Log ("MypageUIManager popupOnDeActive");
 		popupFlag = false;
+		mypageGameManager.SetEffect (!popupFlag);
 	}
 
 	public void Love ()
@@ -149,7 +157,7 @@ public class MypageUIManager : UIManager
 
 	public void Setting ()
 	{
-		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeActive);	
+		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeActive);
 	}
 
 	public void GameStart (string temp = null)
@@ -159,6 +167,10 @@ public class MypageUIManager : UIManager
 		}
 
 		if (temp == MypageGameManager.DISABLE_QUEST) {
+			return;
+		}
+
+		if (SceneData.nextStage != "") {
 			return;
 		}
 

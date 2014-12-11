@@ -354,6 +354,7 @@
      <Compile Include="Assets\Scripts\_Common\Component\SwipeCompoent.cs" />
      <Compile Include="Assets\Scripts\_Common\Component\WebviewComponent.cs" />
      <Compile Include="Assets\Scripts\_Common\Config\Config.cs" />
+     <Compile Include="Assets\Scripts\_Common\Config\Global.cs" />
      <Compile Include="Assets\Scripts\_Common\Control\ButtonSoundControl.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\DATA.cs" />
      <Compile Include="Assets\Scripts\_Common\Data\Register.cs" />
@@ -385,7 +386,6 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fi\common_strings.xml" />
      <None Include="Assets\NGUI\ReadMe - 3.7.5.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hu\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_tooltip_bubble.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
@@ -460,7 +460,6 @@
      <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX2 Particle Alpha Blend Add.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ru\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-be\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-mn-rMN\common_strings.xml" />
@@ -493,8 +492,6 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es-rUS\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fr\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es\wallet_strings.xml" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\wallet_styles.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sv\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\strings.xml" />

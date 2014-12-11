@@ -25,8 +25,9 @@ public class RankFacebookManager : FacebookManager
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 	}
 
-	private void QueryScores ()
+	private IEnumerator QueryScores ()
 	{
+		yield return new WaitForSeconds (0);
 		string tempFriends = FRIENDS_QUERY;
 		Debug.Log (tempFriends);
 
@@ -134,6 +135,6 @@ public class RankFacebookManager : FacebookManager
 
 	public void Rank ()
 	{
-		QueryScores ();
+		StartCoroutine (QueryScores ());
 	}
 }

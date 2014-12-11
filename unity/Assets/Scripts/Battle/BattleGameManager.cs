@@ -29,6 +29,7 @@ public class BattleGameManager : GameManager
 	private const string GUAGE_STAR0 = "guage_star0";
 	private const string TIME = "Time";
 	private const string BONUS = "Bonus";
+	private const string BONUS_BACKGROUND = "BonusBackground";
 	private const string TIME_BACKGROUND = "TimeBackground";
 	private const string BATTLE_T00 = "battle_t00";
 	private const string BATTLE_T08 = "battle_t08";
@@ -46,22 +47,23 @@ public class BattleGameManager : GameManager
 	private GameObject panel100;
 	// component
 	private EffectCameraManager effectCameraManager;
-	private GameStatus gameStatus;
-	private UILabel problemUILabel;
-	private UILabel timerUILabel;
-	private UILabel scoreUILabel;
-	private Animation panel200Animation;
-	private Animation scoreAnimation;
-	private TweenPosition panel200TweenPosition;
-	private UILabel panel200UILabel;
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
+	private GameStatus gameStatus;
+	private TweenPosition panel200TweenPosition;
+	private Animation panel200Animation;
+	private Animation scoreAnimation;
+	private Animation bonusAnimation;
 	private UIProgressBar uIProgressbar;
 	private UIProgressBar timeUIProgressbar;
 	private UISprite star1UISprite;
 	private UISprite star2UISprite;
 	private UISprite star3UISprite;
 	private UISprite timerUISprite;
+	private UILabel problemUILabel;
+	private UILabel timerUILabel;
+	private UILabel scoreUILabel;
+	private UILabel panel200UILabel;
 	private UILabel bonusUILabel;
 	// array
 	private string[] MARK_TEXT;
@@ -88,15 +90,15 @@ public class BattleGameManager : GameManager
 	{
 		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
-		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
-		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
-		bonusUILabel = GameObject.Find (BONUS).GetComponent<UILabel> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
 		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
 		star1UISprite = GameObject.Find (Config.STAR1).GetComponent<UISprite> ();
 		star2UISprite = GameObject.Find (Config.STAR2).GetComponent<UISprite> ();
 		star3UISprite = GameObject.Find (Config.STAR3).GetComponent<UISprite> ();
 		timerUISprite = GameObject.Find (TIME_BACKGROUND).GetComponent<UISprite> ();
+		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
+		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
+		bonusAnimation = GameObject.Find (BONUS_BACKGROUND).GetComponent<Animation> ();
 
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
@@ -106,7 +108,8 @@ public class BattleGameManager : GameManager
 		scoreAnimation = scoreUILabel.gameObject.GetComponent<Animation> ();
 		panel200Animation = panel100.GetComponentInChildren<Animation> ();
 		panel200UILabel = panel100.GetComponentInChildren<UILabel> ();
-		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> ();
+		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> (); 
+		bonusUILabel = Logic.GetChildObject (bonusAnimation.gameObject, BONUS).GetComponent<UILabel> ();
 
 		MARK_TEXT = new string[] {"?", "?"};
 		cardString = new string[Config.CARD_COUNT];
@@ -168,7 +171,7 @@ public class BattleGameManager : GameManager
 		}
 
 		// effect
-		effectCameraManager.GUIOnEffect (tempEffect, panel200UILabel.gameObject);
+		effectCameraManager.GUIOnOverEffect (tempEffect, panel200UILabel.gameObject);
 		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (OVER_TIME);
 		if (flag) {
@@ -308,6 +311,7 @@ public class BattleGameManager : GameManager
 
 		problemUILabel.text = "";
 		bonusUILabel.text = cardString [Random.Range (0, 9)];
+		bonusAnimation.Play (Config.ANIMATION_BUTTON);
 	}
 
 	private void ProblemLogic ()
@@ -428,7 +432,7 @@ public class BattleGameManager : GameManager
 
 	private void Effect (GameObject gO)
 	{
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 40; i++) {
 			Vector3 screenPos = new Vector3 (Random.Range (0, Screen.width), Random.Range (0, Screen.height), 0);
 			Vector3 pos = effectCameraManager.Get ().ScreenToWorldPoint (screenPos);
 			pos.z += Config.EFFECT_Z;
@@ -544,9 +548,14 @@ public class BattleGameManager : GameManager
 		gameStatus = gS;
 	}
 
+	private float GaugeStarPercent (float f, float minX)
+	{
+		float temp = (((f / score3) * 100) * 2) + minX;
+		return temp;
+	}
+
 	private int firstInt = 0;
 	private int lastInt = 0;
-
 	public void SetNumber (int length)
 	{
 		if (gameStatus != GameStatus.Play || firstString == cardString [length]) {
@@ -630,6 +639,22 @@ public class BattleGameManager : GameManager
 		score2 = list [1];
 		score3 = list [2];
 
+		float minX = -100f;
+		float maxX = 100f;
+
+		Vector3 starVector1 = star2UISprite.transform.localPosition;
+		starVector1.x = GaugeStarPercent (score1, minX);
+		star1UISprite.transform.localPosition = starVector1;
+
+		Vector3 starVector2 = star2UISprite.transform.localPosition;
+		starVector2.x = GaugeStarPercent (score2, minX);
+		star2UISprite.transform.localPosition = starVector2;
+
+		Vector3 star3Vector3 = star3UISprite.transform.localPosition;
+		star3Vector3.x = maxX;
+		star3UISprite.transform.localPosition = star3Vector3;
+
+
 		scoreUILabel.text = "" + score;
 		timerUILabel.text = ((int)timer).ToString ("");
 
@@ -640,9 +665,14 @@ public class BattleGameManager : GameManager
 		StartCoroutine (Ready ());
 	}
 
-	public void Stop ()
+	public bool Stop ()
 	{
+		if (gameStatus == GameStatus.Over) {
+			return false;
+		}
+
 		gameStatus = GameStatus.Stop;
+		return true;
 	}
 
 	public void StopClear ()

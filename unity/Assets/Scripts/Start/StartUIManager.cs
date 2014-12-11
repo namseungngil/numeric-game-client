@@ -32,7 +32,8 @@ public class StartUIManager : ResultManager
 			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
 			SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
 		} else {
-
+			Cancel ();
+			SSSceneManager.Instance.PopUp (Config.NOT);
 		}
 	}
 

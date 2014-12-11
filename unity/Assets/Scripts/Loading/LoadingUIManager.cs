@@ -11,8 +11,7 @@ public class LoadingUIManager : UIManager
 		IsCache = false;
 	}
 
-	protected override void Update ()
+	public override void OnKeyBack ()
 	{
-		base.Update ();
 	}
 }

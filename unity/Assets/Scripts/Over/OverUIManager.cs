@@ -47,15 +47,15 @@ public class OverUIManager : ResultManager
 		star.Add (Logic.GetChildObject (star2.gameObject, SPRITE));
 		star.Add (Logic.GetChildObject (star3.gameObject, SPRITE));
 
-		Logic.SetActive (button, false);
 		Logic.SetActive (star, false);
 
 		score = int.Parse (SceneData.score);
 		list = Game.Score (int.Parse (SceneData.stageLevel));
 		index = 0;
 		if (score >= list [index]) {
+			Logic.SetActive (button, false);
+
 			StartCoroutine (Clear (0.5f));
-	
 			btnLabel.text = NEXT;
 		} else {
 			failColor = new Color32[] {
@@ -68,16 +68,11 @@ public class OverUIManager : ResultManager
 			UISprite b2 = GameObject.Find (BACKGROUND + "2").GetComponent<UISprite> ();
 			UISprite b3 = GameObject.Find (BACKGROUND + "3").GetComponent<UISprite> ();
 			b1.color = failColor [0];
-			b2.color = failColor [0];
-			b3.color = failColor [0];
+			b2.color = failColor [1];
+			b3.color = failColor [2];
 
 			btnLabel.text = RETRY;
 		}
-	}
-
-	protected override void Update ()
-	{
-		base.Update ();
 	}
 
 	private IEnumerator Clear (float time)

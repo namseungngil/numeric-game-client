@@ -24,10 +24,13 @@ public class LoginUIManager : UIManager
 		loginGameManager = gameObject.GetComponent<LoginGameManager> ();
 	}
 
-	protected override void Update ()
+	public override void OnKeyBack ()
 	{
-		base.Update ();
+		Application.Quit ();
+	}
 
+	void Update ()
+	{
 		if (FB.IsLoggedIn) {
 //			facebookUI.SetActive (false);
 			uILabel.text = "LOGOUT";

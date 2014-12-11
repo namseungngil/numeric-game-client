@@ -18,9 +18,9 @@ public class BattleUIManager : UIManager
 		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 
-	protected override void Update ()
+	public override void OnKeyBack ()
 	{
-		base.Update ();
+		Stop ();
 	}
 
 	public void BattleOnClick ()
@@ -44,10 +44,8 @@ public class BattleUIManager : UIManager
 
 	public void Stop ()
 	{
-		if (battleGameManager != null) {
-			battleGameManager.Stop ();
+		if (battleGameManager.Stop ()) {
+			SSSceneManager.Instance.PopUp (Config.STOP);
 		}
-
-		SSSceneManager.Instance.PopUp (Config.STOP);
 	}
 }

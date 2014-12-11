@@ -40,11 +40,6 @@ public class LoveUIManager : UIManager
 		send.SetActive (false);
 	}
 
-	protected override void Update ()
-	{
-		base.Update ();
-	}
-	
 	public void Check (UIToggle uIToggle)
 	{
 		if (uIToggle.value) {

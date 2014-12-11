@@ -10,9 +10,4 @@ public class IntroUIManager : UIManager
 
 		IsCache = false;
 	}
-
-	protected override void Update ()
-	{
-		base.Update ();
-	}
 }

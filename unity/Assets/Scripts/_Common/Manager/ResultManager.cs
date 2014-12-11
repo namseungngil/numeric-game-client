@@ -38,8 +38,8 @@ public class ResultManager : UIManager
 		
 		startFacebookManager = gameObject.GetComponent<RankFacebookManager> ();
 		
-		stage = GameObject.Find (STAGE).GetComponent<UILabel> ();
-		score = GameObject.Find (SCORE).GetComponent<UILabel> ();
+		stage = GameObject.Find ("S" + STAGE).GetComponent<UILabel> ();
+		score = GameObject.Find ("S" + SCORE).GetComponent<UILabel> ();
 		maxScore = GameObject.Find (MAX_SCORE).GetComponent<UILabel> ();
 		
 		stage.text = SceneData.stageLevel; 

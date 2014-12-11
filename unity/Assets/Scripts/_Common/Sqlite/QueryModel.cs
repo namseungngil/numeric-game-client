@@ -230,7 +230,8 @@ public class QueryModel : Query
 	// dummy
 	public void DummyData ()
 	{
-		int stage = 100;
+		DBDelete ();
+		int stage = 80;
 
 		string [][] data = new string [stage][];
 
@@ -241,6 +242,8 @@ public class QueryModel : Query
 				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
+				(0).ToString (),
+				(0).ToString (),
 				(0).ToString ()
 			};
 		}

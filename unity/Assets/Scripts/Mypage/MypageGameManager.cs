@@ -29,7 +29,10 @@ public class MypageGameManager : GameManager
 	private const string BACKGROUND = "Background";
 	private const string LOCK = "Lock";
 	private const string UNTAGGED = "Untagged";
+	// gameobject
+	public GameObject effect;
 	// component
+	private EffectCameraManager effectCameraManager;
 	private QueryModel dataQuery;
 	private Register register;
 	private MypageFacebookManager mypageFacebookManager;
@@ -42,6 +45,7 @@ public class MypageGameManager : GameManager
 	
 	void Start ()
 	{
+		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
 		mypageFacebookManager = gameObject.GetComponent<MypageFacebookManager> ();
 		GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ().Set ();
 
@@ -78,6 +82,11 @@ public class MypageGameManager : GameManager
 		}
 
 		SetQuest ();
+	}
+
+	void OnDisable ()
+	{
+		effectCameraManager.Destory ();
 	}
 
 	private int LastIndex ()
@@ -171,6 +180,9 @@ public class MypageGameManager : GameManager
 			quest [dataTable.Rows.Count].uITexture.gameObject.SetActive (true);
 
 			mypageFacebookManager.SetMeFicture (quest [dataTable.Rows.Count].uITexture);
+
+			// effect
+			effectCameraManager.GUIOnEffect (effect, quest [dataTable.Rows.Count].uITexture.gameObject);
 		}
 
 		// set impossible quest
@@ -231,5 +243,10 @@ public class MypageGameManager : GameManager
 		}
 
 		return score.ToString ();
+	}
+
+	public void SetEffect (bool flag)
+	{
+		effectCameraManager.SetActive (flag);
 	}
 }

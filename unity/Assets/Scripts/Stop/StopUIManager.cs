@@ -18,11 +18,11 @@ public class StopUIManager : UIManager
 		battleGameManager = GameObject.Find (Config.BATTLE).GetComponent<BattleGameManager> ();
 	}
 
-	protected override void Update ()
+	public override void OnKeyBack ()
 	{
-		base.Update ();
+		Continue ();
 	}
-
+	
 	public void Continue ()
 	{
 		if (battleGameManager != null) {
@@ -39,9 +39,8 @@ public class StopUIManager : UIManager
 
 	public void Restart ()
 	{
-		if (battleGameManager != null) {
-			battleGameManager.BattleStart ();
-		}
-		Cancel ();
+		SceneData.nextStage = SceneData.stageLevel;
+		SSSceneManager.Instance.DestroyScenesFrom (Config.BATTLE);
+		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
 	}
 }

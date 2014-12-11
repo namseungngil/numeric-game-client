@@ -45,11 +45,6 @@ public class SettingUIManager : UIManager
 		}
 	}
 
-	protected override void Update ()
-	{
-		base.Update ();
-	}
-
 	public void SoundBack ()
 	{
 		bool flag = register.GetBackSound ();
@@ -86,6 +81,7 @@ public class SettingUIManager : UIManager
 
 	public void CheatKey ()
 	{
+		Debug.Log ("CheatKey");
 		QueryModel queryModel = QueryModel.Instance ();
 		queryModel.DummyData ();
 	}
