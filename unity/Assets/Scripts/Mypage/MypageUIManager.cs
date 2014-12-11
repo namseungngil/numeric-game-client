@@ -90,8 +90,9 @@ public class MypageUIManager : UIManager
 	private IEnumerator NextGameStart ()
 	{
 		yield return new WaitForSeconds (0.5f);
+		string temp = SceneData.nextStage;
 		SceneData.nextStage = "";
-		GameStart (SceneData.nextStage);
+		GameStart (temp);
 	}
 
 	private void TestForSwipeGesture (Touch touch)

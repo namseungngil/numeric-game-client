@@ -100,28 +100,51 @@ public class QueryModel : Query
 			stage++;
 		}
 
-		string[][] data = new string[d.Count + dic.Count][];
-		int k = 0;
+		Dictionary<string, string[]> data = new Dictionary<string, string[]> ();
+
 		string date = Date ();
 
 		foreach (KeyValuePair<string, string> kvP in d) {
-			data [k] = new string[] {
+			data.Add (kvP.Key, new string[] {
 				kvP.Key, "1", kvP.Value, "0", "0", "0", "0", date
-			};
-			k++;
+			});
 		}
 
 		if (dic.Count > 0) {
 			foreach (KeyValuePair<string, string> kvP in dic) {
-				data [k] = new string[] {
+				data.Add (kvP.Key, new string[] {
 					kvP.Key, "1", kvP.Value, "0", "0", "0", "0", date
-				};
-				k++;
+				});
 			}
 		}
 
-		if (data.Length > 0) {
-			INSERT_BATCH (QUEST_USER, questUserColumnName, data);
+		if (data.Count > 0) {
+			string[] tempSY = new string[data.Count];
+			int k = 0;
+			foreach (KeyValuePair<string, string[]> kvp in data) {
+				tempSY[k] = kvp.Key;
+				k++;
+			}
+
+			DataTable dataTable2 = SELECT_SYNC (QUEST_USER, STAGE, tempSY);
+			if (dataTable.Rows.Count > 0) {
+				for (k = 0; k < dataTable2.Rows.Count; k++) {
+					if (data.ContainsKey (dataTable2 [k] [QueryModel.STAGE].ToString ())) {
+						data.Remove (dataTable2 [k] [QueryModel.STAGE].ToString ());
+					}
+				}
+			}
+
+			if (data != null && data.Count > 0) {
+				string[][] tempIB = new string[data.Count][];
+				k = 0;
+				foreach (KeyValuePair<string, string[]> kvpSS in data) {
+					tempIB [k] = kvpSS.Value;
+					k++;
+				}
+
+				INSERT_BATCH (QUEST_USER, questUserColumnName, tempIB);
+			}
 		}
 	}
 
@@ -238,7 +261,7 @@ public class QueryModel : Query
 		for (int i = 0; i < stage; i++) {
 			data [i] = new string [] {
 				(i + 9).ToString (),
-				(99999).ToString (),
+				(1).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),
 				(99999).ToString (),

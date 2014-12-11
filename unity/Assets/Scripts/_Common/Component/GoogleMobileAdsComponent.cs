@@ -11,7 +11,6 @@ public class GoogleMobileAdsComponent: MonoBehaviour
 
 	void Start ()
 	{
-		RequestInterstitial ();
 		RequestBanner ();
 		bannerView.Show ();
 	}
@@ -217,7 +216,12 @@ public class GoogleMobileAdsComponent: MonoBehaviour
 
     #endregion
 
-	public void Ad ()
+	public void SetAd ()
+	{
+		RequestInterstitial ();
+	}
+
+	public void GetAd ()
 	{
 		ShowInterstitial ();
 	}

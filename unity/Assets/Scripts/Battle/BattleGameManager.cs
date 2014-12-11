@@ -46,6 +46,7 @@ public class BattleGameManager : GameManager
 	private GameObject panel1;
 	private GameObject panel100;
 	// component
+	private GoogleMobileAdsComponent ad;
 	private EffectCameraManager effectCameraManager;
 	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
@@ -88,6 +89,9 @@ public class BattleGameManager : GameManager
 	
 	void Start ()
 	{
+		ad = GameObject.Find (Config.ROOT_MANAGER).GetComponent<GoogleMobileAdsComponent> ();
+		ad.SetAd ();
+
 		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
@@ -176,8 +180,7 @@ public class BattleGameManager : GameManager
 		yield return new WaitForSeconds (OVER_TIME);
 		if (flag) {
 			// ad
-			GameObject ad = GameObject.Find (Config.ROOT_MANAGER);
-			ad.GetComponent<GoogleMobileAdsComponent> ().Ad ();
+			ad.GetAd ();
 
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();

@@ -12,13 +12,17 @@ public class IntroManager : GameManager
 	private QueryModel queryModel;
 	// variable
 	private string text;
-	private string defaultText = "LOADING";
-	private string lastText = "LOADING....";
+	private string defaultText;
+	private string lastText;
 	private float time;
+	private int dicCount;
 	
 	void Start ()
 	{
+		dicCount = 50;
 		time = 0;
+		defaultText = "LOADING";
+		lastText = "LOADING....";
 		uiLabel = GameObject.Find (Config.LABEL).GetComponent<UILabel> ();
 		text = defaultText;
 
@@ -78,19 +82,45 @@ public class IntroManager : GameManager
 		DataTable dataTable = queryModel.QuestList ();
 
 		if (dataTable.Rows.Count > 0) {
-			httpComponent.OnDone = (object obj) => {
-				SyncGet ();
-			};
-
+			List<Dictionary<string, string>> syncList = new List<Dictionary<string, string>> ();
 			Dictionary<string, string> dic = new Dictionary<string, string> ();
+			int index = 0;
 			for (int i = 0; i < dataTable.Rows.Count; i++) {
 				dic.Add (dataTable [i] [QueryModel.STAGE].ToString (), dataTable [i] [QueryModel.SCORE].ToString ());
+
+				if (index >= dicCount) {
+					index = 0;
+					syncList.Add (dic);
+					dic = new Dictionary<string, string> ();
+//					dic.Clear ();
+				}
+
+				index++;
 			}
 
-			httpComponent.SyncPut (dic);
+			if (dic.Count > 0) {
+				syncList.Add (dic);
+			}
+
+			SyncPut (syncList);
+
 		} else {
 			SyncGet ();
 		}
+	}
+
+	private void SyncPut (List<Dictionary<string, string>> lDSS)
+	{
+		httpComponent.OnDone = (object obj) => {
+			if (lDSS != null && lDSS.Count > 0) {
+				SyncPut (lDSS);
+			} else {
+				SyncGet ();
+			}
+		};
+
+		httpComponent.SyncPut (lDSS [0]);
+		lDSS.RemoveAt (0);
 	}
 
 	private void SyncGet ()
@@ -113,7 +143,6 @@ public class IntroManager : GameManager
 	{
 		Debug.Log ("LoginCallback");
 
-//		SSSceneManager.Instance.Screen (Config.LOGIN);
 		SSSceneManager.Instance.GoHome ();
 	}
 }
