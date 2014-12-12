@@ -17,7 +17,6 @@ public class MypageUIManager : UIManager
 	// array
 	private UISprite[] uiSpriteList;
 	// variable
-	private bool popupFlag;
 	private bool touchStarted;
 	private float minSwipeDistancePixels;
 
@@ -31,7 +30,7 @@ public class MypageUIManager : UIManager
 
 	public override void Start ()
 	{
-		popupFlag = false;
+		base.Start ();
 		touchStarted = false;
 		minSwipeDistancePixels = MIN_SWIPTE_DISTANCE_PIXELS;
 
@@ -51,7 +50,7 @@ public class MypageUIManager : UIManager
 			StartCoroutine (NextGameStart ());
 		}
 	}
-	
+
 	void Update ()
 	{
 		if (Input.touchCount > 0) {
@@ -76,14 +75,6 @@ public class MypageUIManager : UIManager
 			case TouchPhase.Moved:
 				break;
 			}
-		}
-	}
-
-	public override void OnKeyBack ()
-	{
-		if (popupFlag) {
-			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
-			SSSceneManager.Instance.GoHome ();
 		}
 	}
 
@@ -135,30 +126,30 @@ public class MypageUIManager : UIManager
 		}
 	}
 
-	private void PopupOnActive (SSController ctrl)
+	protected override void PopupOnActive (SSController sSC)
 	{
-//		Debug.Log ("MypageUIManager popupOnActive");
-		popupFlag = true;
+		base.PopupOnActive (sSC);
+
 		mypageGameManager.SetEffect (!popupFlag);
 	}
 
-	private void PopupOnDeActive (SSController ctrl)
+	protected override void PopupOnDeactive (SSController sSC)
 	{
-//		Debug.Log ("MypageUIManager popupOnDeActive");
-		popupFlag = false;
+		base.PopupOnDeactive (sSC);
+
 		mypageGameManager.SetEffect (!popupFlag);
 	}
 
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
-			SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeActive);
+			SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeactive);
 		}
 	}
 
 	public void Setting ()
 	{
-		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeActive);
+		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeactive);
 	}
 
 	public void GameStart (string temp = null)
@@ -178,7 +169,7 @@ public class MypageUIManager : UIManager
 		SceneData.score = mypageGameManager.Score (temp);
 		SceneData.stageLevel = temp;
 
-		SSSceneManager.Instance.PopUp (Config.START, null, PopupOnActive, PopupOnDeActive);
+		SSSceneManager.Instance.PopUp (Config.START, null, PopupOnActive, PopupOnDeactive);
 	}
 
 	public void Next ()

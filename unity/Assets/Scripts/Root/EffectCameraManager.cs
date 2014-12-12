@@ -95,6 +95,10 @@ public class EffectCameraManager : MonoBehaviour
 
 	public void Destory ()
 	{
+		if (effectCamera == null) {
+			return;
+		}
+
 		foreach (ParticleSystem pS in effectCamera.GetComponentsInChildren<ParticleSystem> ()) {
 			GameObject.Destroy (pS.gameObject);
 		}

@@ -41,4 +41,14 @@ public class MypageChildUIManager : UIManager
 		Camera.main.backgroundColor = myColor;
 		SSSceneManager.Instance.LoadMenu (Config.MYPAGE);
 	}
+
+	public override void OnKeyBack ()
+	{
+		base.OnKeyBack ();
+		
+		if (!popupFlag) {
+			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
+			SSSceneManager.Instance.GoHome ();
+		}
+	}
 }

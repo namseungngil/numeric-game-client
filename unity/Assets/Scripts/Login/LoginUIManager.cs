@@ -17,8 +17,11 @@ public class LoginUIManager : UIManager
 		
 		IsCache = false;
 	}
+
 	public override void Start ()
 	{
+		base.Start ();
+
 		facebookUI = GameObject.Find (Config.FACEBOOK);
 		uILabel = facebookUI.GetComponentInChildren<UILabel> ();
 		loginGameManager = gameObject.GetComponent<LoginGameManager> ();
@@ -26,7 +29,11 @@ public class LoginUIManager : UIManager
 
 	public override void OnKeyBack ()
 	{
-		Application.Quit ();
+		base.OnKeyBack ();
+
+		if (!popupFlag) {
+			Application.Quit ();
+		}
 	}
 
 	void Update ()
@@ -56,6 +63,6 @@ public class LoginUIManager : UIManager
 
 	public void Setting ()
 	{
-		SSSceneManager.Instance.PopUp (Config.SETTING);
+		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeactive);
 	}
 }

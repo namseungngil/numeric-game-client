@@ -45,7 +45,7 @@ public class MypageGameManager : GameManager
 	
 	void Start ()
 	{
-		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
+		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
 		mypageFacebookManager = gameObject.GetComponent<MypageFacebookManager> ();
 		GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ().Set ();
 

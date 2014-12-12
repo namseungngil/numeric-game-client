@@ -41,8 +41,8 @@
 	public const string LEVEL = "Level";
 	public const string SCORE = "Score";
 	public const string GRID = "Grid";
-	public const string SOLIDCAMERA = "SolidCamera";
-	public const string EFFECTCAMERA = "EffectCamera";
+	public const string SOLID_CAMERA = "SolidCamera";
+	public const string EFFECT_CAMERA = "EffectCamera";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";
 	// device

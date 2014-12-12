@@ -15,12 +15,9 @@ public class BattleUIManager : UIManager
 
 	public override void Start ()
 	{
-		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
-	}
+		base.Start ();
 
-	public override void OnKeyBack ()
-	{
-		Stop ();
+		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 
 	public void BattleOnClick ()
@@ -45,7 +42,7 @@ public class BattleUIManager : UIManager
 	public void Stop ()
 	{
 		if (battleGameManager.Stop ()) {
-			SSSceneManager.Instance.PopUp (Config.STOP);
+			SSSceneManager.Instance.PopUp (Config.STOP, null, PopupOnActive, PopupOnDeactive);
 		}
 	}
 }

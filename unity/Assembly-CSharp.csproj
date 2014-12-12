@@ -331,6 +331,7 @@
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
      <Compile Include="Assets\Scripts\Stop\StopUIManager.cs" />
      <Compile Include="Assets\Scripts\Test\TestScript.cs" />
+     <Compile Include="Assets\Scripts\Tutorial\TutorialUIManager.cs" />
      <Compile Include="Assets\Scripts\Webview\WebviewUIManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Animation\FXMakerAnimation.cs" />
      <Compile Include="Assets\Scripts\_Common\Apns\InfobipPush.cs" />

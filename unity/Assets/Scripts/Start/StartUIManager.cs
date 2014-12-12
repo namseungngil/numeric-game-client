@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class StartUIManager : ResultManager
 {
+	// component
+	private EffectCameraManager effectCameraManager;
+
 	public override void Awake ()
 	{
 		base.Awake ();
@@ -12,6 +15,7 @@ public class StartUIManager : ResultManager
 	public override void Start ()
 	{
 		base.Start ();
+		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
 
 		int tempScore = int.Parse (SceneData.score);
 		List<int> list = Game.Score (int.Parse (SceneData.stageLevel));
@@ -26,6 +30,16 @@ public class StartUIManager : ResultManager
 		}
 	}
 
+	protected void PopupOnActive (SSController s)
+	{
+		effectCameraManager.SetActive (false);
+	}
+	
+	protected void PopupOnDeActive (SSController s)
+	{
+		effectCameraManager.SetActive (true);
+	}
+
 	public void GameStart ()
 	{
 		if (loveComponent.UseLove ()) {
@@ -33,7 +47,7 @@ public class StartUIManager : ResultManager
 			SSSceneManager.Instance.Screen (Game.Scene (Config.BATTLE));
 		} else {
 			Cancel ();
-			SSSceneManager.Instance.PopUp (Config.NOT);
+			SSSceneManager.Instance.PopUp (Config.NOT, null, PopupOnActive, PopupOnDeActive);
 		}
 	}
 

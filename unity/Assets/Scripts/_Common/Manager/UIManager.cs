@@ -5,6 +5,15 @@ public class UIManager : SSController
 {
 	// const
 	protected const string CANCEL = "Cancel";
+	// static
+	public static bool popupFlag;
+
+	public override void Start ()
+	{
+		base.Start ();
+
+		popupFlag = false;
+	}
 
 //	protected virtual void Update ()
 //	{
@@ -20,6 +29,16 @@ public class UIManager : SSController
 //	{
 //		Debug.Log ("AndroidBackButton");
 //	}
+
+	protected virtual void PopupOnActive (SSController sSC)
+	{
+		popupFlag = true;
+	}
+	
+	protected virtual void PopupOnDeactive (SSController sSC)
+	{
+		popupFlag = false;
+	}
 	
 	public void Cancel ()
 	{

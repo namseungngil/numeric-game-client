@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -35,7 +35,7 @@ public class OverUIManager : ResultManager
 			rankFacebookManager.Rank ();
 		}
 
-		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
+		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
 
 		button = new List<GameObject> ();
 		button.Add (GameObject.Find (PLAY));

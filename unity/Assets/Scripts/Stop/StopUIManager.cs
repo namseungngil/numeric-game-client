@@ -20,9 +20,11 @@ public class StopUIManager : UIManager
 
 	public override void OnKeyBack ()
 	{
+		base.OnKeyBack ();
+
 		Continue ();
 	}
-	
+
 	public void Continue ()
 	{
 		if (battleGameManager != null) {

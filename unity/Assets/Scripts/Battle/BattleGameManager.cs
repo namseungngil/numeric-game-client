@@ -22,7 +22,16 @@ public class BattleGameManager : GameManager
 	private const float MISS_TIME = 1f;
 	private const float OVER_TIME = 2f;
 	private const float SHUFFLE_TIME = 1f;
-	private const string PROBLEM_LABEL_TEXT = "Problem";
+	private const string PLUS = "battleP3_04";
+	private const string MINUS = "battleP3_05";
+	private const string MULTIPLICATION = "battleP3_06";
+	private const string DIVISION = "battleP3_07";
+	private const string EQUAL = "battleP3_08";
+	private const string PROBLEM1_LABEL_TEXT = "Problem1";
+	private const string PROBLEM2_LABEL_TEXT = "Problem2";
+	private const string PROBLEM3_LABEL_TEXT = "Problem3";
+	private const string SING = "Sign";
+	private const string RESUlT = "Result";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
 	private const string PROGRESS_BAR = "Progress Bar";
@@ -61,7 +70,11 @@ public class BattleGameManager : GameManager
 	private UISprite star2UISprite;
 	private UISprite star3UISprite;
 	private UISprite timerUISprite;
-	private UILabel problemUILabel;
+	private UISprite signUISprite;
+	private UISprite resultUISprite;
+	private UILabel problem1UILabel;
+	private UILabel problem2UILabel;
+	private UILabel problem3UILabel;
 	private UILabel timerUILabel;
 	private UILabel scoreUILabel;
 	private UILabel panel200UILabel;
@@ -70,6 +83,7 @@ public class BattleGameManager : GameManager
 	private string[] MARK_TEXT;
 	private string[] tempMark;
 	private string[] cardString;
+	private UILabel[] panel100UILabel;
 	// variable
 	private string labelString;
 	private string problemSign;
@@ -92,7 +106,7 @@ public class BattleGameManager : GameManager
 		ad = GameObject.Find (Config.ROOT_MANAGER).GetComponent<GoogleMobileAdsComponent> ();
 		ad.SetAd ();
 
-		effectCameraManager = GameObject.Find (Config.EFFECTCAMERA).GetComponent<EffectCameraManager> ();
+		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
 		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
@@ -100,6 +114,8 @@ public class BattleGameManager : GameManager
 		star2UISprite = GameObject.Find (Config.STAR2).GetComponent<UISprite> ();
 		star3UISprite = GameObject.Find (Config.STAR3).GetComponent<UISprite> ();
 		timerUISprite = GameObject.Find (TIME_BACKGROUND).GetComponent<UISprite> ();
+		signUISprite = GameObject.Find (SING).GetComponent<UISprite> ();
+		resultUISprite = GameObject.Find (RESUlT).GetComponent<UISprite> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		bonusAnimation = GameObject.Find (BONUS_BACKGROUND).GetComponent<Animation> ();
@@ -117,6 +133,9 @@ public class BattleGameManager : GameManager
 
 		MARK_TEXT = new string[] {"?", "?"};
 		cardString = new string[Config.CARD_COUNT];
+
+		signUISprite.spriteName = "";
+		resultUISprite.spriteName = "";
 
 		BattleStart ();
 	}
@@ -299,7 +318,10 @@ public class BattleGameManager : GameManager
 		temp = RandomArray.RandomizeStrings<string> (temp);
 
 		List<UILabel> cardUILabel = new List<UILabel> ();
-		UILabel[] panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
+		if (panel100UILabel == null) {
+			panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
+		}
+
 		int numberCount = 0;
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
@@ -307,12 +329,22 @@ public class BattleGameManager : GameManager
 				cardString [numberCount] = temp [numberCount];
 				uiLabel.text = temp [numberCount].ToString ();
 				numberCount ++;
-			} else if (uiLabel.name == PROBLEM_LABEL_TEXT) {
-				problemUILabel = uiLabel;
+			}
+
+			if (problem1UILabel == null && uiLabel.name == PROBLEM1_LABEL_TEXT) {
+				problem1UILabel = uiLabel;
+			} else if (problem2UILabel == null && uiLabel.name == PROBLEM2_LABEL_TEXT) {
+				problem2UILabel = uiLabel;
+			} else if (problem3UILabel == null && uiLabel.name == PROBLEM3_LABEL_TEXT) {
+				problem3UILabel = uiLabel;
 			}
 		}
 
-		problemUILabel.text = "";
+		problem1UILabel.text = "";
+		problem2UILabel.text = "";
+		problem3UILabel.text = "";
+		signUISprite.spriteName = "";
+		resultUISprite.spriteName = "";
 		bonusUILabel.text = cardString [Random.Range (0, 9)];
 		bonusAnimation.Play (Config.ANIMATION_BUTTON);
 	}
@@ -332,7 +364,7 @@ public class BattleGameManager : GameManager
 		switch (mark) {
 		case 1: // +
 			result = numberFirst + numberLast;
-			problemSign = "+";
+			problemSign = PLUS;
 			break;
 		case 2: // -
 			List<int> tempInt = new List<int> ();
@@ -351,11 +383,11 @@ public class BattleGameManager : GameManager
 			}
 
 			result = temp2Result [Random.Range (0, temp2Result.Count)];
-			problemSign = "-";
+			problemSign = MINUS;
 			break;
 		case 3: // ×
 			result = numberFirst * numberLast;
-			problemSign = "*";
+			problemSign = MULTIPLICATION;
 			break;
 		case 4: // ÷
 			List<int> temp4Result = new List<int> ();
@@ -378,7 +410,7 @@ public class BattleGameManager : GameManager
 			}
 
 			result = temp4Result [Random.Range (0, temp4Result.Count)];
-			problemSign = "/";
+			problemSign = DIVISION;
 			break;
 		}
 
@@ -404,8 +436,12 @@ public class BattleGameManager : GameManager
 			tempLast = lastString;
 		}
 
-		labelString = tempFirst + " " + problemSign + " " + tempLast + " = " + result;
-		problemUILabel.text = labelString;
+		signUISprite.spriteName = problemSign;
+		resultUISprite.spriteName = EQUAL;
+
+		problem1UILabel.text = tempFirst;
+		problem2UILabel.text = tempLast;
+		problem3UILabel.text = result.ToString ();
 	}
 
 	private IEnumerator SetNextStatusWait (float time)
@@ -522,16 +558,16 @@ public class BattleGameManager : GameManager
 	{
 		int tempResult = -1;
 		switch (problemSign) {
-		case "+": // +
+		case PLUS : // +
 			tempResult = first + last;
 			break;
-		case "-": // -
+		case MINUS : // -
 			tempResult = first - last;
 			break;
-		case "*": // *
+		case MULTIPLICATION : // *
 			tempResult = first * last;
 			break;
-		case "/": // ÷
+		case DIVISION : // ÷
 			tempResult = first / last;
 			if ((first % last) != 0) {
 				tempResult = -1;
@@ -559,6 +595,7 @@ public class BattleGameManager : GameManager
 
 	private int firstInt = 0;
 	private int lastInt = 0;
+
 	public void SetNumber (int length)
 	{
 		if (gameStatus != GameStatus.Play || firstString == cardString [length]) {
