@@ -10,7 +10,7 @@ public class RankFacebookManager : FacebookManager
 	private HttpComponent httpComponent;
 	// array
 	private List<GameObject> rank;
-	private List<string> rankFriendsList;
+	private static List<string> rankFriendsList;
 
 	protected override void Start ()
 	{
@@ -31,10 +31,14 @@ public class RankFacebookManager : FacebookManager
 		string tempFriends = FRIENDS_QUERY;
 		Debug.Log (tempFriends);
 
-		if (friends != null && friends.Count > 0) {
+		if (rankFriendsList != null && rankFriendsList.Count > 0) {
 			RankExecute ();
 		} else {
-			FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
+			if (friends != null && friends.Count > 0 && userFristName != null) {
+				RankFriendsList ();
+			} else {
+				FB.API (tempFriends, Facebook.HttpMethod.GET, FriendsCallback);
+			}
 		}
 	}
 
@@ -53,15 +57,21 @@ public class RankFacebookManager : FacebookManager
 
 		DeserializeJSONProfile (result.Text);
 		friends = DeserializeJSONFriends (result.Text);
+
+		RankFriendsList ();
+	}
+
+	private void RankFriendsList ()
+	{
 		rankFriendsList = new List<string> ();
 		rankFriendsList.Add (FB.UserId);
-
+		
 		if (friends.Count > 0) {
 			foreach (Dictionary<string, object> friend in friends) {
 				rankFriendsList.Add (friend ["id"].ToString ());
 			}
 		}
-
+		
 		RankExecute ();
 	}
 
