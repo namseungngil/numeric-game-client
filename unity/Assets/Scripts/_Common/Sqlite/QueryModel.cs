@@ -42,7 +42,7 @@ public class QueryModel : Query
 		};
 	}
 
-	public string Date ()
+	public static string Date ()
 	{
 		return DateTime.Now.ToString (Config.DATA_TIME);
 	}

@@ -98,4 +98,14 @@ public class Register
 		
 		return flag;
 	}
+
+	public void SetTutorial ()
+	{
+		PlayerPrefs.SetString (Config.TUTORIAL, QueryModel.Date ());
+	}
+
+	public string GetTutorial ()
+	{
+		return PlayerPrefs.GetString (Config.TUTORIAL, "");
+	}
 }

@@ -7,4 +7,5 @@ public class SceneData : MonoBehaviour
 	public static string stageLevel = "9";
 	public static string score = "";
 	public static string nextStage = "";
+	public static string tutorialStartScene = Config.LOGIN;
 }

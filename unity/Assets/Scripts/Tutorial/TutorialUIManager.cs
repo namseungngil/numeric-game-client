@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DATA;
 
 public class TutorialUIManager : UIManager
 {
@@ -13,6 +14,19 @@ public class TutorialUIManager : UIManager
 	
 	public override void Start ()
 	{
-		SSSceneManager.Instance.LoadMenu(Config.BATTLE);
+		Color myColor = DataArray.color [0];
+		Camera.main.backgroundColor = myColor;
+
+		Register register = Register.Instance ();
+		register.SetTutorial ();
+
+		SceneData.stageLevel = Config.CARD_COUNT.ToString ();
+
+		SSSceneManager.Instance.LoadMenu(Config.BATTLE, null, LoadMenuOnActive);
+	}
+
+	private void LoadMenuOnActive (SSController sSC)
+	{
+		sSC.gameObject.GetComponent<BattleGameManager> ().SetGuide (true);
 	}
 }

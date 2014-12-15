@@ -32,6 +32,7 @@ public class BattleGameManager : GameManager
 	private const string PROBLEM3_LABEL_TEXT = "Problem3";
 	private const string SING = "Sign";
 	private const string RESUlT = "Result";
+	private const string TIME_PLUS = "TimePlus";
 	private const string SCORE_TEXT = "Score : ";
 	private const string NEXT = "Next";
 	private const string PROGRESS_BAR = "Progress Bar";
@@ -45,6 +46,7 @@ public class BattleGameManager : GameManager
 	private const string BATTLE_TIME01 = "battle_time01";
 	private const string BATTLE_TIME02 = "battle_time02";
 	private const string BATTLE_TIME03 = "battle_time03";
+	private const string GUIDE = "Guide";
 	private const float TIME_MAX = 60f;
 	private const float BONUS_TIME = 5f;
 	// gameobject
@@ -54,6 +56,7 @@ public class BattleGameManager : GameManager
 	public GameObject timeOverEffect;
 	private GameObject panel1;
 	private GameObject panel100;
+	private GameObject guide;
 	// component
 	private GoogleMobileAdsComponent ad;
 	private EffectCameraManager effectCameraManager;
@@ -79,6 +82,8 @@ public class BattleGameManager : GameManager
 	private UILabel scoreUILabel;
 	private UILabel panel200UILabel;
 	private UILabel bonusUILabel;
+	private UILabel timePlusUILabel;
+	private UILabel guideParent;
 	// array
 	private string[] MARK_TEXT;
 	private string[] tempMark;
@@ -87,19 +92,21 @@ public class BattleGameManager : GameManager
 	// variable
 	private string labelString;
 	private string problemSign;
-	private int numberMax;
+	private string firstString;
+	private string lastString;
 	public float timer;
+	private int numberMax;
 	private int clearCount;
 	private int missCount;
 	private int hitCount;
 	private int comboCount;
-	private string firstString = null;
-	private string lastString = null;
 	private int result;
 	private int score;
 	private int score1;
 	private int score2;
 	private int score3;
+	private int guideCount;
+	private bool guideFlag = false;
 	
 	void Start ()
 	{
@@ -118,12 +125,14 @@ public class BattleGameManager : GameManager
 		resultUISprite = GameObject.Find (RESUlT).GetComponent<UISprite> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
+		timePlusUILabel = GameObject.Find (TIME_PLUS).GetComponent<UILabel> ();
 		bonusAnimation = GameObject.Find (BONUS_BACKGROUND).GetComponent<Animation> ();
 
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
 		panel1 = GameObject.Find (Config.PANEL1);
 		panel100 = GameObject.Find (Config.PANEL100);
+		guide = GameObject.Find (GUIDE);
 
 		scoreAnimation = scoreUILabel.gameObject.GetComponent<Animation> ();
 		panel200Animation = panel100.GetComponentInChildren<Animation> ();
@@ -136,6 +145,13 @@ public class BattleGameManager : GameManager
 
 		signUISprite.spriteName = "";
 		resultUISprite.spriteName = "";
+
+		timePlusUILabel.text = "+" + (int)BONUS_TIME;
+		timePlusUILabel.gameObject.SetActive (false);
+
+		guide.SetActive (false);
+		guideParent = null;
+		guideCount = 0;
 
 		BattleStart ();
 	}
@@ -151,6 +167,8 @@ public class BattleGameManager : GameManager
 
 			SetTimer ();
 		}
+
+		SetGuide ();
 	}
 
 	private void SetTimer ()
@@ -197,13 +215,26 @@ public class BattleGameManager : GameManager
 		effectCameraManager.GUIOnOverEffect (tempEffect, panel200UILabel.gameObject);
 		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (OVER_TIME);
+
+		// guide
+		if (guideFlag) {
+			SSSceneManager.Instance.DestroyScenesFrom (Config.BATTLE);
+			if (SceneData.tutorialStartScene == Config.MYPAGE) {
+				SSSceneManager.Instance.Screen (Game.Scene (SceneData.tutorialStartScene));
+			} else {
+				SSSceneManager.Instance.GoHome ();
+			}
+
+			yield break;
+		}
+
 		if (flag) {
 			// ad
 			ad.GetAd ();
 
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
-			string date = dataQuery.Date ();
+			string date = QueryModel.Date ();
 			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
 			// score
@@ -235,7 +266,11 @@ public class BattleGameManager : GameManager
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
 		panel200UILabel.color = new Color32 (255, 255, 255, 255);
-		panel200UILabel.text = "READY";
+		string temp = "READY";
+		if (guideFlag) {
+			temp = "TUTORIALS";
+		}
+		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (READY_TIME);
 
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
@@ -317,7 +352,6 @@ public class BattleGameManager : GameManager
 
 		temp = RandomArray.RandomizeStrings<string> (temp);
 
-		List<UILabel> cardUILabel = new List<UILabel> ();
 		if (panel100UILabel == null) {
 			panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
 		}
@@ -325,7 +359,6 @@ public class BattleGameManager : GameManager
 		int numberCount = 0;
 		foreach (UILabel uiLabel in panel100UILabel) {
 			if (uiLabel.name == Config.LABEL) {
-				cardUILabel.Add (uiLabel);
 				cardString [numberCount] = temp [numberCount];
 				uiLabel.text = temp [numberCount].ToString ();
 				numberCount ++;
@@ -484,6 +517,7 @@ public class BattleGameManager : GameManager
 	{
 		clearCount++;
 		comboCount++;
+		guideCount++;
 		SetStatus (GameStatus.Attack);
 
 		int tempFrist = int.Parse (firstString);
@@ -494,6 +528,8 @@ public class BattleGameManager : GameManager
 
 		int bonus = int.Parse (bonusUILabel.text);
 		if (tempFrist == bonus || tempLast == bonus) {
+			timePlusUILabel.gameObject.SetActive (true);
+			timePlusUILabel.gameObject.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
 			timer += BONUS_TIME;
 			SetTimer ();
 		}
@@ -516,6 +552,7 @@ public class BattleGameManager : GameManager
 		Effect (goodEffect);
 
 		yield return new WaitForSeconds (ATTACK_TIME);
+		timePlusUILabel.gameObject.SetActive (false);
 		panel100.SetActive (false);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
@@ -531,6 +568,13 @@ public class BattleGameManager : GameManager
 		SetGuage ();
 		// Animation
 		scoreAnimation.Play (Config.ANIMATION_BUTTON);
+
+		if (guideFlag) {
+			if (guideCount >= 10) {
+				StartCoroutine (Over ());
+				yield break;
+			}
+		}
 
 		StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));
 	}
@@ -591,6 +635,76 @@ public class BattleGameManager : GameManager
 	{
 		float temp = (((f / score3) * 100) * 2) + minX;
 		return temp;
+	}
+
+	private string tempGuide = "";
+	private void SetGuide ()
+	{
+		if (!guideFlag) {
+			return;
+		}
+
+		if (gameStatus == GameStatus.Play) {
+			guide.SetActive (true);
+
+
+			if (firstString == null) {
+				for (int i = 0; i < cardString.Length; i++) {
+					for (int j = 0; j < cardString.Length; j++) {
+						if (cardString[j] == cardString[i]) {
+							continue;
+						}
+	
+						int tempInt = MainLogic (int.Parse (cardString[i]), int.Parse (cardString[j]));
+						if (tempInt == result) {
+							tempGuide = cardString[i];
+							break;
+						}
+					}
+				}
+			} else {
+				for (int k = 0; k < cardString.Length; k++) {
+					if (tempGuide == cardString [k]) {
+						continue;
+					}
+					int tempLast = int.Parse (cardString [k]);
+					
+					int tempInt2 = MainLogic (firstInt, tempLast);
+					if (tempInt2 == result) {
+						tempGuide = tempLast.ToString ();
+						break;
+					}
+				}
+			}
+//			Debug.Log ("SetGuide : " + tempGuide);
+
+			if (guideParent != null && guideParent.text == tempGuide) {
+				return;
+			}
+
+			foreach (UILabel uL in panel100UILabel) {
+				if (uL.name == Config.LABEL) {
+					if (uL.text == tempGuide) {
+						guideParent = uL;
+
+					}
+				}
+			}
+//			Debug.Log ("guideParent : " + guideParent.text);
+
+			if (guideParent != null) {
+				Vector3 guideVector3 = guideParent.gameObject.GetComponentInParent<UISprite> ().transform.localPosition;
+				guideVector3.y += 120f;
+				guide.transform.localPosition = guideVector3;
+			}
+
+
+		} else {
+			tempGuide = "";
+			guide.transform.localPosition = new Vector3 (10000, 10000, 0);
+			guide.SetActive (false);
+			guideParent = null;
+		}
 	}
 
 	private int firstInt = 0;
@@ -719,5 +833,10 @@ public class BattleGameManager : GameManager
 	{
 		gameStatus = GameStatus.Play;
 		StartCoroutine (Shuffle ());
+	}
+
+	public void SetGuide (bool flag)
+	{
+		guideFlag = flag;
 	}
 }

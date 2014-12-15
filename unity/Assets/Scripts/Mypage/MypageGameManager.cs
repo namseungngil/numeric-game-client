@@ -42,6 +42,7 @@ public class MypageGameManager : GameManager
 	// variable
 	private int index;
 	private bool nextFlag;
+	private bool lastFlag;
 	
 	void Start ()
 	{
@@ -75,6 +76,7 @@ public class MypageGameManager : GameManager
 		register = Register.Instance ();
 		index = 0;
 		nextFlag = false;
+		lastFlag = false;
 
 		// set last stage
 		if (SceneData.lastStage == 0) {
@@ -145,6 +147,9 @@ public class MypageGameManager : GameManager
 			qD.uITexture.gameObject.SetActive (false);
 
 			tempMin++;
+			if (SceneData.lastStage <= tempMin) {
+				lastFlag = true;
+			}
 		}
 
 		// set user clear quest
@@ -215,6 +220,10 @@ public class MypageGameManager : GameManager
 
 	public bool NextQuestStatus ()
 	{
+		if (LastQuestStatus ()) {
+			return false;
+		}
+
 		if (nextFlag) {
 			if (index < LastIndex ()) {
 				return true;
@@ -231,6 +240,11 @@ public class MypageGameManager : GameManager
 		}
 
 		return false;
+	}
+
+	public bool LastQuestStatus ()
+	{
+		return lastFlag;
 	}
 
 	public string Score (string stage)

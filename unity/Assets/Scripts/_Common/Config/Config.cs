@@ -62,6 +62,7 @@
 	public const string WEBVIEW = "Webview";
 	public const string INTRO = "Intro";
 	public const string NOT = "Not";
+	public const string TUTORIAL = "Tutorial";
 	// image
 	public const string STAR_EMPTY = "empty";
 	public const string STAR_FULL = "full";

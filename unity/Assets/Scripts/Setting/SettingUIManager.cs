@@ -79,6 +79,14 @@ public class SettingUIManager : UIManager
 		SSSceneManager.Instance.GoHome ();
 	}
 
+	public void Tutorial ()
+	{
+		if (SceneData.tutorialStartScene == Config.MYPAGE) {
+			SSSceneManager.Instance.DestroyScenesFrom (Config.MYPAGE);
+		}
+		SSSceneManager.Instance.Screen (Config.TUTORIAL);
+	}
+
 	public void CheatKey ()
 	{
 		Debug.Log ("CheatKey");

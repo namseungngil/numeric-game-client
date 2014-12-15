@@ -49,7 +49,13 @@ public class LoginUIManager : UIManager
 
 	public void GameStart ()
 	{
-		SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
+		Register register = Register.Instance ();
+		if (register.GetTutorial () == "") {
+			SceneData.tutorialStartScene = Config.MYPAGE;
+			SSSceneManager.Instance.Screen (Config.TUTORIAL);
+		} else {
+			SSSceneManager.Instance.Screen (Game.Scene (Config.MYPAGE));
+		}
 	}
 	
 	public void FacebookLogin ()
@@ -63,6 +69,7 @@ public class LoginUIManager : UIManager
 
 	public void Setting ()
 	{
+		SceneData.tutorialStartScene = Config.LOGIN;
 		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeactive);
 	}
 }

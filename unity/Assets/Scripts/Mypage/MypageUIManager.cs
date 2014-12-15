@@ -7,12 +7,14 @@ public class MypageUIManager : UIManager
 	// const
 	private const string NEXT = "Next";
 	private const string BACK = "Back";
+	private const string LAST = "LastLabel";
 	private const float MIN_SWIPTE_DISTANCE_PIXELS = 100f;
 	//gameobject
 	private GameObject upGameObject;
 	private GameObject downGameObject;
 	// component
 	private MypageGameManager mypageGameManager;
+	private LoveComponent loveComponent;
 	private Vector2 touchStartPos;
 	// array
 	private UISprite[] uiSpriteList;
@@ -31,12 +33,22 @@ public class MypageUIManager : UIManager
 	public override void Start ()
 	{
 		base.Start ();
+
 		touchStarted = false;
 		minSwipeDistancePixels = MIN_SWIPTE_DISTANCE_PIXELS;
+
+		GameObject gObj = GameObject.Find (Config.ROOT_MANAGER);
+		if (gObj != null) {
+			loveComponent = gObj.GetComponent<LoveComponent> ();
+		}
 
 		upGameObject = GameObject.Find (NEXT);
 		downGameObject = GameObject.Find (BACK);
 		mypageGameManager = gameObject.GetComponent<MypageGameManager> ();
+
+		if (mypageGameManager.LastQuestStatus ()) {
+			upGameObject.SetActive (false);
+		}
 
 		if (!mypageGameManager.NextQuestStatus ()) {
 			upGameObject.SetActive (false);
@@ -49,6 +61,8 @@ public class MypageUIManager : UIManager
 		if (SceneData.nextStage != "") {
 			StartCoroutine (NextGameStart ());
 		}
+
+		GameObject.Find (LAST).GetComponent<UILabel> ().text = SceneData.lastStage.ToString ();
 	}
 
 	void Update ()
@@ -143,12 +157,15 @@ public class MypageUIManager : UIManager
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
-			SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeactive);
+			if (!loveComponent.NotFlag ()) {
+				SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeactive);
+			}
 		}
 	}
 
 	public void Setting ()
 	{
+		SceneData.tutorialStartScene = Config.MYPAGE;
 		SSSceneManager.Instance.PopUp (Config.SETTING, null, PopupOnActive, PopupOnDeactive);
 	}
 

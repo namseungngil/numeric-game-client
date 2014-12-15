@@ -221,7 +221,7 @@ public class LoveComponent : MonoBehaviour
 		if (love > 0) {
 			love -= 1;
 			if (love == Config.LOVE_MAX - 1) {
-				SetLove (love, dataQuery.Date ());
+				SetLove (love, QueryModel.Date ());
 				InitLove ();
 			} else {
 				SetLove (love);
@@ -248,5 +248,15 @@ public class LoveComponent : MonoBehaviour
 			};
 			Notification.Register (tempString);
 		}
+	}
+
+	public bool NotFlag ()
+	{
+		return love <= 0 ? true : false;
+	}
+
+	public bool MaxFlag ()
+	{
+		return love >= Config.LOVE_MAX ? true : false;
 	}
 }
