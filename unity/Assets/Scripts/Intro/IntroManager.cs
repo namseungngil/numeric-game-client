@@ -60,6 +60,11 @@ public class IntroManager : GameManager
 
 	private void Login ()
 	{
+		if (FB.IsLoggedIn) {
+			HttpLogin ();
+			return;
+		}
+
 		FB.Init (OnInitComplete, OnHideUnity);
 	}
 

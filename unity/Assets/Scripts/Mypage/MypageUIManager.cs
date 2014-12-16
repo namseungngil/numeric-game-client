@@ -157,7 +157,7 @@ public class MypageUIManager : UIManager
 	public void Love ()
 	{
 		if (FB.IsLoggedIn) {
-			if (!loveComponent.NotFlag ()) {
+			if (loveComponent.NotFlag ()) {
 				SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeactive);
 			}
 		}

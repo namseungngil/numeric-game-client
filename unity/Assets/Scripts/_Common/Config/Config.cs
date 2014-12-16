@@ -43,8 +43,12 @@
 	public const string GRID = "Grid";
 	public const string SOLID_CAMERA = "SolidCamera";
 	public const string EFFECT_CAMERA = "EffectCamera";
+	public const string MERRY = "Merry";
 	// animation
 	public const string ANIMATION_BUTTON = "Button";
+	public const string ANIMATION_NORMAL = "Normal";
+	public const string ANIMATION_GOOD = "Good";
+	public const string ANIMATION_MISS = "Miss";
 	// device
 	public const string ANDROID = "1";
 	public const string IPHONE = "2";

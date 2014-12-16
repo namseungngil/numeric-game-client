@@ -54,8 +54,8 @@ public class BattleGameManager : GameManager
 	public GameObject missEffect;
 	public GameObject clearEffect;
 	public GameObject timeOverEffect;
-	private GameObject panel1;
 	private GameObject panel100;
+	private GameObject panel200;
 	private GameObject guide;
 	// component
 	private GoogleMobileAdsComponent ad;
@@ -67,6 +67,7 @@ public class BattleGameManager : GameManager
 	private Animation panel200Animation;
 	private Animation scoreAnimation;
 	private Animation bonusAnimation;
+	private Animation merryAnimation;
 	private UIProgressBar uIProgressbar;
 	private UIProgressBar timeUIProgressbar;
 	private UISprite star1UISprite;
@@ -127,17 +128,18 @@ public class BattleGameManager : GameManager
 		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		timePlusUILabel = GameObject.Find (TIME_PLUS).GetComponent<UILabel> ();
 		bonusAnimation = GameObject.Find (BONUS_BACKGROUND).GetComponent<Animation> ();
+		merryAnimation = GameObject.Find (Config.MERRY).GetComponent<Animation> ();
 
 		httpComponent = gameObject.GetComponent<HttpComponent> ();
 
-		panel1 = GameObject.Find (Config.PANEL1);
 		panel100 = GameObject.Find (Config.PANEL100);
+		panel200 = GameObject.Find (Config.PANEL200);
 		guide = GameObject.Find (GUIDE);
 
 		scoreAnimation = scoreUILabel.gameObject.GetComponent<Animation> ();
-		panel200Animation = panel100.GetComponentInChildren<Animation> ();
-		panel200UILabel = panel100.GetComponentInChildren<UILabel> ();
-		panel200TweenPosition = panel100.GetComponentInChildren<TweenPosition> (); 
+		panel200Animation = panel200.GetComponentInChildren<Animation> ();
+		panel200UILabel = panel200.GetComponentInChildren<UILabel> ();
+		panel200TweenPosition = panel200.GetComponentInChildren<TweenPosition> (); 
 		bonusUILabel = Logic.GetChildObject (bonusAnimation.gameObject, BONUS).GetComponent<UILabel> ();
 
 		MARK_TEXT = new string[] {"?", "?"};
@@ -200,7 +202,7 @@ public class BattleGameManager : GameManager
 			flag = false;
 		}
 
-		panel100.SetActive (true);
+		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.color = new Color32 (255, 255, 255, 255);
 
@@ -262,7 +264,7 @@ public class BattleGameManager : GameManager
 		// Game status
 		SetStatus (GameStatus.Ready);
 
-		panel100.SetActive (true);
+		panel200.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
 		panel200UILabel.color = new Color32 (255, 255, 255, 255);
@@ -277,8 +279,8 @@ public class BattleGameManager : GameManager
 		panel200UILabel.text = "GO";
 		yield return new WaitForSeconds (START_TIME);
 
-		panel100.SetActive (false);
-		panel1.SetActive (true);
+		panel200.SetActive (false);
+		panel100.SetActive (true);
 		StartCoroutine (Shuffle ());
 	}
 
@@ -292,6 +294,9 @@ public class BattleGameManager : GameManager
 
 		CardLogic (numberMax);
 		yield return new WaitForSeconds (SHUFFLE_TIME);
+		// animation
+		merryAnimation.Play (Config.ANIMATION_NORMAL);
+
 		ProblemLogic ();
 	}
 
@@ -353,7 +358,7 @@ public class BattleGameManager : GameManager
 		temp = RandomArray.RandomizeStrings<string> (temp);
 
 		if (panel100UILabel == null) {
-			panel100UILabel = panel1.GetComponentsInChildren<UILabel> ();
+			panel100UILabel = panel100.GetComponentsInChildren<UILabel> ();
 		}
 
 		int numberCount = 0;
@@ -545,15 +550,18 @@ public class BattleGameManager : GameManager
 			tempLast += tempCombo;
 		}
 
-		panel100.SetActive (true);
+		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.text = tempString;
 		// effect
 		Effect (goodEffect);
 
+		// animation
+		merryAnimation.Play (Config.ANIMATION_GOOD);
+
 		yield return new WaitForSeconds (ATTACK_TIME);
 		timePlusUILabel.gameObject.SetActive (false);
-		panel100.SetActive (false);
+		panel200.SetActive (false);
 
 		yield return new WaitForSeconds (ATTACK_TIME / 2);
 		score += tempFrist;
@@ -585,15 +593,18 @@ public class BattleGameManager : GameManager
 		comboCount = 0;
 		SetStatus (GameStatus.Miss);
 
-		panel100.SetActive (true);
+		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
 		panel200UILabel.color = new Color32 (158, 0, 167, 255);
 		panel200UILabel.text = "MISS";
 		// effect
 		Effect (missEffect);
 
+		// animation
+		merryAnimation.Play (Config.ANIMATION_MISS);
+
 		yield return new WaitForSeconds (MISS_TIME);
-		panel100.SetActive (false);
+		panel200.SetActive (false);
 
 		StartCoroutine (SetNextStatusWait (MISS_TIME / 2));
 	}
@@ -812,8 +823,8 @@ public class BattleGameManager : GameManager
 		scoreUILabel.text = "" + score;
 		timerUILabel.text = ((int)timer).ToString ("");
 
-		panel1.SetActive (false);
 		panel100.SetActive (false);
+		panel200.SetActive (false);
 
 		gameStatus = GameStatus.Ready;
 		StartCoroutine (Ready ());
