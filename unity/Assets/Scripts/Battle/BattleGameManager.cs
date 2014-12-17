@@ -47,6 +47,7 @@ public class BattleGameManager : GameManager
 	private const string BATTLE_TIME02 = "battle_time02";
 	private const string BATTLE_TIME03 = "battle_time03";
 	private const string GUIDE = "Guide";
+	private const string PROBLEM_BACKGROUND = "ProblemBackground";
 	private const float TIME_MAX = 60f;
 	private const float BONUS_TIME = 5f;
 	// gameobject
@@ -76,6 +77,7 @@ public class BattleGameManager : GameManager
 	private UISprite timerUISprite;
 	private UISprite signUISprite;
 	private UISprite resultUISprite;
+	private UISprite problemUISprite;
 	private UILabel problem1UILabel;
 	private UILabel problem2UILabel;
 	private UILabel problem3UILabel;
@@ -90,6 +92,7 @@ public class BattleGameManager : GameManager
 	private string[] tempMark;
 	private string[] cardString;
 	private UILabel[] panel100UILabel;
+	private Color[] color;
 	// variable
 	private string labelString;
 	private string problemSign;
@@ -124,6 +127,7 @@ public class BattleGameManager : GameManager
 		timerUISprite = GameObject.Find (TIME_BACKGROUND).GetComponent<UISprite> ();
 		signUISprite = GameObject.Find (SING).GetComponent<UISprite> ();
 		resultUISprite = GameObject.Find (RESUlT).GetComponent<UISprite> ();
+		problemUISprite = GameObject.Find (PROBLEM_BACKGROUND).GetComponent<UISprite> ();
 		timerUILabel = GameObject.Find (Config.TIMER).GetComponent<UILabel> ();
 		scoreUILabel = GameObject.Find (Config.SCORE).GetComponent<UILabel> ();
 		timePlusUILabel = GameObject.Find (TIME_PLUS).GetComponent<UILabel> ();
@@ -155,6 +159,10 @@ public class BattleGameManager : GameManager
 		guideParent = null;
 		guideCount = 0;
 
+		color = new Color[] {
+			new Color32 (0, 184, 162, 128), new Color32 (255, 92, 73, 128)
+		};
+
 		BattleStart ();
 	}
 
@@ -178,8 +186,10 @@ public class BattleGameManager : GameManager
 		float temp = timer / (float)TIME_MAX;
 		if (temp <= 0.4) {
 			timerUISprite.spriteName = BATTLE_T08;
+			problemUISprite.color = color [1];
 		} else {
 			timerUISprite.spriteName = BATTLE_T00;
+			problemUISprite.color = color [0];
 		}
 		timeUIProgressbar.value = temp > 1 ? 1 : temp;
 		timerUILabel.text = "" + ((int)timer).ToString ();
@@ -211,6 +221,12 @@ public class BattleGameManager : GameManager
 		if (flag) {
 			temp = "CLEAR";
 			tempEffect = clearEffect;
+
+			// animation
+			merryAnimation.Play (Config.ANIMATION_GOOD);
+		} else {
+			// animation
+			merryAnimation.Play (Config.ANIMATION_MISS);
 		}
 
 		// effect

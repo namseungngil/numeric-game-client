@@ -2,8 +2,7 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="126" Column="69" />
-      <File FileName="../../star-game-client/Assets/Scripts/Login/ResourceManager.cs" Line="23" Column="36" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="52" Column="38" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
