@@ -660,7 +660,7 @@ public class BattleGameManager : GameManager
 
 	private float GaugeStarPercent (float f, float minX)
 	{
-		float temp = (((f / score3) * 100) * 2) + minX;
+		float temp = (((f / score3) * 130) * 2) + minX;
 		return temp;
 	}
 
@@ -820,8 +820,8 @@ public class BattleGameManager : GameManager
 		score2 = list [1];
 		score3 = list [2];
 
-		float minX = -100f;
-		float maxX = 100f;
+		float minX = -130f;
+		float maxX = 130f;
 
 		Vector3 starVector1 = star2UISprite.transform.localPosition;
 		starVector1.x = GaugeStarPercent (score1, minX);

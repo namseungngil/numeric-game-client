@@ -45,7 +45,7 @@
     </activity>
     <activity android:name="com.facebook.unity.FBUnityDeepLinkingActivity" android:exported="true">
     </activity>
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 1624503074443175" />
+    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="\ 542275215908619" />
   </application>
   <!-- Android GCM Plugin -->
   <!-- Rewite app package name! -->

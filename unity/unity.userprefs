@@ -1,8 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Setting/SettingUIManager.cs">
     <Files>
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="52" Column="38" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="804" Column="17" />
+      <File FileName="Assets/Scripts/Tutorial/TutorialUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Setting/SettingUIManager.cs" Line="39" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
