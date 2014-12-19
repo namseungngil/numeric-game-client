@@ -101,7 +101,7 @@ public class OverUIManager : ResultManager
 			temp += 1;
 		}
 
-		if (temp < SceneData.lastStage) {
+		if (temp <= SceneData.lastStage) {
 			SceneData.nextStage = temp.ToString ();
 		}
 
