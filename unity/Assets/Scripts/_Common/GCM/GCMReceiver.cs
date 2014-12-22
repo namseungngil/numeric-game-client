@@ -20,14 +20,14 @@ public class GCMReceiver : MonoBehaviour {
 	}
 	
 	void OnError (string errorId) {
-		Debug.Log ("Error: " + errorId);
+//		Debug.Log ("Error: " + errorId);
 		if (_onError != null) {
 			_onError (errorId);
 		}
 	}
 	
 	void OnMessage (string message) {
-		Debug.Log ("Message: " + message);
+//		Debug.Log ("Message: " + message);
 		if (_onMessage != null) {
 			Dictionary<string, object> table = MiniJSON.Json.Deserialize (message) as Dictionary<string, object>;
 			_onMessage (table);

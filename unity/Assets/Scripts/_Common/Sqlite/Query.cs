@@ -47,7 +47,7 @@ public class Query
 				query += ",";
 			}
 		}
-		Debug.Log ("INSERT_BATCH : " + query);
+//		Debug.Log ("INSERT_BATCH : " + query);
 
 		return sqliteDatabase.ExecuteNonQuery (query);
 	}
@@ -63,7 +63,7 @@ public class Query
 		query += ")VALUES(";
 		query = CommonInsert (query, data);
 		query += ")";
-		Debug.Log (query);
+//		Debug.Log (query);
 
 		return sqliteDatabase.ExecuteNonQuery (query);
 	}
@@ -111,7 +111,7 @@ public class Query
 		}
 		query += ");";
 
-		Debug.Log ("UPDATE_BATCH : " +  query);
+//		Debug.Log ("UPDATE_BATCH : " +  query);
 
 		return sqliteDatabase.ExecuteNonQuery (query);
 	}
@@ -149,7 +149,7 @@ public class Query
 
 		query += ";";
 		
-		Debug.Log ("SELECT_SYNC : " + query);
+//		Debug.Log ("SELECT_SYNC : " + query);
 		
 		DataTable dataTabe = sqliteDatabase.ExecuteQuery (query);
 		

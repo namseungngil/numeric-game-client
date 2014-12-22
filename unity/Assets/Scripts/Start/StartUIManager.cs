@@ -53,7 +53,7 @@ public class StartUIManager : ResultManager
 
 	public void Request ()
 	{
-		Debug.Log (UIButton.current.name);
+//		Debug.Log (UIButton.current.name);
 		if (UIButton.current.name == FacebookManager.BUTTON) {
 			return;
 		}

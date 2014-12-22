@@ -10,4 +10,8 @@ public class LoadingUIManager : UIManager
 		
 		IsCache = false;
 	}
+
+	public override void OnKeyBack ()
+	{
+	}
 }

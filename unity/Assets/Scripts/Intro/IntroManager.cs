@@ -48,13 +48,13 @@ public class IntroManager : GameManager
 
 	private void OnInitComplete ()
 	{
-		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
+//		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
 		HttpLogin ();
 	}
 	
 	private void OnHideUnity (bool isGameShown)
 	{
-		Debug.Log ("Is game showing? " + isGameShown);
+//		Debug.Log ("Is game showing? " + isGameShown);
 		HttpLogin ();
 	}
 
@@ -146,7 +146,7 @@ public class IntroManager : GameManager
 
 	private void LoginCallback ()
 	{
-		Debug.Log ("LoginCallback");
+//		Debug.Log ("LoginCallback");
 
 		SSSceneManager.Instance.GoHome ();
 	}

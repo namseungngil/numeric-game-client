@@ -13,7 +13,7 @@ public abstract class GameManager : MonoBehaviour
 	}
 
 	void OnApplicationPause(bool pauseStatus) {
-		Debug.Log ("GameManager OnApplicationPause : " + pauseStatus);
+//		Debug.Log ("GameManager OnApplicationPause : " + pauseStatus);
 		if (!pauseStatus) {
 			Notification.CancelAll ();
 		}

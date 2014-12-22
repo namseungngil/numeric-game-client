@@ -6,9 +6,10 @@ using GoogleMobileAds.Api;
 // Example script showing how to invoke the Google Mobile Ads Unity plugin.
 public class GoogleMobileAdsComponent: MonoBehaviour
 {
+	// component
 	private BannerView bannerView;
 	private InterstitialAd interstitial;
-
+	
 	void Start ()
 	{
 		RequestBanner ();

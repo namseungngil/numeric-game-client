@@ -73,7 +73,7 @@ namespace ASSETBUNDLE
 					}
 					yield return www;
 					if (www.error != null) {
-						Debug.LogError ("WWW download error : " + www.error);
+//						Debug.LogError ("WWW download error : " + www.error);
 						if (mOnFail != null) {
 							mOnFail (www);
 						}

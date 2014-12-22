@@ -7,16 +7,15 @@ public class OverUIManager : ResultManager
 	// const
 	private const string BACKGROUND = "Background";
 	private const string PLAY = "Play";
-	private const string NEXT = "NEXT";
-	private const string RETRY = "RETRY";
+	private const string NEXT = "Next";
 	private const string SPRITE = "Sprite";
 	private const float STAR_ON_TIMER = 1f;
 	// gameobject
 	public GameObject starEffect;
+	private GameObject nextGObj;
 	// component
 	private EffectCameraManager effectCameraManager;
 	private RankFacebookManager rankFacebookManager;
-	private UILabel btnLabel;
 	// array
 	private List<GameObject> button;
 	private List<GameObject> star;
@@ -25,6 +24,8 @@ public class OverUIManager : ResultManager
 	// variable
 	private int index;
 	private int score;
+	private int stage;
+	private bool flag;
 
 	public override void Start ()
 	{
@@ -36,11 +37,12 @@ public class OverUIManager : ResultManager
 		}
 
 		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
+		nextGObj = GameObject.Find (NEXT);
+		flag = true;
 
 		button = new List<GameObject> ();
 		button.Add (GameObject.Find (PLAY));
 		button.Add (GameObject.Find (CANCEL));
-		btnLabel = button [0].GetComponentInChildren<UILabel> ();
 
 		star = new List<GameObject> ();
 		star.Add (Logic.GetChildObject (star1.gameObject, SPRITE));
@@ -50,13 +52,14 @@ public class OverUIManager : ResultManager
 		Logic.SetActive (star, false);
 
 		score = int.Parse (SceneData.score);
-		list = Game.Score (int.Parse (SceneData.stageLevel));
+		stage = int.Parse (SceneData.stageLevel);
+		list = Game.Score (stage);
 		index = 0;
 		if (score >= list [index]) {
 			Logic.SetActive (button, false);
+			flag = false;
 
 			StartCoroutine (Clear (0.5f));
-			btnLabel.text = NEXT;
 		} else {
 			failColor = new Color32[] {
 				new Color32 (88, 119, 57, 200),
@@ -71,7 +74,14 @@ public class OverUIManager : ResultManager
 			b2.color = failColor [1];
 			b3.color = failColor [2];
 
-			btnLabel.text = RETRY;
+			nextGObj.SetActive (false);
+		}
+	}
+
+	public override void OnKeyBack ()
+	{
+		if (flag) {
+			OverCancel ();
 		}
 	}
 
@@ -85,25 +95,31 @@ public class OverUIManager : ResultManager
 			if (score >= list [index]) {
 				StartCoroutine (Clear (STAR_ON_TIMER));
 			} else {
-				Logic.SetActive (button, true);
+				flag = true;
 			}
 		} else {
+			flag = true;
+		}
+
+		if (flag) {
 			Logic.SetActive (button, true);
 		}
 	}
 
-	public void RetryPlay ()
+	public void Next ()
 	{
-		int temp = int.Parse (SceneData.stageLevel);
-		if (btnLabel.text == RETRY) {
-
-		} else {
-			temp += 1;
-		}
+		int temp = stage + 1;
 
 		if (temp <= SceneData.lastStage) {
 			SceneData.nextStage = temp.ToString ();
 		}
+
+		OverCancel ();
+	}
+
+	public void Retry ()
+	{
+		SceneData.nextStage = stage.ToString ();
 
 		OverCancel ();
 	}

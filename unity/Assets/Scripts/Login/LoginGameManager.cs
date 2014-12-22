@@ -11,16 +11,16 @@ public class LoginGameManager : GameManager
 	{
 		if (result.Error != null) {
 			// "Error Response:\n" + result.Error;
-			Debug.Log ("Error Response:\n" + result.Error);
+//			Debug.Log ("Error Response:\n" + result.Error);
 			uIManager.Cancel ();
 			// debugText = result.Error;
 		} else if (!FB.IsLoggedIn) {
 			// "Login cancelled by Player";
-			Debug.Log ("Login cancelled by Player");
+//			Debug.Log ("Login cancelled by Player");
 			uIManager.Cancel ();
 		} else {
 			// "Login was successful!";
-			Debug.Log ("Login was successful!");
+//			Debug.Log ("Login was successful!");
 			uIManager.Cancel ();
 			SSSceneManager.Instance.Screen (Config.INTRO);
 		}

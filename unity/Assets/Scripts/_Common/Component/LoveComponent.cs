@@ -76,7 +76,7 @@ public class LoveComponent : MonoBehaviour
 	}
 
 	void OnApplicationPause(bool pauseStatus) {
-		Debug.Log ("LoveComponent OnApplicationPause : " + pauseStatus);
+//		Debug.Log ("LoveComponent OnApplicationPause : " + pauseStatus);
 		if (!pauseStatus) {
 			if (register != null) {
 				loveTime = 0;

@@ -18,13 +18,13 @@ public class GCMComponent : MonoBehaviour
 		
 		// Set callbacks
 		GCM.SetErrorCallback ((string errorId) => {
-			Debug.Log ("Error!!! " + errorId);
+//			Debug.Log ("Error!!! " + errorId);
 //			GCM.ShowToast ("Error!!!");
 			_text = "Error: " + errorId;
 		});
 		
 		GCM.SetMessageCallback ((Dictionary<string, object> table) => {
-			Debug.Log ("Message!!!");
+//			Debug.Log ("Message!!!");
 //			GCM.ShowToast ("Message!!!");
 			_text = "Message: " + System.Environment.NewLine;
 			foreach (var key in  table.Keys) {
@@ -33,20 +33,20 @@ public class GCMComponent : MonoBehaviour
 		});
 		
 		GCM.SetRegisteredCallback ((string registrationId) => {
-			Debug.Log ("Registered!!! " + registrationId);
+//			Debug.Log ("Registered!!! " + registrationId);
 			gcmID = registrationId;
 //			GCM.ShowToast ("Registered!!!");
 			_text = "Register: " + registrationId; 
 		});
 		
 		GCM.SetUnregisteredCallback ((string registrationId) => {
-			Debug.Log ("Unregistered!!! " + registrationId);
+//			Debug.Log ("Unregistered!!! " + registrationId);
 //			GCM.ShowToast ("Unregistered!!!");
 			_text = "Unregister: " + registrationId;
 		});
 		
 		GCM.SetDeleteMessagesCallback ((int total) => {
-			Debug.Log ("DeleteMessages!!! " + total);
+//			Debug.Log ("DeleteMessages!!! " + total);
 //			GCM.ShowToast ("DeleteMessaged!!!");
 			_text = "DeleteMessages: " + total;
 		});

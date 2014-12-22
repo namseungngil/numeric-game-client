@@ -70,8 +70,8 @@ public class QueryModel : Query
 			}
 
 			if (tempDic.Count > 0) {
-				string[] whereData = new string[dataTable.Rows.Count];
-				string[] dataData = new string[dataTable.Rows.Count];
+				string[] whereData = new string[tempDic.Count];
+				string[] dataData = new string[tempDic.Count];
 
 				int index = 0;
 				foreach (KeyValuePair<string, string> kVP in tempDic) {

@@ -31,7 +31,7 @@ public class SwipeCompoent : MonoBehaviour
 					touchStarted = false;
 				}
 				break;
-			case TouchPhase.Canceled:				
+			case TouchPhase.Canceled:
 				touchStarted = false;
 				break;
 			case TouchPhase.Stationary:

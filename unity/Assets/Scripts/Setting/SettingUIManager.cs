@@ -89,7 +89,7 @@ public class SettingUIManager : UIManager
 
 	public void CheatKey ()
 	{
-		Debug.Log ("CheatKey");
+//		Debug.Log ("CheatKey");
 		QueryModel queryModel = QueryModel.Instance ();
 		queryModel.DummyData ();
 	}

@@ -22,7 +22,7 @@ public class UnityTimerNotificationManager {
 		
 		String[] strArray = str.split(",");
 		String date = strArray[0];
-		Log.v(TAG, date);
+//		Log.v(TAG, date);
 		String title = strArray[1];
 		String text = strArray[2];
 		
@@ -32,32 +32,32 @@ public class UnityTimerNotificationManager {
 		calendar.setTimeInMillis(System.currentTimeMillis());
 		
 		int temp = Integer.parseInt(date.substring(4, 6));
-		Log.v(TAG, "MONTH : " + temp);
+//		Log.v(TAG, "MONTH : " + temp);
 //		calendar.set(Calendar.MONTH, temp);
 		
 		temp = Integer.parseInt(date.substring(0, 4));
-		Log.v(TAG, "YEAR : " + temp);
+//		Log.v(TAG, "YEAR : " + temp);
 //		calendar.set(Calendar.YEAR, temp);
 		
 		temp = Integer.parseInt(date.substring(6, 8));
-		Log.v(TAG, "DAY_OF_MONTH : " + temp);
+//		Log.v(TAG, "DAY_OF_MONTH : " + temp);
 		calendar.set(Calendar.DAY_OF_MONTH, temp);
 		
 		temp = Integer.parseInt(date.substring(8, 10));
-		Log.v(TAG, "HOUR_OF_DAY : " + temp);
+//		Log.v(TAG, "HOUR_OF_DAY : " + temp);
 		calendar.set(Calendar.HOUR_OF_DAY, temp);
 		
 		temp = Integer.parseInt(date.substring(10, 12));
-		Log.v(TAG, "MINUTE : " + temp);
+//		Log.v(TAG, "MINUTE : " + temp);
 		calendar.set(Calendar.MINUTE, temp);
 		
 		temp = Integer.parseInt(date.substring(12, 14));
-		Log.v(TAG, "SECOND : " + temp);
+//		Log.v(TAG, "SECOND : " + temp);
 		calendar.set(Calendar.SECOND, temp);
 		
 		Intent intent = new Intent(activity, UnityTimerNotificationBroadcastRecevier.class);
-		Log.v(TAG, "Title : " + title);
-		Log.v(TAG, "Text : " + text);
+//		Log.v(TAG, "Title : " + title);
+//		Log.v(TAG, "Text : " + text);
 		
 		SharedPreferences pref = activity.getSharedPreferences(KEY, Activity.MODE_PRIVATE);
 		String tempTitleText = title + "," + text;
@@ -75,7 +75,7 @@ public class UnityTimerNotificationManager {
 	
 	public static void unregister() {
 		
-		Log.v(TAG, "local notification unregister");
+//		Log.v(TAG, "local notification unregister");
 		
 		Activity activity = UnityPlayer.currentActivity;
 		

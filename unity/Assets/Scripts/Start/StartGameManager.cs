@@ -21,7 +21,7 @@ public class StartGameManager : MonoBehaviour
 
 	private void Score ()
 	{
-		Debug.Log ("StartGameManager Score");
+//		Debug.Log ("StartGameManager Score");
 		if (!FB.IsLoggedIn) {
 			return;
 		}
@@ -31,7 +31,7 @@ public class StartGameManager : MonoBehaviour
 			DataTable dataTable = queryModel.MypageStage (SceneData.stageLevel);
 			if (dataTable.Rows.Count > 0) {
 				httpComponent.OnDone = (object obj) => {
-					Debug.Log ("httpComponent OnDone");
+//					Debug.Log ("httpComponent OnDone");
 					rankFacebookManager.Rank ();
 				};
 

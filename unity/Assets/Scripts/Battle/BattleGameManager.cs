@@ -114,8 +114,11 @@ public class BattleGameManager : GameManager
 	
 	void Start ()
 	{
-		ad = GameObject.Find (Config.ROOT_MANAGER).GetComponent<GoogleMobileAdsComponent> ();
-		ad.SetAd ();
+		GameObject tempAd = GameObject.Find (Config.ROOT_MANAGER);
+		if (tempAd != null) {
+			ad = tempAd.GetComponent<GoogleMobileAdsComponent> ();
+			ad.SetAd ();
+		}
 
 		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
 		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
@@ -214,17 +217,19 @@ public class BattleGameManager : GameManager
 
 		panel200.SetActive (true);
 		panel200Animation.Play (Config.ANIMATION_BUTTON);
-		panel200UILabel.color = new Color32 (255, 255, 255, 255);
 
 		string temp = "TIME OVER";
 		GameObject tempEffect = timeOverEffect;
 		if (flag) {
 			temp = "CLEAR";
 			tempEffect = clearEffect;
+			panel200UILabel.color = new Color32 (41, 171, 226, 255);
 
 			// animation
 			merryAnimation.Play (Config.ANIMATION_GOOD);
 		} else {
+			panel200UILabel.color = new Color32 (212, 20, 90, 255);
+
 			// animation
 			merryAnimation.Play (Config.ANIMATION_MISS);
 		}
@@ -248,7 +253,9 @@ public class BattleGameManager : GameManager
 
 		if (flag) {
 			// ad
-			ad.GetAd ();
+			if (ad != null) {
+				ad.GetAd ();
+			}
 
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
@@ -283,10 +290,13 @@ public class BattleGameManager : GameManager
 		panel200.SetActive (true);
 		panel200TweenPosition.ResetToBeginning ();
 		panel200TweenPosition.Play (true);
-		panel200UILabel.color = new Color32 (255, 255, 255, 255);
+
 		string temp = "READY";
 		if (guideFlag) {
+			panel200UILabel.color = new Color32 (255, 255, 255, 255);
 			temp = "TUTORIALS";
+		} else {
+			panel200UILabel.color = new Color32 (140, 198, 63, 255);
 		}
 		panel200UILabel.text = temp;
 		yield return new WaitForSeconds (READY_TIME);

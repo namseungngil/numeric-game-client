@@ -48,7 +48,7 @@ public class HttpComponent : MonoBehaviour
 	private IEnumerator RegGCMApnsFacebook (float time)
 	{
 		yield return new WaitForSeconds (time);
-		Debug.Log ("RegGCMApnsFacebook");
+//		Debug.Log ("RegGCMApnsFacebook");
 		
 #if UNITY_ANDROID
 		id = gCMComponent.GCMID ();
@@ -59,7 +59,7 @@ public class HttpComponent : MonoBehaviour
 #endif
 
 		if ((id == null || id == "") && regGCMApnsFacebookCount < regGCMApnsFacebookCountMax) {
-			Debug.Log ("Re RegGCMApnsFacebook.");
+//			Debug.Log ("Re RegGCMApnsFacebook.");
 			StartCoroutine (RegGCMApnsFacebook (Config.REG_GCM_APNS_FACEBOOK_WAIT));
 			regGCMApnsFacebookCount++;
 		}
@@ -71,29 +71,29 @@ public class HttpComponent : MonoBehaviour
 			http.AddData (Config.KEY_NAME, Config.KEY);
 			http.AddData (DEVICE_KEY, key);
 			http.AddData (GCM_APNS, id);
-			Debug.Log (Config.KEY_NAME + " : " + Config.KEY);
-			Debug.Log (DEVICE_KEY + " : " + key);
-			Debug.Log (GCM_APNS + " : " + id);
+//			Debug.Log (Config.KEY_NAME + " : " + Config.KEY);
+//			Debug.Log (DEVICE_KEY + " : " + key);
+//			Debug.Log (GCM_APNS + " : " + id);
 
 			if (facebookManager.userID () != null) {
-				Debug.Log (FACEBOOK_ID + " : " + facebookManager.userID ());
+//				Debug.Log (FACEBOOK_ID + " : " + facebookManager.userID ());
 				http.AddData (FACEBOOK_ID, facebookManager.userID ());
 			}
 
 			http.OnDone = (WWW www) => {
-				Debug.Log (www.text);
+//				Debug.Log (www.text);
 				httpOnDone (null);
 			};
 			
 			// error
 			http.OnFail = (WWW www) => {
-				Debug.Log (www.error);
+//				Debug.Log (www.error);
 				httpOnDone (null);
 			};
 			
 			// timed out
 			http.OnDisposed = () => {
-				Debug.Log ("Timed out");
+//				Debug.Log ("Timed out");
 				httpOnDone (null);
 			};
 			
@@ -105,10 +105,10 @@ public class HttpComponent : MonoBehaviour
 
 	private void OverCallback (SSController s = null)
 	{
-		Debug.Log ("OverCallback");
+//		Debug.Log ("OverCallback");
 
 		http.OnDone = (WWW www) => {
-			Debug.Log (www.text);
+//			Debug.Log (www.text);
 			if (s != null) {
 				s.gameObject.GetComponent<UIManager> ().Cancel ();
 			}
@@ -116,7 +116,7 @@ public class HttpComponent : MonoBehaviour
 		};
 		
 		http.OnFail = (WWW www) => {
-			Debug.Log (www.error);
+//			Debug.Log (www.error);
 			if (s != null) {
 				s.gameObject.GetComponent<UIManager> ().Cancel ();
 			}
@@ -124,7 +124,7 @@ public class HttpComponent : MonoBehaviour
 		};
 		
 		http.OnDisposed = () => {
-			Debug.Log ("Timed out");
+//			Debug.Log ("Timed out");
 			if (s != null) {
 				s.gameObject.GetComponent<UIManager> ().Cancel ();
 			}
@@ -136,34 +136,34 @@ public class HttpComponent : MonoBehaviour
 
 	public void Login (float regGCMApnsFacebookWaitTime)
 	{
-		Debug.Log ("Http login");
+//		Debug.Log ("Http login");
 		StartCoroutine (RegGCMApnsFacebook (regGCMApnsFacebookWaitTime));
 	}
 
 	public void SyncPut (Dictionary<string, string> d)
 	{
-		Debug.Log ("HttpComponent SyncPut");
+//		Debug.Log ("HttpComponent SyncPut");
 		string url = Config.URL + Config.INTRO + "put";
 		http = new WWWClient (this, url);
 		http.AddData (Config.KEY_NAME, Config.KEY);
 		http.AddData (FACEBOOK_ID, FB.UserId);
 		
 		string temp = Json.Serialize (d);
-		Debug.Log (temp);
+//		Debug.Log (temp);
 		http.AddData (FACEBOOK_JSON, temp);
 
 		http.OnDone = (WWW www) => {
-			Debug.Log (www.text);
+//			Debug.Log (www.text);
 			httpOnDone (null);
 		};
 		
 		http.OnFail = (WWW www) => {
-			Debug.Log (www.error);
+//			Debug.Log (www.error);
 			httpOnDone (null);
 		};
 		
 		http.OnDisposed = () => {
-			Debug.Log ("Time out");
+//			Debug.Log ("Time out");
 			httpOnDone (null);
 		};
 
@@ -184,7 +184,7 @@ public class HttpComponent : MonoBehaviour
 		http.AddData (FACEBOOK_ID, facebookManager.userID ());
 
 		http.OnDone = (WWW www) => {
-			Debug.Log (www.text);
+//			Debug.Log (www.text);
 			Dictionary <string, string> dic = new Dictionary<string, string> ();
 			IDictionary iDictionary = (IDictionary)Json.Deserialize (www.text);
 			
@@ -205,12 +205,12 @@ public class HttpComponent : MonoBehaviour
 		};
 		
 		http.OnFail = (WWW www) => {
-			Debug.Log (www.error);
+//			Debug.Log (www.error);
 			httpOnDone (null);
 		};
 		
 		http.OnDisposed = () => {
-			Debug.Log ("Time out");
+//			Debug.Log ("Time out");
 			httpOnDone (null);
 		};
 		
@@ -219,7 +219,7 @@ public class HttpComponent : MonoBehaviour
 	
 	public void Over (Dictionary<string, string> data, bool popupFlag = true)
 	{
-		Debug.Log ("HttpComponent Over");
+//		Debug.Log ("HttpComponent Over");
 
 		string url = Config.URL + Config.OVER;
 		http = new WWWClient (this, url);
@@ -238,7 +238,7 @@ public class HttpComponent : MonoBehaviour
 
 	public void StartGame (List<string> l, string stage)
 	{
-		Debug.Log ("HttpComponent Start");
+//		Debug.Log ("HttpComponent Start");
 		string url = Config.URL + Config.START;
 		http = new WWWClient (this, url);
 		http.AddData (Config.KEY_NAME, Config.KEY);
@@ -246,11 +246,11 @@ public class HttpComponent : MonoBehaviour
 		http.AddData (QueryModel.STAGE, stage);
 
 		string temp = Json.Serialize (l);
-		Debug.Log (temp);
+//		Debug.Log (temp);
 		http.AddData (FACEBOOK_JSON, temp);
 
 		http.OnDone = (WWW www) => {
-			Debug.Log (www.text);
+//			Debug.Log (www.text);
 			Dictionary <string, int> dic = new Dictionary<string, int> ();
 			IDictionary iDictionary = (IDictionary)Json.Deserialize (www.text);
 
@@ -271,12 +271,12 @@ public class HttpComponent : MonoBehaviour
 		};
 
 		http.OnFail = (WWW www) => {
-			Debug.Log (www.error);
+//			Debug.Log (www.error);
 			httpOnDone (null);
 		};
 
 		http.OnDisposed = () => {
-			Debug.Log ("Time out");
+//			Debug.Log ("Time out");
 			httpOnDone (null);
 		};
 

@@ -34,12 +34,12 @@ public class FacebookManager : MonoBehaviour
 	 
 	private void OnInitComplete ()
 	{
-		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
+//		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
 	}
 	
 	private void OnHideUnity (bool isGameShown)
 	{
-		Debug.Log ("Is game showing? " + isGameShown);
+//		Debug.Log ("Is game showing? " + isGameShown);
 	}
 	
 	private void Callback (FBResult result)
@@ -81,15 +81,15 @@ public class FacebookManager : MonoBehaviour
 
 	private void AppRequestCallback (FBResult result)
 	{
-		Debug.Log ("AppRequestCallback");
+//		Debug.Log ("AppRequestCallback");
 		
 		if (result != null) {
 			Dictionary<string, object> responseObject = Json.Deserialize (result.Text) as Dictionary<string, object>;
 			object obj = 0;
 			if (responseObject.TryGetValue ("cancelled", out obj)) {
-				Debug.Log ("AppRequestCallback cancelled");
+//				Debug.Log ("AppRequestCallback cancelled");
 			} else if (responseObject.TryGetValue ("request", out obj)) {
-				Debug.Log ("AppRequestCallback send");
+//				Debug.Log ("AppRequestCallback send");
 				
 				if (loveComponent != null) {
 					loveComponent.Add (count);
@@ -109,7 +109,7 @@ public class FacebookManager : MonoBehaviour
 
 	protected void CallFBInit ()
 	{
-		Debug.Log ("FacebookManager CallFBInit");
+//		Debug.Log ("FacebookManager CallFBInit");
 		FB.Init (OnInitComplete, OnHideUnity);
 	}
 	
@@ -127,7 +127,7 @@ public class FacebookManager : MonoBehaviour
 	{
 		FB.API (url, Facebook.HttpMethod.GET, result => {
 			if (result.Error != null) {
-				Debug.Log ("LoadPictureAPK Load error : " + result.Error);
+//				Debug.Log ("LoadPictureAPK Load error : " + result.Error);
 				return;
 			}
 			
@@ -150,7 +150,7 @@ public class FacebookManager : MonoBehaviour
 	
 	protected void MyPicktureCallback (Texture texture)
 	{
-		Debug.Log ("MyPicktureCallback");
+//		Debug.Log ("MyPicktureCallback");
 		if (userTexture != null) {
 			return;
 		}

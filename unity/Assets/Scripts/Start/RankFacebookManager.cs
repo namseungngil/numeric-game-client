@@ -29,7 +29,7 @@ public class RankFacebookManager : FacebookManager
 	{
 		yield return new WaitForSeconds (0);
 		string tempFriends = FRIENDS_QUERY;
-		Debug.Log (tempFriends);
+//		Debug.Log (tempFriends);
 
 		if (rankFriendsList != null && rankFriendsList.Count > 0) {
 			RankExecute ();
@@ -44,10 +44,10 @@ public class RankFacebookManager : FacebookManager
 
 	private void FriendsCallback (FBResult result)
 	{
-		Debug.Log ("FriendsCallback");
+//		Debug.Log ("FriendsCallback");
 		
 		if (result.Error != null) {
-			Debug.Log ("FriendsCallback error : " + result.Error);
+//			Debug.Log ("FriendsCallback error : " + result.Error);
 			
 			// Let's just try again
 			string temp = FRIENDS_QUERY;

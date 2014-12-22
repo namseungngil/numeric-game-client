@@ -34,7 +34,7 @@ public class LoveFacebookManager : FacebookManager
 
 	private void FriendsCallback (FBResult result = null)
 	{
-		Debug.Log ("FriendsCallback");
+//		Debug.Log ("FriendsCallback");
 
 		bool flag = false;
 		if (result == null) {
@@ -42,7 +42,7 @@ public class LoveFacebookManager : FacebookManager
 		}
 
 		if (!flag && result.Error != null) {
-			Debug.Log ("FriendsCallback error : " + result.Error);
+//			Debug.Log ("FriendsCallback error : " + result.Error);
 			flag = true;
 		}
 
@@ -63,7 +63,7 @@ public class LoveFacebookManager : FacebookManager
 
 	private void InvitableFriendsCallback (FBResult result = null)
 	{
-		Debug.Log ("InvitableFriendsCallback");
+//		Debug.Log ("InvitableFriendsCallback");
 
 		bool flag = false;
 		if (result == null) {
@@ -71,7 +71,7 @@ public class LoveFacebookManager : FacebookManager
 		}
 
 		if (!flag && result.Error != null) {
-			Debug.Log ("InvitableFriendsCallback error : " + result.Error);
+//			Debug.Log ("InvitableFriendsCallback error : " + result.Error);
 			flag = true;
 		}
 
@@ -89,10 +89,10 @@ public class LoveFacebookManager : FacebookManager
 	private void SetFriends (List<object> l)
 	{
 		foreach (Dictionary<string, object> f in l) {
-			Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
+//			Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
 			
 			GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-			Debug.Log (gObj);
+//			Debug.Log (gObj);
 			gObj.name = f ["id"].ToString ();
 			gObj.transform.parent = this.transform;
 			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
@@ -117,8 +117,8 @@ public class LoveFacebookManager : FacebookManager
 
 	private void FriendsView ()
 	{
-		Debug.Log ("Friends count : " + friends.Count);
-		Debug.Log ("InvitableFriends count : " + invitableFriends.Count);
+//		Debug.Log ("Friends count : " + friends.Count);
+//		Debug.Log ("InvitableFriends count : " + invitableFriends.Count);
 
 		if (friends != null && friends.Count > 0) {
 			SetFriends (friends);

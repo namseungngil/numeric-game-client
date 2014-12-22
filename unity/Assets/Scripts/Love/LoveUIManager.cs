@@ -74,7 +74,7 @@ public class LoveUIManager : UIManager
 			for (int i = 0; i < list.Count; i++) {
 				temp[i] = list[i];
 			}
-			Debug.Log ("Request : " + temp.Length);
+//			Debug.Log ("Request : " + temp.Length);
 			loveFacebookManager.onChallengeClicked (temp);
 		}
 	}
@@ -97,7 +97,7 @@ public class LoveUIManager : UIManager
 		if (allUIToggle == null) {
 			allUIToggle = new List<LoveToggleControl> ();
 			foreach (LoveToggleControl lTC in gridList.GetComponentsInChildren<LoveToggleControl> ()) {
-				Debug.Log (lTC.name);
+//				Debug.Log (lTC.name);
 				allUIToggle.Add (lTC);
 			}
 		}

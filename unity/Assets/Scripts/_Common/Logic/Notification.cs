@@ -14,12 +14,12 @@ public class Notification
 	/// <param name="stringArray">String array. [0]date [1]title [2]comment</param>
 	public static void Register (params string[] stringArray)
 	{
-		Debug.Log ("notification register");
+//		Debug.Log ("notification register");
 #if UNITY_ANDROID
 		if (Application.platform == RuntimePlatform.Android) {
 			using (AndroidJavaClass cls = new AndroidJavaClass (CLASS_NAME)) {
 				string str = string.Join (",", stringArray);
-				Debug.Log ("register : " + str);
+//				Debug.Log ("register : " + str);
 				cls.CallStatic ("register", str);
 			}
 		}
@@ -43,7 +43,7 @@ public class Notification
 
 	public static void Unregister ()
 	{
-		Debug.Log ("notification unregister");
+//		Debug.Log ("notification unregister");
 #if UNITY_ANDROID
 		if (Application.platform == RuntimePlatform.Android) {
 			using (AndroidJavaClass cls = new AndroidJavaClass (CLASS_NAME)) {
