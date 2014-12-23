@@ -27,7 +27,9 @@ public class BattleChildUIManager : UIManager
 				battleUIManager = GameObject.Find (Config.BATTLE).GetComponent<BattleUIManager> ();
 			}
 
-			battleUIManager.Stop ();
+			if (battleUIManager.GetBackStatus ()) {
+				battleUIManager.Stop ();
+			}
 		}
 	}
 }

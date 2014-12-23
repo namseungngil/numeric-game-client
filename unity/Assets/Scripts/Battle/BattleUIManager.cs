@@ -20,6 +20,19 @@ public class BattleUIManager : UIManager
 		battleGameManager = gameObject.GetComponent<BattleGameManager> ();
 	}
 
+	public bool GetBackStatus ()
+	{
+		if (battleGameManager == null) {
+			return false;
+		}
+
+		if (battleGameManager.GetCheckStatus (GameStatus.Ready)) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public void BattleOnClick ()
 	{
 //		Debug.Log ("BattleOnClick");
