@@ -84,7 +84,7 @@ public class SqliteDatabase
 	{
 		
 		pathDB = System.IO.Path.Combine (Application.persistentDataPath, dbName);
-		Debug.Log (pathDB);
+//		Debug.Log (pathDB);
 		
 		
 		//if no exist the DB in the folder of persistent data (folder "Documents" on iOS) proceeds to copy it.

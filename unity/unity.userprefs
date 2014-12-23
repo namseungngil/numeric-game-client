@@ -2,16 +2,8 @@
   <MonoDevelop.Ide.Workspace />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
     <Files>
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleUIManager.cs" Line="87" Column="1" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleData.cs" Line="9" Column="39" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleBeads.cs" Line="50" Column="69" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleSystem.cs" Line="57" Column="14" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/UI/BattleUIManager.cs" Line="304" Column="3" />
-      <File FileName="Assets/Scripts/_Common/Component/GoogleMobileAdsComponent.cs" Line="227" Column="23" />
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="296" Column="61" />
-      <File FileName="Assets/Scripts/Loading/LoadingUIManager.cs" Line="16" Column="3" />
-      <File FileName="Assets/Scripts/Loading/LoadingControl.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Login/LoginGameManager.cs" Line="32" Column="52" />
+      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="185" Column="6" />
+      <File FileName="Assets/Scripts/Login/LoginGameManager.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Login/LoginUIManager.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>

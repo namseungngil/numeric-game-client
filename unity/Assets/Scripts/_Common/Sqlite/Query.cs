@@ -47,7 +47,7 @@ public class Query
 				query += ",";
 			}
 		}
-//		Debug.Log ("INSERT_BATCH : " + query);
+		Debug.Log ("INSERT_BATCH : " + query);
 
 		return sqliteDatabase.ExecuteNonQuery (query);
 	}

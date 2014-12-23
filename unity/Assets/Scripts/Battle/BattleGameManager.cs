@@ -16,12 +16,6 @@ public enum GameStatus
 public class BattleGameManager : GameManager
 {
 	// const
-	private const float READY_TIME = 2f;
-	private const float START_TIME = 1f;
-	private const float ATTACK_TIME = 1f;
-	private const float MISS_TIME = 1f;
-	private const float OVER_TIME = 2f;
-	private const float SHUFFLE_TIME = 1f;
 	private const string PLUS = "battleP3_04";
 	private const string MINUS = "battleP3_05";
 	private const string MULTIPLICATION = "battleP3_06";
@@ -48,8 +42,16 @@ public class BattleGameManager : GameManager
 	private const string BATTLE_TIME03 = "battle_time03";
 	private const string GUIDE = "Guide";
 	private const string PROBLEM_BACKGROUND = "ProblemBackground";
+	private const string PANEL300 = "Panel:300";
+	private const float READY_TIME = 2f;
+	private const float START_TIME = 1f;
+	private const float ATTACK_TIME = 1f;
+	private const float MISS_TIME = 1f;
+	private const float OVER_TIME = 2f;
+	private const float SHUFFLE_TIME = 1f;
 	private const float TIME_MAX = 60f;
 	private const float BONUS_TIME = 5f;
+	private const int GUIDE_COUNT = 5;
 	// gameobject
 	public GameObject goodEffect;
 	public GameObject missEffect;
@@ -57,6 +59,7 @@ public class BattleGameManager : GameManager
 	public GameObject timeOverEffect;
 	private GameObject panel100;
 	private GameObject panel200;
+	private GameObject panel300;
 	private GameObject guide;
 	// component
 	private GoogleMobileAdsComponent ad;
@@ -141,6 +144,7 @@ public class BattleGameManager : GameManager
 
 		panel100 = GameObject.Find (Config.PANEL100);
 		panel200 = GameObject.Find (Config.PANEL200);
+		panel300 = GameObject.Find (PANEL300);
 		guide = GameObject.Find (GUIDE);
 
 		scoreAnimation = scoreUILabel.gameObject.GetComponent<Animation> ();
@@ -158,6 +162,7 @@ public class BattleGameManager : GameManager
 		timePlusUILabel.text = "+" + (int)BONUS_TIME;
 		timePlusUILabel.gameObject.SetActive (false);
 
+		panel300.SetActive (false);
 		guide.SetActive (false);
 		guideParent = null;
 		guideCount = 0;
@@ -175,7 +180,9 @@ public class BattleGameManager : GameManager
 			timer -= Time.deltaTime;
 			if (timer <= 0) {
 				timer = 0;
-				StartCoroutine (Over ());
+				if (!guideFlag) {
+					StartCoroutine (Over ());
+				}
 			}
 
 			SetTimer ();
@@ -213,6 +220,10 @@ public class BattleGameManager : GameManager
 			// star1
 		} else {
 			flag = false;
+		}
+
+		if (guideFlag) {
+			flag = true;
 		}
 
 		panel200.SetActive (true);
@@ -293,6 +304,7 @@ public class BattleGameManager : GameManager
 
 		string temp = "READY";
 		if (guideFlag) {
+			panel300.SetActive (true);
 			panel200UILabel.color = new Color32 (255, 255, 255, 255);
 			temp = "TUTORIALS";
 		} else {
@@ -604,7 +616,7 @@ public class BattleGameManager : GameManager
 		scoreAnimation.Play (Config.ANIMATION_BUTTON);
 
 		if (guideFlag) {
-			if (guideCount >= 10) {
+			if (guideCount >= GUIDE_COUNT) {
 				StartCoroutine (Over ());
 				yield break;
 			}

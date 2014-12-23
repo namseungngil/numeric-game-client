@@ -10,7 +10,10 @@ namespace DATA
 			new Color32 (84, 158, 209, 255),
 			new Color32 (25, 40, 59, 255),
 			new Color32 (44, 52, 84, 255),
-			new Color32 (42, 42, 66, 255)
+			new Color32 (42, 42, 66, 255),
+			new Color32 (239, 135, 11, 255),
+			new Color32 (191, 112, 237, 255),
+			new Color32 (249, 159, 70, 255)
 		};
 	}
 }

@@ -11,7 +11,7 @@ public class ApnsComponent : MonoBehaviour
 		InfobipPush.Register ("", "");
 
 		tokenID = InfobipPushInternal.TokenKey;
-		Debug.Log ("Apns token : " + tokenID);
+//		Debug.Log ("Apns token : " + tokenID);
 	
 //		string deviceId = InfobipPush.DeviceId;
 //		ScreenPrinter.Print(deviceId);
@@ -20,7 +20,7 @@ public class ApnsComponent : MonoBehaviour
 	void Update ()
 	{
 		if (tokenID == null && InfobipPushInternal.TokenKey != null) {
-			Debug.Log ("token : " + InfobipPushInternal.TokenKey);
+//			Debug.Log ("token : " + InfobipPushInternal.TokenKey);
 			tokenID = InfobipPushInternal.TokenKey;
 		}
 	}
