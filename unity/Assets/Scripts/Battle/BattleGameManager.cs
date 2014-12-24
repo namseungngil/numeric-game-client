@@ -50,7 +50,7 @@ public class BattleGameManager : GameManager
 	private const float OVER_TIME = 2f;
 	private const float SHUFFLE_TIME = 1f;
 	private const float TIME_MAX = 60f;
-	private const float BONUS_TIME = 5f;
+	private const int BONUS_TIME = 5;
 	private const int GUIDE_COUNT = 5;
 	// gameobject
 	public GameObject goodEffect;
@@ -102,6 +102,7 @@ public class BattleGameManager : GameManager
 	private string firstString;
 	private string lastString;
 	public float timer;
+	private int bonusTime;
 	private int numberMax;
 	private int clearCount;
 	private int missCount;
@@ -159,7 +160,12 @@ public class BattleGameManager : GameManager
 		signUISprite.spriteName = "";
 		resultUISprite.spriteName = "";
 
-		timePlusUILabel.text = "+" + (int)BONUS_TIME;
+		bonusTime = int.Parse (SceneData.stageLevel) / Config.CARD_COUNT;
+		if (bonusTime >= BONUS_TIME) {
+			bonusTime = BONUS_TIME;
+		}
+
+		timePlusUILabel.text = "+" + bonusTime;
 		timePlusUILabel.gameObject.SetActive (false);
 
 		panel300.SetActive (false);
@@ -573,7 +579,7 @@ public class BattleGameManager : GameManager
 		if (tempFrist == bonus || tempLast == bonus) {
 			timePlusUILabel.gameObject.SetActive (true);
 			timePlusUILabel.gameObject.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
-			timer += BONUS_TIME;
+			timer += bonusTime;
 			SetTimer ();
 		}
 

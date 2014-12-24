@@ -65,7 +65,8 @@ public class RankFacebookManager : FacebookManager
 	{
 		rankFriendsList = new List<string> ();
 		rankFriendsList.Add (FB.UserId);
-		
+
+//		Debug.Log ("Friends : " + friends.Count);
 		if (friends.Count > 0) {
 			foreach (Dictionary<string, object> friend in friends) {
 				rankFriendsList.Add (friend ["id"].ToString ());
