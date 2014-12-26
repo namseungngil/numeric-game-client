@@ -1,12 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Not/NotUIManager.cs">
     <Files>
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleUIManager.cs" Line="83" Column="3" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleSystem.cs" Line="41" Column="35" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleBeads.cs" Line="158" Column="9" />
-      <File FileName="../../star-game-client/Assets/Scripts/Battle/Puzzle/PuzzleData.cs" Line="35" Column="30" />
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="163" Column="47" />
+      <File FileName="Assets/Scripts/Not/NotUIManager.cs" Line="50" Column="32" />
+      <File FileName="Assets/Scripts/Love/LoveFacebookManager.cs" Line="6" Column="46" />
+      <File FileName="Assets/Scripts/Love/LoveUIManager.cs" Line="5" Column="33" />
+      <File FileName="Assets/Scripts/_Common/Manager/FacebookManager.cs" Line="89" Column="45" />
+      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/_Common/Manager/UIManager.cs" Line="4" Column="30" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

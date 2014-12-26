@@ -10,8 +10,10 @@ public class FacebookManager : MonoBehaviour
 	// const
 	public const string ME_SCORE_QUERY = "/me/scores";
 	protected const string SCORES_QUERY = "/app/scores?fields=score,user.limit(20)";
-	protected const string FRIENDS_QUERY = "/me?fields=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
-	protected const string INVITABLE_FRIENDS_QUERY = "/me?invitable_friends=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+	protected const string FRIENDS_QUERY = "/me?fields=id,first_name,last_name,friends.fields(first_name,last_name,id)";
+	protected const string INVITABLE_FRIENDS_QUERY = "/me?invitable_friends=id,first_name,last_name";
+//	protected const string FRIENDS_QUERY = "/me?fields=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
+//	protected const string INVITABLE_FRIENDS_QUERY = "/me?invitable_friends=id,first_name,last_name,friends.fields(first_name,last_name,id,picture.width(128).height(128))";
 //	protected const string INVITABLE_FRIENDS_QUERY = "me?fields=friends.fields(first_name,id,picture.width(128).height(128)),invitable_friends.fields(first_name,id,picture.width(128).height(128))";
 	protected const int TEXTURE_SIZE = 128;
 	public const string BUTTON = "Button";

@@ -29,7 +29,7 @@ public class LoginGameManager : GameManager
 	public void PopupCallback (SSController s)
 	{
 		uIManager = s.gameObject.GetComponent<UIManager> ();
-		FB.Login ("email, publish_actions", LoginCallback);
+		FB.Login ("email, publish_actions, user_friends", LoginCallback);
 	}
 
 	public void FacebookLogin ()

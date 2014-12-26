@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Facebook;
 
 public class IntroManager : GameManager
 {
@@ -49,6 +50,14 @@ public class IntroManager : GameManager
 	private void OnInitComplete ()
 	{
 //		Debug.Log ("FB.Init completed: Is user logged in? " + FB.IsLoggedIn);
+		if (FB.IsLoggedIn)
+		{
+			FB.API("/me/permissions", HttpMethod.GET, delegate (FBResult response) {
+				// inspect the response and adapt your UI as appropriate
+				// check response.Text and response.Error
+				Debug.Log(response.Text);
+			});
+		}
 		HttpLogin ();
 	}
 	

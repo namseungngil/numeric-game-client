@@ -31,7 +31,7 @@ public class TestScript : MonoBehaviour
 		Debug.Log ("GetGet");
 
 //		NGUITools.FindCameraForLayer
-		GameObject g = Instantiate (effect, new Vector3 (1000, 1000, 0), Quaternion.identity) as GameObject;
+//		GameObject g = Instantiate (effect, new Vector3 (1000, 1000, 0), Quaternion.identity) as GameObject;
 
 //		Vector3 uipos = effectCamera.WorldToScreenPoint (button1.transform.position);
 //		float x = uipos.x;
@@ -40,11 +40,11 @@ public class TestScript : MonoBehaviour
 //		
 //		Vector3 temp = new Vector3 (x, y, 5);
 
-		Camera guiCam = NGUITools.FindCameraForLayer (button1.gameObject.layer);
-
-		Vector3 pos = effectCamera.ViewportToWorldPoint (guiCam.WorldToViewportPoint (button1.transform.position));
-		pos.z += 5;
-		g.transform.position = pos;
+//		Camera guiCam = NGUITools.FindCameraForLayer (button1.gameObject.layer);
+//
+//		Vector3 pos = effectCamera.ViewportToWorldPoint (guiCam.WorldToViewportPoint (button1.transform.position));
+//		pos.z += 5;
+//		g.transform.position = pos;
 
 	}
 
