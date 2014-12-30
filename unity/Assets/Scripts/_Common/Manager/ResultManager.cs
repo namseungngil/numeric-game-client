@@ -55,4 +55,19 @@ public class ResultManager : UIManager
 		star2 = starList [1].GetComponent<UISprite> ();
 		star3 = starList [2].GetComponent<UISprite> ();
 	}
+
+	public void Request ()
+	{
+		//		Debug.Log (UIButton.current.name);
+		if (UIButton.current.name == FacebookManager.BUTTON) {
+			return;
+		}
+		
+		if (startFacebookManager != null) {
+			string[] temp = new string[] {
+				UIButton.current.name
+			};
+			startFacebookManager.onChallengeClicked (temp);
+		}
+	}
 }

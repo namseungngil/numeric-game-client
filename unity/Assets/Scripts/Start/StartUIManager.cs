@@ -50,19 +50,4 @@ public class StartUIManager : ResultManager
 			SSSceneManager.Instance.PopUp (Config.NOT, null, PopupOnActive, PopupOnDeActive);
 		}
 	}
-
-	public void Request ()
-	{
-//		Debug.Log (UIButton.current.name);
-		if (UIButton.current.name == FacebookManager.BUTTON) {
-			return;
-		}
-
-		if (startFacebookManager != null) {
-			string[] temp = new string[] {
-				UIButton.current.name
-			};
-			startFacebookManager.onChallengeClicked (temp);
-		}
-	}
 }

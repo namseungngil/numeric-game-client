@@ -4,6 +4,8 @@ using DATA;
 
 public class TutorialUIManager : UIManager
 {
+	private BattleUIManager battleUIManager;
+
 	public override void Awake ()
 	{
 		BgmType = Bgm.SAME;
@@ -23,6 +25,21 @@ public class TutorialUIManager : UIManager
 		SceneData.stageLevel = Config.CARD_COUNT.ToString ();
 
 		SSSceneManager.Instance.LoadMenu(Config.BATTLE, null, LoadMenuOnActive);
+	}
+
+	public override void OnKeyBack ()
+	{
+		base.OnKeyBack ();
+		
+		if (!popupFlag) {
+			if (battleUIManager == null) {
+				battleUIManager = GameObject.Find (Config.BATTLE).GetComponent<BattleUIManager> ();
+			}
+			
+			if (battleUIManager.GetBackStatus ()) {
+				battleUIManager.Stop ();
+			}
+		}
 	}
 
 	private void LoadMenuOnActive (SSController sSC)

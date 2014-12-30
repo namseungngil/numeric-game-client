@@ -6,7 +6,7 @@ public class OverUIManager : ResultManager
 {
 	// const
 	private const string BACKGROUND = "Background";
-	private const string PLAY = "Play";
+	private const string RETRY = "Retry";
 	private const string NEXT = "Next";
 	private const string SPRITE = "Sprite";
 	private const float STAR_ON_TIMER = 1f;
@@ -36,12 +36,17 @@ public class OverUIManager : ResultManager
 			rankFacebookManager.Rank ();
 		}
 
-		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
+		GameObject temp = GameObject.Find (Config.EFFECT_CAMERA);
+		if (temp != null) {
+			effectCameraManager = temp.GetComponent<EffectCameraManager> ();
+		}
+
 		nextGObj = GameObject.Find (NEXT);
 		flag = true;
 
 		button = new List<GameObject> ();
-		button.Add (GameObject.Find (PLAY));
+		button.Add (GameObject.Find (RETRY));
+		button.Add (GameObject.Find (NEXT));
 		button.Add (GameObject.Find (CANCEL));
 
 		star = new List<GameObject> ();
@@ -59,7 +64,7 @@ public class OverUIManager : ResultManager
 			Logic.SetActive (button, false);
 			flag = false;
 
-			StartCoroutine (Clear (0.5f));
+			StartCoroutine (ClearStart ());
 		} else {
 			failColor = new Color32[] {
 				new Color32 (88, 119, 57, 200),
@@ -85,9 +90,17 @@ public class OverUIManager : ResultManager
 		}
 	}
 
+	private IEnumerator ClearStart ()
+	{
+		yield return new WaitForSeconds (0.6f);
+
+		StartCoroutine (Clear (STAR_ON_TIMER));
+	}
+
 	private IEnumerator Clear (float time)
 	{
 		yield return new WaitForSeconds (time);
+
 		effectCameraManager.GUIOnEffect (starEffect, starList[index].gameObject);
 		star[index].SetActive (true);
 		index++;

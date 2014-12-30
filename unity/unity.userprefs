@@ -1,15 +1,10 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Battle/BattleGameManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/_Common/Apns/InfobipPushInternal.cs">
     <Files>
-      <File FileName="Assets/Scripts/Battle/BattleGameManager.cs" Line="70" Column="21" />
-      <File FileName="Assets/Scripts/Not/NotUIManager.cs" Line="25" Column="22" />
-      <File FileName="Assets/Scripts/Love/LoveFacebookManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Love/LoveUIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Manager/FacebookManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageGameManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Mypage/MypageUIManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Manager/UIManager.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Tutorial/TutorialUIManager.cs" Line="28" Column="3" />
+      <File FileName="Assets/Scripts/Battle/BattleChildUIManager.cs" Line="6" Column="42" />
+      <File FileName="Assets/Scripts/_Common/Apns/InfobipPushInternal.cs" Line="26" Column="2" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
