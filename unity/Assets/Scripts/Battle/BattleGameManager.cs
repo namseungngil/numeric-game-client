@@ -102,6 +102,7 @@ public class BattleGameManager : GameManager
 	private string firstString;
 	private string lastString;
 	public float timer;
+	public float maxTime;
 	private int bonusTime;
 	private int numberMax;
 	private int clearCount;
@@ -199,7 +200,7 @@ public class BattleGameManager : GameManager
 
 	private void SetTimer ()
 	{
-		float temp = timer / (float)TIME_MAX;
+		float temp = timer / maxTime;
 		if (temp <= 0.4) {
 			timerUISprite.spriteName = BATTLE_T08;
 			problemUISprite.color = color [1];
@@ -607,14 +608,14 @@ public class BattleGameManager : GameManager
 		timePlusUILabel.gameObject.SetActive (false);
 		panel200.SetActive (false);
 
-		yield return new WaitForSeconds (ATTACK_TIME / 2);
+		yield return new WaitForSeconds (0.3f);
 		score += tempFrist;
 		scoreUILabel.text = "" + (score <= 0 ? 0 : score);
 		SetGuage ();
 		// Animation
 		scoreAnimation.Play (Config.ANIMATION_BUTTON);
 
-		yield return new WaitForSeconds (ATTACK_TIME / 2);
+		yield return new WaitForSeconds (0.3f);
 		score += tempLast;
 		scoreUILabel.text = "" + (score <= 0 ? 0 : score);
 		SetGuage ();
@@ -628,7 +629,7 @@ public class BattleGameManager : GameManager
 			}
 		}
 
-		StartCoroutine (SetNextStatusWait (ATTACK_TIME / 2));
+		StartCoroutine (SetNextStatusWait (0));
 	}
 
 	private IEnumerator SetMiss ()
@@ -650,7 +651,7 @@ public class BattleGameManager : GameManager
 		yield return new WaitForSeconds (MISS_TIME);
 		panel200.SetActive (false);
 
-		StartCoroutine (SetNextStatusWait (MISS_TIME / 2));
+		StartCoroutine (SetNextStatusWait (0));
 	}
 
 	private int MainLogic (int first, int last)
@@ -836,11 +837,15 @@ public class BattleGameManager : GameManager
 		score2 = 0;
 		score3 = 0;
 
-		// Set time
-		timer = TIME_MAX;
-
 		// Set numer max
 		numberMax = int.Parse (SceneData.stageLevel);
+
+		// Set time
+		maxTime = 30 + numberMax - Config.CARD_COUNT;
+		if (maxTime >= TIME_MAX) {
+			maxTime = TIME_MAX;
+		}
+		timer = maxTime;
 
 		List<int> list = Game.Score (numberMax);
 		// Set score1

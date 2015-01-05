@@ -115,8 +115,15 @@ public class OverUIManager : ResultManager
 		}
 
 		if (flag) {
-			Logic.SetActive (button, true);
+			StartCoroutine (OnButton ());
 		}
+	}
+
+	private IEnumerator OnButton ()
+	{
+		yield return new WaitForSeconds (STAR_ON_TIMER);
+
+		Logic.SetActive (button, true);
 	}
 
 	public void Next ()

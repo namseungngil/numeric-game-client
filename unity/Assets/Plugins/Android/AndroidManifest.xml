@@ -57,4 +57,6 @@
   <uses-permission android:name="android.permission.WAKE_LOCK" />
   <!-- Android GCM Plugin -->
   <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="19" />
+  <!-- Samsung app -->
+  <!-- <uses-permission android:name="com.samsung.android.providers.context.permission.WRITE_USE_APP_FEATURE_SURVEY" /> -->
 </manifest>
