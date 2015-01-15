@@ -22,7 +22,7 @@ public class BattleUIManager : UIManager
 
 	public bool GetBackStatus ()
 	{
-		if (battleGameManager == null) {
+		if (battleGameManager == null) { 
 			return false;
 		}
 

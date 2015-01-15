@@ -132,6 +132,11 @@ public class OverUIManager : ResultManager
 
 		if (temp <= SceneData.lastStage) {
 			SceneData.nextStage = temp.ToString ();
+			Register register = Register.Instance ();
+			int qS = Game.QuestSence (temp);
+			if (register.GetStage () < qS) {
+				register.SetStage (qS);
+			}
 		}
 
 		OverCancel ();

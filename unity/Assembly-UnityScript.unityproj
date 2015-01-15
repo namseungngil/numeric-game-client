@@ -19,7 +19,7 @@
 	<DebugType>full</DebugType>
 	<Optimize>false</Optimize>
 	<OutputPath>Temp\bin\Debug\</OutputPath>
-	<DefineConstants>DEBUG;TRACE;UNITY_4_5_5;UNITY_4_5;UNITY_IPHONE;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;UNITY_IPHONE_API;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_2D_PHYSICS;ENABLE_GAMECENTER;UNITY_IOS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_PRO_LICENSE</DefineConstants>
+	<DefineConstants>DEBUG;TRACE;UNITY_4_6_1;UNITY_4_6;UNITY_ANDROID;ENABLE_MICROPHONE;ENABLE_TEXTUREID_MAP;ENABLE_UNITYEVENTS;ENABLE_NEW_HIERARCHY ;ENABLE_AUDIO_FMOD;ENABLE_MONO;ENABLE_TERRAIN;ENABLE_SUBSTANCE;ENABLE_GENERICS;INCLUDE_WP8SUPPORT;ENABLE_WWW;ENABLE_IMAGEEFFECTS;ENABLE_4_6_FEATURES;INCLUDE_WP_BLUE_SUPPORT;ENABLE_WEBCAM;INCLUDE_METROSUPPORT;RENDER_SOFTWARE_CURSOR;ENABLE_NETWORK;ENABLE_PHYSICS;ENABLE_CACHING;ENABLE_CLOTH;UNITY_ANDROID_API;ENABLE_2D_PHYSICS;ENABLE_SHADOWS;ENABLE_AUDIO;ENABLE_NAVMESH_CARVING;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_PROFILER;UNITY_EDITOR;UNITY_EDITOR_OSX;UNITY_PRO_LICENSE</DefineConstants>
 	<ErrorReport>prompt</ErrorReport>
 	<WarningLevel>4</WarningLevel>
 	<NoWarn>0169</NoWarn>
@@ -46,25 +46,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_animSpeedRandomizer.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_destroyThisTimed.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_effectCaster.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_prefabGenerator.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_randomScale.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_rotateThis.js" />
-     <Compile Include="Assets\ShurikenMagic\Scripts\SM_trailFade.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\EventListenersScatteredJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\ExampleJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\ExamplePunchJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\MenuExampleJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\MenuSimpleJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\MoveLocalCurveJS.js" />
+     <Compile Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Scripts\SlideImageIn.js" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />
-     <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Alpha Blended.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\version.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fi\common_strings.xml" />
-     <None Include="Assets\NGUI\ReadMe - 3.7.5.txt" />
+     <None Include="Assets\NGUI\ReadMe - 3.7.7.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_usersettingsfragment.xml" />
-     <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Cutout.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Basic.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hu\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_tooltip_bubble.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 2.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\proguard.txt" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Multiply Color.shader" />
      <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_list_selector_background_transition.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hr\common_strings.xml" />
@@ -75,7 +73,7 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ar\common_strings.xml" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo20.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo14.txt" />
-     <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Additive Tint.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders (Mobile)\CFXM_MobileParticleAdd_Alpha8.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_login_activity_layout.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_item_background.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-it\common_strings.xml" />
@@ -89,8 +87,10 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 2.shader" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Masked Colored.shader" />
      <None Include="Assets\Particle Playground\Graphics\Shaders\Alpha Blended Texture.shader" />
+     <None Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTweenExamples\Shader\2dUnlitWithFade.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 3.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_button.xml" />
+     <None Include="Assets\GUI Animator\Tweeners\HOTween\readme.txt" />
      <None Include="Assets\NGUI\Examples\Atlases\Wooden\Arimo18.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_friendpickerfragment.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es\common_strings.xml" />
@@ -109,6 +109,7 @@
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_top_background.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_text_dark.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ms-rMY\common_strings.xml" />
+     <None Include="Assets\GUI Animator\Tweeners\LeanTween\LeanTween-ReadMe.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_icon_light.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_placepickerfragment_list_row.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\bin\AndroidManifest.xml" />
@@ -116,9 +117,9 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rHK\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values-mdpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\wallet_secondary_text_holo_dark.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders (Mobile)\CFXM_MobileParticleAlphaBlend_Alpha8.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\AndroidManifest.xml" />
      <None Include="Assets\External Assets\First Fantasy for Mobile\Environments\Shaders\Water Heightmap.shader" />
-     <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Additive.shader" />
      <None Include="Assets\Plugins\Android\facebook\bin\R.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\values-he\strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 1.shader" />
@@ -129,30 +130,35 @@
      <None Include="Assets\Plugins\Android\facebook\res\values-hdpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_image.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored 3.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX3 Invert.shader" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Normal.txt" />
-     <None Include="Assets\IGSoft_Tools\Readme\Contact.txt" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX2 Particle Alpha Blend Add.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ru\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 2.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-BasicOutline.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-be\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-mn-rMN\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sl\common_strings.xml" />
      <None Include="Assets\External Assets\First Fantasy for Mobile\Environments\Shaders\Water Simple.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX Easy Editor\CartoonFX Easy Editor Readme.txt" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text 3.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values\drawables.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zu\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 2.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-en-rIN\common_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX4 Particle AlphaBlend+AddSoft.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lo-rLA\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-iw\common_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX4 Particle AlphaBlend+AddSoft VColor.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\bin\R.txt" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX4 Particle AlphaBlend+Add.shader" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 1.shader" />
      <None Include="Assets\External Assets\First Fantasy for Mobile\!Tips.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\values-iw\strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Premultiplied Colored 1.shader" />
+     <None Include="Assets\JMO Assets\!JMO Assets Readme.txt" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX4 Hidden.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_icon_dark.xml" />
-     <None Include="Assets\IGSoft_Tools\Readme\Fx Maker Version.txt" />
      <None Include="Assets\Plugins\Android\facebook\build.xml" />
      <None Include="Assets\External Assets\First Fantasy for Mobile\Environments\Shaders\Mobile Particles Additive Culled.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-tl\common_strings.xml" />
@@ -160,30 +166,31 @@
      <None Include="Assets\SSSystem\ss_version.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es-rUS\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fr\common_strings.xml" />
+     <None Include="Assets\GUI Animator\Media\Fonts\Elektron Data\Elektron 38pt\Elektron 38pt.fnt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-es\wallet_strings.xml" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-LightedOutline.shader" />
-     <None Include="Assets\Standard Assets\Toon Shading\Sources\Shaders\Toony-Lighted.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\wallet_styles.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sv\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ka-rGE\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
      <None Include="Assets\Plugins\Android\facebook\proguard-project.txt" />
-     <None Include="Assets\IGSoft_Tools\Readme\FX Maker VideoGuide Youtube.txt" />
+     <None Include="Assets\GUI Animator\Media\Fonts\Elektron Data\Elektron 36pt\Elektron 36pt.fnt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-de\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\styles.xml" />
-     <None Include="Assets\IGSoft_Tools\FXMaker\ToolScript\Temp\grayShader.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-am\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-nl\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\bin\AndroidManifest.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lv\common_strings.xml" />
-     <None Include="Assets\IGSoft_Tools\FXMaker\ToolResource\UnityShader\FXMakerGrayscaleEffect.shader" />
      <None Include="Assets\Plugins\Android\facebook\res\values-es\strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hi\common_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Demo\Assets\CFX_Demo_WaterWiggle.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values\wallet_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX4 Particle AlphaBlend+Add VColor.shader" />
+     <None Include="Assets\Plugins\Pixelplacement\iTween\ReadMe!\ReadMe!.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_picker_top_button.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-el\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text.shader" />
+     <None Include="Assets\GUI Animator\!Readme.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_list_section_header.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-hy-rAM\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\wallet_primary_text_holo_light.xml" />
@@ -194,6 +201,7 @@
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Transparent Packed 3.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\drawable\common_signin_btn_text_light.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values\attrs.xml" />
+     <None Include="Assets\Plugins\iOS\README.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pt-rPT\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-lt\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_checkbox.xml" />
@@ -202,19 +210,22 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ro\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-fa\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pt-rBR\common_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\Shaders\CFX2 Particle Alpha Blend Tint.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-bg\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-da\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\drawable\com_facebook_loginbutton_silver.xml" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Additive Colored.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-cs\common_strings.xml" />
+     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX4 Readme.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-pl\common_strings.xml" />
      <None Include="Assets\NGUI\Examples\Atlases\Refractive\Refractive Font - Header.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Refractive.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-uk\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-af\common_strings.xml" />
-     <None Include="Assets\IGSoft_Tools\FXMaker\ToolResource\EditorShader\LineColoredBlended.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX2 Readme.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-tr\common_strings.xml" />
      <None Include="Assets\NGUI\Resources\Shaders\Unlit - Text (TextureClip).shader" />
+     <None Include="Assets\GUI Animator\Media\Fonts\Elektron Data\Elektron 24pt\Elektron 24pt.fnt" />
      <None Include="Assets\SSSystem\ss_readme.txt" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\common_signin_btn_text_dark.xml" />
@@ -223,7 +234,6 @@
      <None Include="Assets\Plugins\Android\facebook\bin\proguard.txt" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-km-rKH\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\color\common_signin_btn_text_light.xml" />
-     <None Include="Assets\IGSoft_Resources\ToolResources\EffectShader\FXMaker_Mask Alpha Blended Tint.shader" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-zh-rTW\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\values-ldpi\dimens.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-vi\common_strings.xml" />
@@ -241,12 +251,22 @@
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-ja\common_strings.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sw\common_strings.xml" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_search_box.xml" />
-     <None Include="Assets\IGSoft_Tools\FXMaker\ToolResource\EditorShader\LineBackground.shader" />
+     <None Include="Assets\JMO Assets\Cartoon FX\CartoonFX Readme.txt" />
      <None Include="Assets\Plugins\Android\facebook\res\layout\com_facebook_picker_list_row.xml" />
      <None Include="Assets\Plugins\Android\google-play-services_lib\res\values-sr\common_strings.xml" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/GUISystem/4.6.1/UnityEngine.UI.dll</HintPath>
+ </Reference>
  <Reference Include="IFacebook">
  <HintPath>/Users/sinam/Documents/github/numeric-game-client/unity/Assets/Facebook/Scripts/IFacebook.dll</HintPath>
  </Reference>
+ <Reference Include="HOTween">
+ <HintPath>/Users/sinam/Documents/github/numeric-game-client/unity/Assets/GUI Animator/Tweeners/HOTween/Plugins/HOTween.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{518622B2-9050-A153-E465-3E4BD155181A}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
