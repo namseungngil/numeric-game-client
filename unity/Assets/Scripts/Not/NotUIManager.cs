@@ -64,5 +64,8 @@ public class NotUIManager : UIManager
 	public void Invite ()
 	{
 		FB.AppRequest (message: "Come play this TwoTouch!", callback: LogCallback);
+
+//		Cancel ();
+//		SSSceneManager.Instance.PopUp (Config.LOVE, null, PopupOnActive, PopupOnDeactive);
 	}
 }

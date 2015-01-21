@@ -52,6 +52,7 @@ public class BattleGameManager : GameManager
 	private const float TIME_MAX = 60f;
 	private const int BONUS_TIME = 5;
 	private const int GUIDE_COUNT = 5;
+	private const int EFFECT_COUNT = 40;
 	// gameobject
 	public GameObject goodEffect;
 	public GameObject missEffect;
@@ -64,7 +65,6 @@ public class BattleGameManager : GameManager
 	// component
 	private GoogleMobileAdsComponent ad;
 	private EffectCameraManager effectCameraManager;
-	private BattleUIManager battleUIManager;
 	private HttpComponent httpComponent;
 	private GameStatus gameStatus;
 	private TweenPosition panel200TweenPosition;
@@ -126,7 +126,6 @@ public class BattleGameManager : GameManager
 		}
 
 		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
-		battleUIManager = GameObject.Find (Config.UIROOT).GetComponent<BattleUIManager> ();
 		uIProgressbar = GameObject.Find (PROGRESS_BAR).GetComponent<UIProgressBar> ();
 		timeUIProgressbar = GameObject.Find (TIME).GetComponent<UIProgressBar> ();
 		star1UISprite = GameObject.Find (Config.STAR1).GetComponent<UISprite> ();
@@ -177,6 +176,9 @@ public class BattleGameManager : GameManager
 		color = new Color[] {
 			new Color32 (0, 184, 162, 128), new Color32 (255, 92, 73, 128)
 		};
+
+		ObjectPool.Init (goodEffect, EFFECT_COUNT, transform);
+		ObjectPool.Init (missEffect, EFFECT_COUNT, transform);
 
 		BattleStart ();
 	}
@@ -277,7 +279,7 @@ public class BattleGameManager : GameManager
 
 			// DB
 			QueryModel dataQuery = QueryModel.Instance ();
-			string date = QueryModel.Date ();
+			string date = Date.Time ();
 			string[] tempData = dataQuery.BattleClear (numberMax.ToString (), score.ToString (), ((int)timer).ToString (), hitCount.ToString (), clearCount.ToString (), missCount.ToString (), date);
 
 			// score
@@ -354,7 +356,7 @@ public class BattleGameManager : GameManager
 			arr.Add (tempString.ToString ());
 		}
 
-		return RandomArray.RandomizeStrings<string> (arr);
+		return AtRandom.Randomize<string> (arr);
 	}
 
 	private List<string> SetCardCount (List<string> list, List<string> get, int count)
@@ -400,7 +402,7 @@ public class BattleGameManager : GameManager
 			temp = SetCardCount (temp, temp12, tempCount);
 		}
 
-		temp = RandomArray.RandomizeStrings<string> (temp);
+		temp = AtRandom.Randomize<string> (temp);
 
 		if (panel100UILabel == null) {
 			panel100UILabel = panel100.GetComponentsInChildren<UILabel> ();
@@ -554,12 +556,14 @@ public class BattleGameManager : GameManager
 
 	private void Effect (GameObject gO)
 	{
-		for (int i = 0; i < 40; i++) {
+		for (int i = 0; i < EFFECT_COUNT; i++) {
 			Vector3 screenPos = new Vector3 (Random.Range (0, Screen.width), Random.Range (0, Screen.height), 0);
 			Vector3 pos = effectCameraManager.Get ().ScreenToWorldPoint (screenPos);
 			pos.z += Config.EFFECT_Z;
-			GameObject gObj = Instantiate (gO, pos, Quaternion.identity) as GameObject;
-			gObj.transform.parent = effectCameraManager.Get ().transform;
+
+			GameObject gObj = ObjectPool.Instantiate (gO, pos, Quaternion.identity) as GameObject;
+
+			ObjectPool.Destroy (this, gObj, 1.5f);
 		}
 	}
 

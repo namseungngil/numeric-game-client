@@ -8,8 +8,6 @@ public class ButtonSoundControl : MonoBehaviour
 	[Range(0f, 1f)] public float volume = 1f;
 	[Range(0f, 2f)] public float pitch = 1f;
 	
-	bool mIsOver = false;
-	
 	void OnClick ()
 	{
 		Register register = Register.Instance ();

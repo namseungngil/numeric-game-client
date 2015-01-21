@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Date
@@ -15,5 +16,15 @@ public class Date
 		return new int[] {
 			year, month, day, hour, minute, second
 		};
+	}
+
+	public static string Time ()
+	{
+		return DateTime.Now.ToString (Config.DATA_TIME);
+	}
+
+	public static string Day ()
+	{
+		return DateTime.Now.ToString ("yyyyMMdd");
 	}
 }

@@ -17,12 +17,12 @@ public class LoveFacebookManager : FacebookManager
 		if (loveUIManager != null) {
 			uIManager = loveUIManager;
 		}
-
+		
 		GameObject temp = GameObject.Find (Config.ROOT_MANAGER);
 		if (temp != null) {
 			loveComponent = temp.GetComponent<LoveComponent> ();
 		}
-
+		
 		if (FB.IsLoggedIn) {
 			if (friends != null && friends.Count > 0) {
 				InvitableFriendsCallback ();
@@ -31,68 +31,68 @@ public class LoveFacebookManager : FacebookManager
 			}
 		}
 	}
-
+	
 	private void FriendsCallback (FBResult result = null)
 	{
 //		Debug.Log ("FriendsCallback");
-
+		
 		bool flag = false;
 		if (result == null) {
 			flag = true;
 		}
-
+		
 		if (!flag && result.Error != null) {
 //			Debug.Log ("FriendsCallback error : " + result.Error);
 			flag = true;
 		}
-
+		
 		if (flag) {
 			string temp = FRIENDS_QUERY;
 			FB.API (temp, Facebook.HttpMethod.GET, FriendsCallback);
 			return;
 		}
-
+		
 		friends = DeserializeJSONFriends (result.Text);
-
+		
 		if (invitableFriends != null && invitableFriends.Count > 0) {
 			FriendsView ();
 		} else {
 			InvitableFriendsCallback ();
 		}
 	}
-
+	
 	private void InvitableFriendsCallback (FBResult result = null)
 	{
 //		Debug.Log ("InvitableFriendsCallback");
-
+		
 		bool flag = false;
 		if (result == null) {
 			flag = true;
 		}
-
+		
 		if (!flag && result.Error != null) {
 //			Debug.Log ("InvitableFriendsCallback error : " + result.Error);
 			flag = true;
 		}
-
+		
 		if (flag) {
 			string temp = INVITABLE_FRIENDS_QUERY;
 			FB.API (temp, Facebook.HttpMethod.GET, InvitableFriendsCallback);
 			return;
 		}
-
+		
 		invitableFriends = DeserializeJSONFriends (result.Text);
-
+		
 		FriendsView ();
 	}
-
+	
 	private void SetFriends (List<object> l)
 	{
 		foreach (Dictionary<string, object> f in l) {
 //			Debug.Log ("[" + (string)f ["first_name"] + " - " + (string)f ["last_name"] + "]");
 			
 			GameObject gObj = Instantiate (firend, new Vector3 (0, 0, 0), Quaternion.identity) as GameObject;
-//			Debug.Log (gObj);
+			//			Debug.Log (gObj);
 			gObj.name = f ["id"].ToString ();
 			gObj.transform.parent = this.transform;
 			gObj.transform.localScale = new Vector3 (1f, 1f, 1f);
@@ -107,27 +107,27 @@ public class LoveFacebookManager : FacebookManager
 			uILabel2.text = f ["last_name"].ToString ();
 			
 			LoadPictureAPI (GetPictureURL (f ["id"].ToString (), TEXTURE_SIZE, TEXTURE_SIZE), pictureTexture =>
-			                {
+			{
 				if (pictureTexture != null) {
 					uITexture.mainTexture = pictureTexture;
 				}
 			});
 		}
 	}
-
+	
 	private void FriendsView ()
 	{
 //		Debug.Log ("Friends count : " + friends.Count);
 //		Debug.Log ("InvitableFriends count : " + invitableFriends.Count);
-
+		
 		if (friends != null && friends.Count > 0) {
 			SetFriends (friends);
 		}
-
+		
 		if (invitableFriends != null && invitableFriends.Count > 0) {
 			SetFriends (invitableFriends);
 		}
-
+		
 		gameObject.GetComponent<UIGrid> ().Reposition ();
 	}
 }

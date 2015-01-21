@@ -204,4 +204,9 @@ public class MypageUIManager : UIManager
 		}
 		mypageGameManager.BackQuest ();
 	}
+
+	public void Slot ()
+	{
+		SSSceneManager.Instance.PopUp (Config.SLOT, null, PopupOnActive, PopupOnDeactive);
+	}
 }

@@ -221,7 +221,7 @@ public class LoveComponent : MonoBehaviour
 		if (love > 0) {
 			love -= 1;
 			if (love == Config.LOVE_MAX - 1) {
-				SetLove (love, QueryModel.Date ());
+				SetLove (love, Date.Time ());
 				InitLove ();
 			} else {
 				SetLove (love);

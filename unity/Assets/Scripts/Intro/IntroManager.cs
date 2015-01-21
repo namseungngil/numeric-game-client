@@ -83,7 +83,7 @@ public class IntroManager : GameManager
 			Sync ();
 		};
 
-		httpComponent.Login (0);
+		httpComponent.Login (Config.REG_GCM_APNS_FACEBOOK_WAIT);
 	}
 
 	private void Sync ()

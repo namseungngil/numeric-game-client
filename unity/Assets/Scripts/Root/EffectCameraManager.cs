@@ -128,4 +128,23 @@ public class EffectCameraManager : MonoBehaviour
 			}
 		}
 	}
+
+	public void GUIOnMoveEffect (GameObject effect, GameObject start, GameObject end)
+	{
+		Camera guiCam = NGUITools.FindCameraForLayer (start.layer);
+		
+		Vector3 position = effectCamera.ViewportToWorldPoint (guiCam.WorldToViewportPoint (start.transform.position));
+		position.z = 0;
+		
+		GameObject temp = ObjectPool.Instantiate (effect, position, Quaternion.identity);
+//		GameObject temp = Instantiate (effect, position, Quaternion.identity) as GameObject;
+		
+		temp.transform.position = position;
+		temp.transform.parent = effectCamera.transform;
+		
+		position = effectCamera.ViewportToWorldPoint (guiCam.WorldToViewportPoint (end.transform.position));
+		position.z = 0;
+		
+		temp.GetComponent<MoveEffect> ().target = position;
+	}
 }

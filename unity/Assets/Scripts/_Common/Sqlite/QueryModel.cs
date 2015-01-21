@@ -42,11 +42,6 @@ public class QueryModel : Query
 		};
 	}
 
-	public static string Date ()
-	{
-		return DateTime.Now.ToString (Config.DATA_TIME);
-	}
-
 	public void SyncGet (Dictionary<string, string> d)
 	{
 		List<string> allData = new List<string> ();
@@ -102,7 +97,7 @@ public class QueryModel : Query
 
 		Dictionary<string, string[]> data = new Dictionary<string, string[]> ();
 
-		string date = Date ();
+		string date = Date.Time ();
 
 		foreach (KeyValuePair<string, string> kvP in d) {
 			data.Add (kvP.Key, new string[] {
@@ -176,10 +171,9 @@ public class QueryModel : Query
 	{
 		DataTable dataTable = SELECT (QUEST_USER, "WHERE " + STAGE + "=" + stage);
 		if (date == "") {
-			date = Date ();
+			date = Date.Time ();
 		}
 
-		bool returnflag = true;
 		string[] data = new string[] {
 			stage,
 			"1",
@@ -233,13 +227,11 @@ public class QueryModel : Query
 				}
 			
 				data [1] = "" + tempVersion;
-				returnflag = UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
-			} else {
-				returnflag = false;
+				UPDATE (QUEST_USER, questUserColumnName, data, "WHERE " + STAGE + "=" + stage);
 			}
 
 		} else {
-			returnflag = INSERT (QUEST_USER, questUserColumnName, data);
+			INSERT (QUEST_USER, questUserColumnName, data);
 		}
 
 		return data;

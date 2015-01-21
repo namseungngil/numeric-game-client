@@ -101,11 +101,21 @@ public class Register
 
 	public void SetTutorial ()
 	{
-		PlayerPrefs.SetString (Config.TUTORIAL, QueryModel.Date ());
+		PlayerPrefs.SetString (Config.TUTORIAL, Date.Time ());
 	}
 
 	public string GetTutorial ()
 	{
 		return PlayerPrefs.GetString (Config.TUTORIAL, "");
+	}
+
+	public void SetSlot ()
+	{
+		PlayerPrefs.SetString (Config.SLOT, Date.Day ());
+	}
+
+	public string GetSlot ()
+	{
+		return PlayerPrefs.GetString (Config.SLOT, "");
 	}
 }

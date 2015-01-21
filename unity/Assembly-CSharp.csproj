@@ -307,6 +307,7 @@
      <Compile Include="Assets\Scripts\Battle\BattleChildUIManager.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleGameManager.cs" />
      <Compile Include="Assets\Scripts\Battle\BattleUIManager.cs" />
+     <Compile Include="Assets\Scripts\Battle\MoveEffect.cs" />
      <Compile Include="Assets\Scripts\Debug\NumericDebug.cs" />
      <Compile Include="Assets\Scripts\Intro\IntroManager.cs" />
      <Compile Include="Assets\Scripts\Intro\IntroUIManager.cs" />
@@ -326,6 +327,8 @@
      <Compile Include="Assets\Scripts\Root\EffectCameraManager.cs" />
      <Compile Include="Assets\Scripts\Root\SceneManager.cs" />
      <Compile Include="Assets\Scripts\Setting\SettingUIManager.cs" />
+     <Compile Include="Assets\Scripts\Slot\SlotControl.cs" />
+     <Compile Include="Assets\Scripts\Slot\SlotUIManager.cs" />
      <Compile Include="Assets\Scripts\Start\RankFacebookManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartGameManager.cs" />
      <Compile Include="Assets\Scripts\Start\StartUIManager.cs" />
@@ -363,11 +366,11 @@
      <Compile Include="Assets\Scripts\_Common\Date\Date.cs" />
      <Compile Include="Assets\Scripts\_Common\GCM\GCM.cs" />
      <Compile Include="Assets\Scripts\_Common\GCM\GCMReceiver.cs" />
+     <Compile Include="Assets\Scripts\_Common\Logic\AtRandom.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Device.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Game.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Logic.cs" />
      <Compile Include="Assets\Scripts\_Common\Logic\Notification.cs" />
-     <Compile Include="Assets\Scripts\_Common\Logic\RandomArray.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\FacebookManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\GameManager.cs" />
      <Compile Include="Assets\Scripts\_Common\Manager\ResultManager.cs" />
@@ -381,6 +384,11 @@
      <Compile Include="Assets\Scripts\_Common\Sqlite\Query.cs" />
      <Compile Include="Assets\Scripts\_Common\Sqlite\QueryModel.cs" />
      <Compile Include="Assets\Scripts\_Common\Sqlite\SqliteDatabase.cs" />
+     <Compile Include="Assets\Scripts\_Common\System\ObjectPool.cs" />
+     <Compile Include="Assets\Scripts\_Common\UI\JoystickControl.cs" />
+     <Compile Include="Assets\Scripts\_Common\UI\StarUICursor.cs" />
+     <Compile Include="Assets\Scripts\_Common\UI\StarUIJoystick.cs" />
+     <Compile Include="Assets\Scripts\_Common\UI\StarUIRoot.cs" />
      <Compile Include="Assets\Scripts\_External\Json\MiniJSON.cs" />
      <Compile Include="Assets\Scripts\_External\Webview\WebViewObject.cs" />
      <None Include="Assets\NGUI\Examples\Shaders\Unlit - Depth Cutout.shader" />

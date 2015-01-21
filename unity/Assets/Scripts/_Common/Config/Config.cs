@@ -67,6 +67,7 @@
 	public const string INTRO = "Intro";
 	public const string NOT = "Not";
 	public const string TUTORIAL = "Tutorial";
+	public const string SLOT = "Slot";
 	// image
 	public const string STAR_EMPTY = "empty";
 	public const string STAR_FULL = "full";
