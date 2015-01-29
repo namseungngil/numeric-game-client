@@ -561,9 +561,7 @@ public class BattleGameManager : GameManager
 			Vector3 pos = effectCameraManager.Get ().ScreenToWorldPoint (screenPos);
 			pos.z += Config.EFFECT_Z;
 
-			GameObject gObj = ObjectPool.Instantiate (gO, pos, Quaternion.identity) as GameObject;
-
-			ObjectPool.Destroy (this, gObj, 1.5f);
+			ObjectPool.Instantiate (gO, pos, Quaternion.identity);
 		}
 	}
 

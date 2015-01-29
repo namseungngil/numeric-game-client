@@ -19,6 +19,7 @@ public class SceneManager : SSSceneManager
 		m_SolidCamera.camera.tag = "MainCamera";
 		m_SolidCamera.AddComponent<AudioListener> ();
 		m_SolidCamera.AddComponent<AudioSource> ();
+		m_SolidCamera.AddComponent<UnityAnalyticsIntegration> ();
 		m_SolidCamera.audio.loop = true;
 		
 		m_Audios = new Dictionary<string, AudioClip> ();

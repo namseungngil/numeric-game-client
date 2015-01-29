@@ -24,6 +24,10 @@ public class SlotControl : MonoBehaviour
 
 	void Update ()
 	{
+		if (gameObject.name == "Temp") {
+			return;
+		}
+
 		nameS = int.Parse (gameObject.name);
 
 		if (stop) {

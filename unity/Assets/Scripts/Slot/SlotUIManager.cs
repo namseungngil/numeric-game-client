@@ -6,6 +6,9 @@ public class SlotUIManager : UIManager
 {
 	// const
 	public const int MAX = 10;
+	private const int REWARD3 = 5;
+	private const int REWARD2 = 3;
+	private const string X = "X";
 	// array
 	public GameObject[] panel;
 	public int[] percent;
@@ -13,8 +16,16 @@ public class SlotUIManager : UIManager
 	private Dictionary<string, bool[]> slotFlag;
 	// gameobject
 	public GameObject prefab;
+	private GameObject reward;
+	private GameObject button;
+	private GameObject cancel;
+	private GameObject effectUIWidget;
 	// component;
 	private Register register;
+	private LoveComponent loveComponent;
+	private UISprite info;
+	private UILabel heart;
+	private EffectCameraManager effectCameraManager;
 	// variable
 	public float slotSpeed = 10f;
 	private string slotName;
@@ -79,11 +90,40 @@ public class SlotUIManager : UIManager
 		slotStartFlag = false;
 		count = 0;
 
+		GameObject.Find ("RewardInfo1").GetComponent<UILabel> ().text = X + REWARD3;
+		GameObject.Find ("RewardInfo2").GetComponent<UILabel> ().text = X + REWARD2;
+
 		register = Register.Instance ();
+
+		loveComponent = GameObject.Find (Config.ROOT_MANAGER).GetComponent<LoveComponent> ();
+		info = GameObject.Find ("Info").GetComponent<UISprite> ();
+		heart = Logic.GetChildObject (info.gameObject, "Heart").GetComponent<UILabel> ();
+		button = GameObject.Find (Config.ANIMATION_BUTTON);
+		cancel = GameObject.Find ("Cancel");
+		effectUIWidget = GameObject.Find ("EffectUIWidget");
+
+		reward = GameObject.Find ("Reward");
+		reward.SetActive (false);
+
+		if (register.GetSlot () == Date.Day ()) {
+			info.spriteName = "Heart96";
+			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "-1";
+		} else {
+			info.spriteName = "casino";
+			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "FOR FREE";
+			heart.gameObject.SetActive (false);
+		}
+
+		effectCameraManager = GameObject.Find (Config.EFFECT_CAMERA).GetComponent<EffectCameraManager> ();
+
 	}
 
 	void Update ()
 	{
+		if (heart.gameObject.activeInHierarchy) {
+			heart.text = loveComponent.GetLove ().ToString ();
+		}
+
 		if (!slotStartFlag) {
 			int index = 0;
 			foreach (KeyValuePair<string, bool[]> kVP in slotFlag) {
@@ -134,15 +174,32 @@ public class SlotUIManager : UIManager
 						slotFlag [panel [index].name] [0] = false;
 
 						if (index >= 2) {
+							int rewardCount = 0;
+							float time = 1f;
 							if (count == index / 2) {
 								// reward
-								Debug.Log ("Reward 1");
+								rewardCount = REWARD2;
 							} else if (count == index) {
 								// reward
-								Debug.Log ("Reward 2");
+								rewardCount = REWARD3;
+							} else {
+								time = 0.5f;
 							}
 
 							count = 0;
+
+							if (rewardCount > 0) {
+								loveComponent.Add (rewardCount);
+
+								// animation
+								reward.SetActive (true);
+								reward.GetComponentInChildren<UILabel> ().text = rewardCount.ToString ();
+								reward.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
+
+								// effect
+							}
+
+							StartCoroutine (AfterRewardOver (time));
 						}
 					}
 				}
@@ -158,9 +215,24 @@ public class SlotUIManager : UIManager
 		}
 	}
 
-	private IEnumerator SetFlag ()
+	private IEnumerator AfterRewardOver (float time)
 	{
-		yield return new WaitForSeconds (0);
+		yield return new WaitForSeconds (time);
+
+		reward.SetActive (false);
+
+		cancel.SetActive (true);
+		button.SetActive (true);
+		info.gameObject.SetActive (true);
+		heart.gameObject.SetActive (true);
+		
+		info.spriteName = "Heart96";
+		info.GetComponentInChildren<UILabel> ().text = "-1";
+	}
+
+	private IEnumerator SetFlag (float time = 0)
+	{
+		yield return new WaitForSeconds (time);
 
 		if (!slotStartFlag) {
 			slotStartFlag = true;
@@ -170,6 +242,8 @@ public class SlotUIManager : UIManager
 					sC.SlotStart ();
 				}
 			}
+
+			StartCoroutine (SetFlag (1.5f));
 		} else {
 			slotStartFlag = false;
 
@@ -181,11 +255,13 @@ public class SlotUIManager : UIManager
 					int random = Random.Range (0, 100) + 1;
 					if (percent [index] >= random) {
 						kVP.Value [1] = true;
+					} else {
+						kVP.Value [1] = false;
 					}
 				}
 				index++;
 
-				yield return new WaitForSeconds (2f);
+				yield return new WaitForSeconds (1f);
 			}
 		}
 	}
@@ -201,12 +277,36 @@ public class SlotUIManager : UIManager
 		return null;
 	}
 
+	protected void PopupOnActive (SSController s)
+	{
+		effectCameraManager.SetActive (false);
+	}
+	
+	protected void PopupOnDeActive (SSController s)
+	{
+		effectCameraManager.SetActive (true);
+	}
+
 	public void SlotOnClick ()
 	{
-		if (register.GetSlot () == Date.Day ()) {
-		} else {
-
+		if (slotStartFlag) {
+			return;
 		}
+
+		if (register.GetSlot () == Date.Day ()) {
+			if (!loveComponent.UseLove ()) {
+				Cancel ();
+				SSSceneManager.Instance.PopUp (Config.NOT, null, PopupOnActive, PopupOnDeActive);
+
+				return;
+			}
+		} else {
+			register.SetSlot ();
+		}
+
+		button.SetActive (false);
+		cancel.SetActive (false);
+		info.gameObject.SetActive (false);
 
 		StartCoroutine (SetFlag ());
 	}

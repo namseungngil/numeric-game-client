@@ -55,7 +55,7 @@ public class IntroManager : GameManager
 			FB.API("/me/permissions", HttpMethod.GET, delegate (FBResult response) {
 				// inspect the response and adapt your UI as appropriate
 				// check response.Text and response.Error
-				Debug.Log(response.Text);
+//				Debug.Log(response.Text);
 			});
 		}
 		HttpLogin ();

@@ -110,9 +110,14 @@ public class ObjectPool
 	{
 		Transform temp = parent;
 		if (temp != null) {
-			GameObject tempGObj = new GameObject (OBJECTPOOL);
-			tempGObj.transform.parent = parent;
-			temp = tempGObj.transform;
+			GameObject parentGameObject = Logic.GetChildObject (temp.gameObject, OBJECTPOOL);
+			if (parentGameObject == null) {
+				GameObject tempGObj = new GameObject (OBJECTPOOL);
+				tempGObj.transform.parent = parent;
+				temp = tempGObj.transform;
+			} else {
+				temp = parentGameObject.transform;
+			}
 
 			if (objectPool.dic.ContainsKey (prefab)) {
 				objectPool.dic.Remove (prefab);
@@ -148,8 +153,8 @@ public class ObjectPool
 		gObj.SetActive (false);
 	}
 	
-	public static void Destroy (MonoBehaviour mono, GameObject gObj, float time)
+	public static void Destroy (MonoBehaviour mB, GameObject gObj, float time)
 	{
-		mono.StartCoroutine (objectPool.DelayDestory (gObj, time));
+		mB.StartCoroutine (objectPool.DelayDestory (gObj, time));
 	}
 }

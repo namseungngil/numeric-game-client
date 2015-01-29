@@ -15,7 +15,6 @@ public class LoveComponent : MonoBehaviour
 	private UILabel loveTimeUILabel;
 	private UILabel loveCountUILabel;
 	private Register register;
-	private QueryModel dataQuery;
 	// variable
 	private int love;
 	private int loveTime;
@@ -24,7 +23,6 @@ public class LoveComponent : MonoBehaviour
 	void Start ()
 	{
 		register = Register.Instance ();
-		dataQuery = QueryModel.Instance ();
 		GameObject loveGameObject = GameObject.Find (LOVE);
 		if (loveGameObject != null) {
 			foreach (UILabel uiLabel in loveGameObject.GetComponentsInChildren<UILabel> ()) {
@@ -258,5 +256,10 @@ public class LoveComponent : MonoBehaviour
 	public bool MaxFlag ()
 	{
 		return love >= Config.LOVE_MAX ? true : false;
+	}
+
+	public int GetLove ()
+	{
+		return love;
 	}
 }
