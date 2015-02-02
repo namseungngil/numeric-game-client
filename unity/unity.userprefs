@@ -1,22 +1,6 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Plugins/UnityAnalytics/PlatformWrapper.cs">
-    <Files>
-      <File FileName="Assets/Scripts/_Common/System/ObjectPool.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Logic/Game.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Logic/Device.cs" Line="1" Column="1" />
-      <File FileName="../../star-game-client/Assets/External Assets/PlayMaker/Actions/GetChild.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/Logic/Logic.cs" Line="1" Column="1" />
-      <File FileName="Assets/Facebook/Scripts/FB.cs" Line="1" Column="1" />
-      <File FileName="Assets/GoogleMobileAds/Common/DummyClient.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/_Common/UnityAnalytics/UnityAnalyticsIntegration.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/UnityAnalytics/UnityAnalytics.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/UnityAnalytics/AndroidWrapper.cs" Line="9" Column="53" />
-      <File FileName="Assets/NGUI/Scripts/Interaction/UIWrapContent.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/UnityAnalytics/iOSWrapper.cs" Line="1" Column="1" />
-      <File FileName="Assets/Plugins/UnityAnalytics/PlatformWrapper.cs" Line="205" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

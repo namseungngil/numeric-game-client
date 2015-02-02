@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using DATA;
 
 public class BattleChildUIManager : UIManager
 {
@@ -15,6 +16,15 @@ public class BattleChildUIManager : UIManager
 	
 	public override void Start ()
 	{
+		Register register = Register.Instance ();
+		int temp = register.GetStage ();
+
+		if (temp >= 9 && temp <= 11) {
+			temp -= 9;
+			Color myColor = DataArray.battleColor [temp];
+			Camera.main.backgroundColor = myColor;
+		}
+
 		SSSceneManager.Instance.LoadMenu(Config.BATTLE);
 	}
 

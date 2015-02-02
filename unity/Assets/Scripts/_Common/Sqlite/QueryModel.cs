@@ -246,7 +246,7 @@ public class QueryModel : Query
 	public void DummyData ()
 	{
 		DBDelete ();
-		int stage = 200;
+		int stage = 400;
 
 		string [][] data = new string [stage][];
 

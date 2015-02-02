@@ -16,6 +16,7 @@ public class SlotUIManager : UIManager
 	private Dictionary<string, bool[]> slotFlag;
 	// gameobject
 	public GameObject prefab;
+	public GameObject effectPrefab;
 	private GameObject reward;
 	private GameObject button;
 	private GameObject cancel;
@@ -106,11 +107,9 @@ public class SlotUIManager : UIManager
 		reward.SetActive (false);
 
 		if (register.GetSlot () == Date.Day ()) {
-			info.spriteName = "Heart96";
-			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "-1";
+			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "1";
 		} else {
-			info.spriteName = "casino";
-			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "FOR FREE";
+			Logic.GetChildObject (info.gameObject, "Label").GetComponent<UILabel> ().text = "FREE";
 			heart.gameObject.SetActive (false);
 		}
 
@@ -175,7 +174,7 @@ public class SlotUIManager : UIManager
 
 						if (index >= 2) {
 							int rewardCount = 0;
-							float time = 1f;
+							float time = 2f;
 							if (count == index / 2) {
 								// reward
 								rewardCount = REWARD2;
@@ -197,6 +196,7 @@ public class SlotUIManager : UIManager
 								reward.GetComponent<Animation> ().Play (Config.ANIMATION_BUTTON);
 
 								// effect
+								effectCameraManager.GUIOnOverEffect (effectPrefab, effectUIWidget.gameObject);
 							}
 
 							StartCoroutine (AfterRewardOver (time));
@@ -225,9 +225,8 @@ public class SlotUIManager : UIManager
 		button.SetActive (true);
 		info.gameObject.SetActive (true);
 		heart.gameObject.SetActive (true);
-		
-		info.spriteName = "Heart96";
-		info.GetComponentInChildren<UILabel> ().text = "-1";
+
+		info.GetComponentInChildren<UILabel> ().text = "1";
 	}
 
 	private IEnumerator SetFlag (float time = 0)
